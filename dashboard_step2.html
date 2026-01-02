@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회현동소극장 AI 기획 워크숍</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Chosen Palette: Warm Neutrals & Theater Red */
+        /* Background: #FAFAF9 (Stone 50) */
+        /* Text: #1C1917 (Stone 900) */
+        /* Primary Brand: #9F1239 (Rose 800) - Represents Theater/Passion */
+        /* Secondary Accent: #2563EB (Blue 600) - Represents AI/Strategy */
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #FAFAF9;
+            color: #1C1917;
+        }
+
+        /* Chart Container Styling - MANDATORY */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #E7E5E4;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #9CA3AF;
+            padding: 1rem;
+        }
+
+        /* Typewriter Animation Class */
+        .typewriter-text {
+            border-right: 2px solid #2563EB;
+            white-space: pre-wrap;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #2563EB;
+            }
+        }
+
+        .highlight-enter {
+            animation: highlight-fade 1.5s ease-out forwards;
+        }
+
+        @keyframes highlight-fade {
+            0% {
+                background-color: #FEF3C7;
+                transform: scale(0.98);
+            }
+
+            50% {
+                background-color: #FEF3C7;
+                transform: scale(1.01);
+            }
+
+            100% {
+                background-color: transparent;
+                transform: scale(1);
+            }
+        }
+    </style>
+    <!-- Application Structure Plan:
+         1. Header: Context setting for the Jan 3rd meeting.
+         2. Setup Phase: Displays the "Input Data" (Theater Context) from the guide.
+         3. Transformation Lab (Core):
+            - Left: Artist Voice (Input)
+            - Center: AI Processor (Policy Matching logic)
+            - Right: Admin Output (Structuring logic)
+         4. Critical Review Simulation: A toggleable section to show the "Judge" persona critique.
+         5. Quantitative Outcomes: Visualizing the "Numbers" example from the checklist.
+         Rationale: This structure mirrors the cognitive process of the workshop: Understand Context -> Experience Transformation -> Face Critique -> Verify Results.
+    -->
+    <!-- Visualization & Content Choices:
+         - Interaction: "Simulate" button triggers the typing effect of the AI response to make the "Translation" tangible.
+         - Chart: Bar chart for "Quantitative Effects" (Audience/Coupons) to show how text becomes data.
+         - Content: Strictly follows the 'step1_ai_practical_guide.md' scenarios (Old shops, 3D mapping).
+         - Confirmation: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+
+<body class="bg-stone-50 text-stone-900">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎭</span>
+                    <h1 class="font-bold text-xl text-stone-800">회현동소극장 <span class="text-rose-700">AI Co-Pilot</span>
+                    </h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#setup" class="text-stone-600 hover:text-rose-700 transition">1. 기초 데이터</a>
+                    <a href="#transformation" class="text-stone-600 hover:text-rose-700 transition">2. 기획 번역기</a>
+                    <a href="#critic" class="text-stone-600 hover:text-rose-700 transition">3. 심사위원 시뮬레이션</a>
+                    <a href="#outcomes" class="text-stone-600 hover:text-rose-700 transition">4. 기대효과</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-stone-900 text-white py-12 border-b-4 border-rose-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <span class="inline-block px-3 py-1 bg-rose-800 text-rose-100 text-xs font-bold rounded-full mb-3">2026
+                    지방보조금 전략 워크숍</span>
+                <h2 class="text-4xl font-bold mb-4 leading-tight">예술가의 언어를 <br><span class="text-rose-400">행정의
+                        언어</span>로 번역하다</h2>
+                <p class="text-stone-400 text-lg">
+                    추상적인 아이디어가 AI를 만나 구체적인 사업계획서가 되는 과정을 실시간으로 경험해보세요.
+                    <br><span class="text-sm opacity-70">*본 워크숍은 '1단계 실습 가이드'를 기반으로 진행됩니다.</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- Section 1: AI Setup (Context Loading) -->
+        <section id="setup" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-stone-900">1. AI 기초 데이터 세팅</h3>
+                    <p class="text-stone-600 mt-1">AI가 우리를 이해하도록 극장의 정체성을 입력합니다.</p>
+                </div>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold">회의 전 사전 입력 완료</span>
+            </div>
+
+            <div class="bg-white border border-stone-200 rounded-xl p-6 shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                <h4 class="text-sm font-bold text-stone-500 uppercase tracking-wider mb-3">System Prompt (Context
+                    Window)</h4>
+                <div class="font-mono text-sm text-stone-700 bg-stone-50 p-4 rounded-lg border border-stone-200">
+                    <p class="mb-2"><span class="text-blue-600 font-bold">Who:</span> "우리는 김해 회현동에서 7년째 운영 중인 80석 규모의
+                        '회현동소극장'이야."</p>
+                    <p class="mb-2"><span class="text-rose-600 font-bold">Goal:</span> "2026년 김해시 지방보조금 지원사업(공연/대회 분야)
+                        신청."</p>
+                    <p><span class="text-green-600 font-bold">Strength:</span> "3D 매핑 기술 활용 & 원도심 밀착형 공동체성."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Transformation Lab (Core Interaction) -->
+        <section id="transformation" class="scroll-mt-24">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-stone-900">2. 아이디어의 행정적 변신</h3>
+                <p class="text-stone-600 mt-1">"노포 이야기" 아이디어가 어떻게 정책 용어로 바뀌는지 확인하세요.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Step 1: Artist Input -->
+                <div class="card p-6 border-t-4 border-t-stone-400">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg text-stone-800">🗣️ 예술가의 목소리</h4>
+                        <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">Raw Data</span>
+                    </div>
+                    <div
+                        class="bg-stone-50 p-4 rounded-lg border border-stone-200 h-48 italic text-stone-600 overflow-y-auto">
+                        "회현동에 오래된 노포들이 많잖아요. 그 상인분들의 삶을 3D 매핑 기술이랑 섞어서 연극으로 만들면 참 재밌을 것 같아요. 아이들도 같이 참여시키고요."
+                    </div>
+                    <button id="translateBtn" onclick="runSimulation()"
+                        class="mt-4 w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg shadow transition transform active:scale-95 flex items-center justify-center gap-2">
+                        <span>⚡ AI 번역 실행</span>
+                    </button>
+                </div>
+
+                <!-- Step 2: Policy Matching (Process) -->
+                <div class="card p-6 border-t-4 border-t-blue-500 bg-blue-50/30">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg text-blue-900">🧩 정책 매칭 (Policy)</h4>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Analysis</span>
+                    </div>
+                    <div id="policy-output" class="space-y-3 min-h-[12rem]">
+                        <div class="text-stone-400 text-center text-sm py-10">
+                            좌측 '번역 실행' 버튼을 눌러주세요.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Structuring (Output) -->
+                <div class="card p-6 border-t-4 border-t-green-600 bg-green-50/30">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg text-green-900">📄 사업계획서 (Draft)</h4>
+                        <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Result</span>
+                    </div>
+                    <div id="structure-output" class="font-mono text-sm text-stone-800 min-h-[12rem]">
+                        <div class="text-stone-400 text-center py-10">
+                            AI 생성 대기 중...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Critical Review (The Judge) -->
+        <section id="critic" class="scroll-mt-24">
+            <div class="mb-6 flex items-center gap-3">
+                <h3 class="text-2xl font-bold text-stone-900">3. 독한 심사위원 시뮬레이션</h3>
+                <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-bold rounded uppercase">Critical
+                    Review</span>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="bg-stone-800 p-4 flex justify-between items-center text-white">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">⚖️</span>
+                        <span class="font-bold">AI Judge System</span>
+                    </div>
+                    <label class="flex items-center cursor-pointer">
+                        <div class="relative">
+                            <input type="checkbox" id="criticToggle" class="sr-only" onchange="toggleCritic()">
+                            <div class="block bg-stone-600 w-14 h-8 rounded-full"></div>
+                            <div
+                                class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform duration-300">
+                            </div>
+                        </div>
+                        <div class="ml-3 text-sm font-medium text-stone-300">심사 시작</div>
+                    </label>
+                </div>
+
+                <div id="critic-content" class="p-8 text-center">
+                    <div class="text-stone-400 py-8">
+                        <p class="text-lg">"심사 시작" 스위치를 켜서 기획서의 약점을 점검하세요.</p>
+                    </div>
+                </div>
+
+                <!-- Hidden Content for JS to Reveal -->
+                <div id="critic-active" class="hidden p-6 grid grid-cols-1 md:grid-cols-2 gap-6 bg-red-50/50">
+                    <div class="bg-white p-5 rounded-lg border border-red-200 shadow-sm">
+                        <h5 class="text-red-700 font-bold mb-2 flex items-center gap-2">
+                            <span>🚫 지적 사항 (Weakness)</span>
+                        </h5>
+                        <p class="text-stone-700 text-sm leading-relaxed">
+                            "3D 매핑 장비 대여료가 예산의 40%를 차지합니다. 일회성 공연을 위해 너무 과도한 지출 아닌가요? <br><strong>예산 낭비 및 실현 가능성
+                                부족</strong>으로 보입니다."
+                        </p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-green-200 shadow-sm">
+                        <h5 class="text-green-700 font-bold mb-2 flex items-center gap-2">
+                            <span>✅ 대안 답변 (Solution)</span>
+                        </h5>
+                        <p class="text-stone-700 text-sm leading-relaxed">
+                            "장비 대여 대신 <strong>인근 대학(김해대) 및 기술 업체와 MOU</strong>를 체결하여 비용을 70% 절감하겠습니다. 또한 제작된 영상 소스는
+                            <strong>유튜브 아카이빙</strong>으로 영구 활용됩니다."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Quantitative Outcomes -->
+        <section id="outcomes" class="scroll-mt-24 pb-12">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-stone-900">4. 정량적 기대효과 (수치화)</h3>
+                <p class="text-stone-600 mt-1">심사위원이 가장 신뢰하는 '숫자'로 기획을 증명합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h4 class="font-bold text-lg text-stone-800 mb-4 text-center">📊 성과 지표 예측</h4>
+                    <div class="chart-container">
+                        <canvas id="outcomeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card p-6 flex flex-col justify-center">
+                    <h4 class="font-bold text-lg text-stone-800 mb-4">📝 AI 비서 체크리스트</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3 p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition">
+                            <span class="text-blue-600 text-xl">①</span>
+                            <div>
+                                <strong class="block text-stone-800 text-sm">번역 (Translate)</strong>
+                                <span class="text-xs text-stone-500">"이 아이디어를 '사회적 가치' 관점에서 설명하면?"</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition">
+                            <span class="text-rose-600 text-xl">②</span>
+                            <div>
+                                <strong class="block text-stone-800 text-sm">확장 (Extend)</strong>
+                                <span class="text-xs text-stone-500">"주민들이 직접 참여할 수 있는 '워크숍'을 추가한다면?"</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition">
+                            <span class="text-green-600 text-xl">③</span>
+                            <div>
+                                <strong class="block text-stone-800 text-sm">수치 (Quantify)</strong>
+                                <span class="text-xs text-stone-500">"예상되는 관객 수와 홍보 횟수를 표로 만들어줘."</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-500 py-8 text-center text-sm">
+        <p>Based on 'Step 1: AI Practical Guide' for Hoehyeondong Theater.</p>
+        <p class="mt-1">Generated for Jan 3, 2026 Strategic Meeting.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Core Interaction: The Transformation Simulation ---
+        function runSimulation() {
+            const btn = document.getElementById('translateBtn');
+            const policyDiv = document.getElementById('policy-output');
+            const structureDiv = document.getElementById('structure-output');
+
+            // Reset
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> AI 분석 중...`;
+            policyDiv.innerHTML = '';
+            structureDiv.innerHTML = '';
+
+            // Step 1: Policy Matching (Simulated Delay 800ms)
+            setTimeout(() => {
+                const policies = [
+                    { icon: '🏘️', title: '로컬 브랜딩', desc: '회현동 노포의 자산화' },
+                    { icon: '💡', title: '디지털 전환', desc: '소극장 무대의 첨단화 (3D)' },
+                    { icon: '🤝', title: '세대 통합', desc: '시니어(상인) + 주니어(아동)' }
+                ];
+
+                let policyHTML = '';
+                policies.forEach((p, index) => {
+                    setTimeout(() => {
+                        const item = document.createElement('div');
+                        item.className = 'flex items-start gap-3 p-2 rounded bg-white border border-blue-100 shadow-sm highlight-enter';
+                        item.innerHTML = `
+                            <span class="text-xl">${p.icon}</span>
+                            <div>
+                                <strong class="text-sm text-blue-800 block">${p.title}</strong>
+                                <span class="text-xs text-stone-500">${p.desc}</span>
+                            </div>
+                        `;
+                        policyDiv.appendChild(item);
+                    }, index * 600); // Staggered appearance
+                });
+            }, 800);
+
+            // Step 2: Structuring (Simulated Delay 3000ms)
+            setTimeout(() => {
+                const structureHTML = `
+<strong class="text-rose-700 block mb-2">[사업명]</strong>
+「회현동 기억의 겹: 3D 매핑으로 만나는 노포(老鋪) 이야기 극장」
+
+<strong class="text-rose-700 block mt-4 mb-2">[사업 목적]</strong>
+원도심 상인들의 생애사를 디지털 기술과 접목한 이머시브 연극으로 제작하여, 지역민의 자긍심을 고취하고 봉리단길 방문객을 유입시켜 지역 경제 활성화에 기여함.
+                `;
+
+                structureDiv.innerHTML = structureHTML;
+                structureDiv.classList.add('typewriter-text');
+
+                // Finish
+                btn.innerHTML = `<span>✅ 번역 완료</span>`;
+                btn.classList.replace('bg-rose-600', 'bg-green-600');
+                btn.classList.replace('hover:bg-rose-700', 'hover:bg-green-700');
+            }, 3000);
+        }
+
+        // --- Critical Review Toggle ---
+        function toggleCritic() {
+            const checkbox = document.getElementById('criticToggle');
+            const content = document.getElementById('critic-content');
+            const active = document.getElementById('critic-active');
+            const dot = document.querySelector('.dot');
+
+            if (checkbox.checked) {
+                // Activate Judge Mode
+                dot.style.transform = 'translateX(100%)';
+                content.classList.add('hidden');
+                active.classList.remove('hidden');
+                active.classList.add('animate-pulse-once'); // Add visual cue
+            } else {
+                // Deactivate
+                dot.style.transform = 'translateX(0)';
+                content.classList.remove('hidden');
+                active.classList.add('hidden');
+            }
+        }
+
+        // --- Quantitative Chart ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('outcomeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['연간 관객 (명)', '할인권 회수 (매)', '참여 상인 (곳)', 'SNS 홍보 (건)'],
+                    datasets: [{
+                        label: '목표 수치',
+                        data: [500, 200, 10, 50],
+                        backgroundColor: [
+                            '#9F1239', // Rose 800
+                            '#F59E0B', // Amber 500
+                            '#2563EB', // Blue 600
+                            '#10B981'  // Emerald 500
+                        ],
+                        borderWidth: 0,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `목표: ${context.raw} 건`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#F5F5F4' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
