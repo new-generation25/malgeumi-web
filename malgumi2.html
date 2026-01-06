@@ -658,6 +658,107 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .instagram-feed h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .insta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .insta-item {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .insta-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .insta-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .insta-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .insta-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .insta-item .overlay i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Footer Update */
+        .footer-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .footer-info h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 0.2rem 0;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .insta-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 
@@ -845,39 +946,74 @@
                 <p class="section-subtitle">공연 섭외, 단체 관람 문의를 남겨주세요</p>
             </div>
 
-            <div class="contact-grid">
-                <form class="contact-form fade-in">
-                    <input type="text" placeholder="이름" required>
-                    <input type="email" placeholder="이메일" required>
-                    <textarea placeholder="문의 내용을 입력해주세요"></textarea>
-                    <button type="submit">문의 보내기</button>
-                </form>
-                <div class="contact-info fade-in">
-                    <div class="contact-info-item">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>055-000-0000</span>
+
+            <div class="instagram-feed fade-in">
+                <h3>📢 말그미 극단 소식</h3>
+                <div class="insta-grid">
+                    <div class="insta-item">
+                        <img src="malgumi/20260105_222409.png" alt="Insta 1">
+                        <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
                     </div>
-                    <div class="contact-info-item">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>malgumi@example.com</span>
+                    <div class="insta-item">
+                        <img src="malgumi/20260105_222432.png" alt="Insta 2">
+                        <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
                     </div>
-                    <div class="contact-info-item">
-                        <i class="fa-brands fa-instagram"></i>
-                        <span>@malgumi_theater</span>
+                    <div class="insta-item">
+                        <img src="malgumi/chobi.png" alt="Insta 3">
+                        <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="insta-item">
+                        <img src="malgumi/20260105_222409.png" alt="Insta 4">
+                        <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
                     </div>
                 </div>
             </div>
+
+            <form class="contact-form fade-in">
+                <input type="text" placeholder="이름" required>
+                <input type="email" placeholder="이메일" required>
+                <textarea placeholder="문의 내용을 입력해주세요"></textarea>
+                <button type="submit">문의 보내기</button>
+            </form>
+            <div class="contact-info fade-in">
+                <div class="contact-info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>055-000-0000</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>malgumi@example.com</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>@malgumi_theater</span>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
 
     <!-- Footer -->
+    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-links">
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>말그미 극단</h3>
+                <p><strong>대표:</strong> 김미경</p>
+                <p><strong>주소:</strong> 경남 김해시 분성로 259, 4층</p>
+                <p><strong>문의:</strong> malgumi@example.com / 055-000-0000</p>
+            </div>
+            <div class="footer-social">
+                <div class="footer-links">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
         </div>
-        <p>© 2026 말그미 극단. All rights reserved.</p>
+        <div class="copyright">
+            <p>© 2026 말그미 극단. All rights reserved.</p>
+        </div>
     </footer>
 
     <!-- Animation Script -->
