@@ -309,6 +309,76 @@
         }
 
         /* Philosophy Section */
+
+        /* 극단이 스스로를 설명하는 문장. 카드보다 먼저 읽히도록 크게 둔다 */
+        .creed {
+            margin: 0 0 3rem;
+            padding: 0;
+            text-align: center;
+        }
+
+        .creed-line {
+            font-size: clamp(1.25rem, 3.4vw, 1.85rem);
+            line-height: 1.65;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0 0 1.25rem;
+            word-break: keep-all;
+        }
+
+        .creed-line em {
+            font-style: normal;
+            font-weight: 700;
+            /* 노란 강조색은 밝은 배경에서 글자로 쓰면 안 읽혀 밑줄 띠로 쓴다 */
+            background: linear-gradient(transparent 62%, var(--accent) 62%);
+            padding: 0 0.1em;
+        }
+
+        .creed-sub {
+            max-width: 42rem;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.95;
+            word-break: keep-all;
+        }
+
+        /* 전문예술단체 지정 — 작게, 카드 아래에 한 줄로 */
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            max-width: 30rem;
+            margin: 3rem auto 0;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .credential img {
+            flex: none;
+            width: 54px;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+
+        .credential-title {
+            margin: 0 0 0.3rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            word-break: keep-all;
+        }
+
+        .credential-sub {
+            margin: 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
         .philosophy-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -524,14 +594,28 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* 포스터가 세로라 4:5로 잡는다. 가로 공연사진도 같은 비율로 잘라 넣었다 */
         .archive-card img {
             width: 100%;
-            height: 200px;
+            aspect-ratio: 4 / 5;
             object-fit: cover;
+            background: var(--surface-alt);
         }
 
         .archive-card-content {
             padding: 1.5rem;
+        }
+
+        .archive-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            color: var(--text-primary);
+            background: var(--accent);
+            border-radius: var(--radius-full);
+            padding: 0.2rem 0.7rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
         }
 
         .archive-card h3 {
@@ -542,6 +626,17 @@
         .archive-card p {
             color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+
+        /* 언제 어디서 한 공연인지. 줄거리와 구분되게 한 단계 낮춘다.
+           위 `.archive-card p`(0,1,1)를 이기려고 선택자를 둘로 겹쳤다 */
+        .archive-card .archive-meta {
+            margin-top: 0.9rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            line-height: 1.65;
+            color: var(--text-secondary);
         }
 
         /* Space Section */
@@ -1145,21 +1240,39 @@
                 <p class="section-subtitle">세 가지 핵심 가치로 아이들의 꿈을 함께 그립니다</p>
             </div>
 
+            <blockquote class="creed fade-in">
+                <p class="creed-line">처음 시작하는 이들에게 <em>꿈의 무대</em>,<br>다시 도전하는 이들에게 <em>용기의 무대</em>.</p>
+                <p class="creed-sub">
+                    전문가와 비전문가, 전공자와 비전공자 그 사이 어디쯤에 있는 사람들이 모였습니다.
+                    평균 연령은 마흔이 넘지만, 따뜻한 엄마의 시선으로 소외된 이웃의 답답한 이야기를
+                    무대 위에서 대신 외칩니다.
+                </p>
+            </blockquote>
+
             <div class="philosophy-grid">
                 <div class="philosophy-card fade-in">
-                    <div class="icon">👑</div>
-                    <h3>아이들이 주인공</h3>
-                    <p>관객석에 머물지 않고 무대의 흐름을 직접 바꾸는 경험을 선사합니다.</p>
+                    <div class="icon">🧸</div>
+                    <h3>아이들 눈높이로</h3>
+                    <p>인형극과 창작 아동극이 출발점입니다. 장애인식개선, 환경, 한글까지 — 어려운 주제를 아이가 웃으며 받아들이는 이야기로 바꿉니다.</p>
                 </div>
                 <div class="philosophy-card fade-in">
-                    <div class="icon">🎨</div>
-                    <h3>놀이가 곧 예술</h3>
-                    <p>아이들의 천진난만한 놀이 본능을 예술적 퍼포먼스로 승화시킵니다.</p>
+                    <div class="icon">🏫</div>
+                    <h3>학교로 찾아갑니다</h3>
+                    <p>공연장에 오기 어려운 아이들을 위해 강당으로 갑니다. 함안·함양의 초등학교 열한 곳을 순회하며 인형극을 올렸습니다.</p>
                 </div>
                 <div class="philosophy-card fade-in">
                     <div class="icon">📍</div>
-                    <h3>지역의 재발견</h3>
-                    <p>우리가 사는 동네(김해)의 이야기를 가장 재미있게 전달합니다.</p>
+                    <h3>지역의 이야기를 씁니다</h3>
+                    <p>김해 희망모자원의 사연, 화포천의 새와 사람, 부원동의 골목. 이 동네가 품은 이야기를 직접 쓰고 무대에 올립니다.</p>
+                </div>
+            </div>
+
+            <div class="credential fade-in">
+                <img src="images/cert-252.jpg" alt="말그미극단 경상남도 전문예술단체 지정서 (제252호)" loading="lazy" width="560"
+                    height="804">
+                <div>
+                    <p class="credential-title">경상남도 전문예술단체 제252호</p>
+                    <p class="credential-sub">2019년 창단 · 2022년 12월 21일 지정<br>「경상남도 문화예술진흥 조례」 제17조</p>
                 </div>
             </div>
         </div>
@@ -1186,7 +1299,8 @@
                             <i class="fa-regular fa-calendar"></i> 2026. 8. 16 – 8. 23 · 회현동소극장
                         </p>
                         <p class="show-card-desc">
-                            오늘 아침, ㄱ과 ㅎ이 사라졌습니다. 1942년 말모이 작전으로 떠나는 60분의 참여형 아동극.
+                            오늘 아침, ㄱ과 ㅎ이 사라졌습니다. 1942년 말모이 작전으로 떠나는 60분의 참여형 아동극.<br>
+                            작 김미경 · 연출 안민정
                         </p>
                         <span class="show-card-cta">자세히 보기 <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
@@ -1206,25 +1320,53 @@
 
             <div class="archive-scroll fade-in">
                 <div class="archive-card">
-                    <img src="images/chobi2.png" alt="소원 도깨비 초비" loading="lazy" width="567" height="638">
+                    <img src="images/work-chobi.jpg" alt="창작 아동극 〈소원 도깨비 초비〉 포스터" loading="lazy" width="900"
+                        height="1125">
                     <div class="archive-card-content">
-                        <h3>&lt;소원 도깨비 초비&gt;</h3>
-                        <p>초등학교 5학년 지아의 어려움을 소원도깨비 초비의 방식으로 해결! 과연 지아는 이겨낼 수 있을까?</p>
+                        <span class="archive-tag">대표 레퍼토리</span>
+                        <h3>소원 도깨비 초비</h3>
+                        <p>초등학교 5학년 지아의 어려움을 소원 도깨비 초비의 방식으로 해결! 과연 지아는 이겨낼 수 있을까?</p>
+                        <p class="archive-meta">2021.11.28 초연 · 2022.5.5 재연<br>회현동 소극장 · 극작 김미경 / 연출 배소완</p>
                     </div>
                 </div>
                 <div class="archive-card">
-                    <img src="images/uri.png" alt="어리와 친구들" loading="lazy" width="423" height="258">
+                    <img src="images/work-kkone.jpg" alt="환경교육 아동극 〈아기토끼 꼬네의 메아리〉 포스터" loading="lazy" width="900"
+                        height="1125">
                     <div class="archive-card-content">
-                        <h3>&lt;얼음 어리&gt;</h3>
-                        <p>얼음골에서 태어난 돌연별이 얼음 '어리' 기후변화로 인해 사라져버린 얼음 친구들.. 어리와 함께 친구를 찾으러 모험을 떠나자!!</p>
+                        <span class="archive-tag">융복합 아동극</span>
+                        <h3>아기토끼 꼬네의 메아리</h3>
+                        <p>산불로 가족과 친구를 잃은 아기토끼 꼬네. 숲의 정령 초비와 함께 친구들이 돌아올 방법을 찾아 마고할미를 찾아갑니다.</p>
+                        <p class="archive-meta">2023.7.29 회현동 소극장<br>2023.10.14~15 가야테마파크 철광산공연장</p>
                     </div>
                 </div>
                 <div class="archive-card">
-                    <img src="images/gongzon.png" alt="꼬네와 초비" loading="lazy" width="558" height="751">
+                    <img src="images/work-eori.jpg" alt="기후변화 환경 아동극 〈어리의 모험〉 공연 장면" loading="lazy" width="900"
+                        height="1125">
                     <div class="archive-card-content">
-                        <h3>&lt;꼬네와 초비&gt;</h3>
-                        <p>아기토끼 꼬네가 사는 숲이 산불로 가족과 친구들이 떠나버린다. 혼자가 된 꼬네와 숲의 정령 초비는 숲속 친구들이 돌아올 수 있도록 그 방법을 아는 마고할미를
-                            찾아가지만...</p>
+                        <span class="archive-tag">기후변화 환경 아동극</span>
+                        <h3>어리의 모험</h3>
+                        <p>얼음골에 마지막 남은 얼음 '어리'. 기후변화로 사라져버린 얼음 친구들을 찾아 모험을 떠납니다.</p>
+                        <p class="archive-meta">2022.10.30 · 11.12<br>밀양기상과학관</p>
+                    </div>
+                </div>
+                <div class="archive-card">
+                    <img src="images/work-bongsun.jpg" alt="환경 인형극 〈봉순아! 꼭 가야하니?〉 포스터" loading="lazy" width="900"
+                        height="1125">
+                    <div class="archive-card-content">
+                        <span class="archive-tag">환경 인형극</span>
+                        <h3>봉순아! 꼭 가야하니?</h3>
+                        <p>화포천을 찾아오는 황새 '봉순이'. 떠나는 새와 남는 사람들의 이야기입니다.</p>
+                        <p class="archive-meta">2022.3.6 · 회현동 소극장<br>김해문화재단 문화도시센터 '시민+' 선정</p>
+                    </div>
+                </div>
+                <div class="archive-card">
+                    <img src="images/work-geuraeyo.jpg" alt="장애인식개선 인형극 〈귀 없는 그래요〉 학교 순회공연 장면" loading="lazy" width="900"
+                        height="1125">
+                    <div class="archive-card-content">
+                        <span class="archive-tag">장애인식개선 인형극</span>
+                        <h3>귀 없는 그래요</h3>
+                        <p>귀가 없어 듣지 못하는 '그래요'가 친구를 만나는 이야기. 공연장에 오기 어려운 아이들을 찾아 강당으로 갔습니다.</p>
+                        <p class="archive-meta">2020~2021 · 함안 초등학교 11곳 순회<br>총 14회 · 관객 900명</p>
                     </div>
                 </div>
             </div>
