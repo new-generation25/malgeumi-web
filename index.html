@@ -331,12 +331,16 @@
         }
 
         .show-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* 카드 수가 1개든 3개든 폭이 흔들리지 않도록 grid 대신 flex로 둔다 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 2rem;
         }
 
         .show-card {
+            flex: 0 1 360px;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             background: var(--surface);
@@ -360,7 +364,8 @@
 
         .show-card-thumb {
             position: relative;
-            aspect-ratio: 16 / 10;
+            /* 공연 포스터가 세로형이라 4:5로 둔다 */
+            aspect-ratio: 4 / 5;
             overflow: hidden;
         }
 
@@ -859,6 +864,7 @@
                 <a href="#philosophy">활동 철학</a>
                 <a href="#project">공연 안내</a>
                 <a href="#archive">지난 활동</a>
+                <a href="#space">소극장</a>
                 <a href="#contact" class="btn-primary">문의하기</a>
             </div>
         </div>
@@ -883,7 +889,7 @@
             </div>
         </div>
         <div class="hero-image-wrapper fade-in">
-            <img src="images/20260105_222409.png" alt="아이들이 뛰어노는 무대">
+            <img src="images/stage-1.jpg" alt="아이들이 뛰어노는 무대" width="1205" height="906" fetchpriority="high">
             <div class="deco-blob"></div>
         </div>
     </section>
@@ -927,8 +933,8 @@
             <div class="show-grid fade-in">
                 <a class="show-card" href="king.html">
                     <div class="show-card-thumb">
-                        <!-- 임시 이미지. img/king-hero.jpg 준비되면 교체 -->
-                        <img src="images/20260105_222432.png" alt="King받은 이도 공연 장면">
+                        <img src="images/king-poster.jpg" alt="King받은 이도 : 말모이 작전 공연 포스터" loading="lazy" width="900"
+                            height="1118">
                         <span class="show-card-badge">🎫 예매 중</span>
                     </div>
                     <div class="show-card-body">
@@ -943,22 +949,6 @@
                     </div>
                 </a>
 
-                <a class="show-card" href="#contact">
-                    <div class="show-card-thumb">
-                        <img src="images/chobi3.png" alt="도깨비 초비">
-                        <span class="show-card-badge is-upcoming">🎭 2026 신작</span>
-                    </div>
-                    <div class="show-card-body">
-                        <h3>회현동 도깨비 '초비'와<br>가야 유물 탐험대</h3>
-                        <p class="show-card-meta">
-                            <i class="fa-regular fa-calendar"></i> 일정 조율 중 · 단체 관람 문의
-                        </p>
-                        <p class="show-card-desc">
-                            도깨비 초비와 함께 사라진 가야의 보물을 찾아 떠나는 모험. 아이들이 직접 탐험대가 되어 극을 이끌어갑니다.
-                        </p>
-                        <span class="show-card-cta">문의하기 <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </a>
             </div>
         </div>
     </section>
@@ -973,21 +963,21 @@
 
             <div class="archive-scroll fade-in">
                 <div class="archive-card">
-                    <img src="images/chobi2.png" alt="소원 도깨비 초비">
+                    <img src="images/chobi2.png" alt="소원 도깨비 초비" loading="lazy" width="567" height="638">
                     <div class="archive-card-content">
                         <h3>&lt;소원 도깨비 초비&gt;</h3>
                         <p>초등학교 5학년 지아의 어려움을 소원도깨비 초비의 방식으로 해결! 과연 지아는 이겨낼 수 있을까?</p>
                     </div>
                 </div>
                 <div class="archive-card">
-                    <img src="images/uri.png" alt="어리와 친구들">
+                    <img src="images/uri.png" alt="어리와 친구들" loading="lazy" width="423" height="258">
                     <div class="archive-card-content">
                         <h3>&lt;얼음 어리&gt;</h3>
                         <p>얼음골에서 태어난 돌연별이 얼음 '어리' 기후변화로 인해 사라져버린 얼음 친구들.. 어리와 함께 친구를 찾으러 모험을 떠나자!!</p>
                     </div>
                 </div>
                 <div class="archive-card">
-                    <img src="images/gongzon.png" alt="꼬네와 초비">
+                    <img src="images/gongzon.png" alt="꼬네와 초비" loading="lazy" width="558" height="751">
                     <div class="archive-card-content">
                         <h3>&lt;꼬네와 초비&gt;</h3>
                         <p>아기토끼 꼬네가 사는 숲이 산불로 가족과 친구들이 떠나버린다. 혼자가 된 꼬네와 숲의 정령 초비는 숲속 친구들이 돌아올 수 있도록 그 방법을 아는 마고할미를
@@ -1024,7 +1014,7 @@
                     </div>
                 </div>
                 <div class="map-placeholder fade-in" style="border: none; overflow: hidden;">
-                    <img src="images/map.jpg" alt="회현동 소극장 위치" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="images/map.jpg" alt="회현동 소극장 위치" loading="lazy" width="1024" height="851" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -1044,13 +1034,13 @@
                 <div class="insta-grid">
                     <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
                         rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
-                        <img src="images/20260105_222409.png" alt="무대 위 배우들과 관객" loading="lazy" width="1205"
+                        <img src="images/stage-1.jpg" alt="무대 위 배우들과 관객" loading="lazy" width="1205"
                             height="906">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
                     </a>
                     <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
                         rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
-                        <img src="images/20260105_222432.png" alt="공연 중인 무대" loading="lazy" width="1206" height="801">
+                        <img src="images/stage-2.jpg" alt="공연 중인 무대" loading="lazy" width="1206" height="801">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
                     </a>
                     <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
@@ -1091,6 +1081,11 @@
                         <i class="fa-brands fa-instagram"></i>
                         <span>@hoehyeon.theater</span>
                     </a>
+                    <a class="contact-info-item" href="https://blog.naver.com/jhoehyeon707" target="_blank"
+                        rel="noopener">
+                        <i class="fa-solid fa-blog"></i>
+                        <span>네이버 블로그</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1111,6 +1106,8 @@
                 <div class="footer-links">
                     <a href="https://www.instagram.com/hoehyeon.theater/" target="_blank" rel="noopener"
                         aria-label="말그미 극단 인스타그램"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://blog.naver.com/jhoehyeon707" target="_blank" rel="noopener"
+                        aria-label="말그미 극단 네이버 블로그"><i class="fa-solid fa-blog"></i></a>
                 </div>
             </div>
         </div>
