@@ -7,6 +7,7 @@
     <title>말그미 극단 - 아이들의 놀이가 예술이 되는 순간</title>
     <meta name="description"
         content="김해 회현동에서 만나는 하이퍼-로컬 참여형 어린이 연극. 말그미 극단은 아이들이 관객이 아닌 주인공이 되는 무대를 만듭니다. 공연 섭외·단체 관람 문의 055-339-9110.">
+    <meta name="theme-color" content="#F0F9FF">
     <link rel="canonical" href="https://malgeumi-play.vercel.app/">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
@@ -681,7 +682,9 @@
             gap: 1rem;
         }
 
-        .contact-form input,
+        /* 체크박스를 제외한 '글자 입력칸' 전용 규칙이다.
+           :not()을 빼면 동의 체크박스가 padding 1rem을 물려받아 거대한 상자로 렌더된다. */
+        .contact-form input:not([type="checkbox"]),
         .contact-form textarea {
             padding: 1rem;
             border-radius: var(--radius-md);
@@ -693,6 +696,88 @@
         .contact-form textarea {
             min-height: 120px;
             resize: vertical;
+        }
+
+        /* 개인정보 수집·이용 동의 — 폼의 한 칸으로 취급해 gap 1rem 리듬을 지킨다 */
+        .consent {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-break: keep-all;
+            cursor: pointer;
+        }
+
+        /* color-scheme을 고정하지 않으면 OS 다크 모드에서 어두운 체크박스가
+           짙은 남색 배경 위에 놓여 사실상 보이지 않는다. */
+        .contact-form input[type="checkbox"] {
+            flex: none;
+            width: 20px;
+            height: 20px;
+            margin-top: 0.15rem;
+            accent-color: var(--accent);
+            color-scheme: light;
+            cursor: pointer;
+        }
+
+        .contact-form input[type="checkbox"]:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .consent-required {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .consent-detail {
+            margin: 0;
+            padding-left: calc(20px + 0.6rem);
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.72);
+            word-break: keep-all;
+        }
+
+        /* 전역 a { text-decoration: none } 때문에 폼 안 링크가 일반 텍스트와 구분되지 않는다 */
+        .form-note a,
+        .consent-detail a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* 전송 결과 안내. 내용이 없을 때는 자리를 차지하지 않는다 */
+        .form-status {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-weight: 500;
+            word-break: keep-all;
+        }
+
+        .form-status:empty {
+            display: none;
+        }
+
+        .form-status.is-ok {
+            color: #9BE8B0;
+        }
+
+        .form-status.is-error {
+            color: #FFB4A8;
+        }
+
+        .contact-form button:disabled {
+            opacity: 0.6;
+            cursor: progress;
+            transform: none;
         }
 
         .contact-form button {
@@ -893,6 +978,20 @@
 
             .contact-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* 손가락으로 누를 수 있게 동의 줄의 세로 여백을 키운다 (패딩은 .consent 안쪽이라 폼 gap은 그대로) */
+            .consent-label {
+                padding: 0.6rem 0;
+            }
+
+            .contact-form input[type="checkbox"] {
+                width: 22px;
+                height: 22px;
+            }
+
+            .consent-detail {
+                padding-left: calc(22px + 0.6rem);
             }
         }
 
@@ -1210,11 +1309,29 @@
                     <input id="cf-email" type="email" placeholder="이메일 (선택)" autocomplete="email">
                     <label class="sr-only" for="cf-message">남기실 말씀 (선택)</label>
                     <textarea id="cf-message" placeholder="남기실 말씀이 있으면 적어주세요 (선택)"></textarea>
+                    <div class="consent">
+                        <label class="consent-label" for="cf-consent">
+                            <input id="cf-consent" type="checkbox" required aria-describedby="cf-consent-detail">
+                            <span>개인정보 수집·이용 및 공연 안내 문자 수신에 동의합니다 <span
+                                    class="consent-required">(필수)</span></span>
+                        </label>
+                        <p class="consent-detail" id="cf-consent-detail">
+                            · 수집 항목 — 이름, 휴대전화 번호(필수) / 이메일, 남기실 말씀(선택)<br>
+                            · 이용 목적 — 공연 안내 문자 발송 (이메일을 남기신 경우 메일 안내 포함)<br>
+                            · 동의를 거부하실 수 있으며, 거부하시면 공연 안내를 보내드릴 수 없습니다.<br>
+                            · 만 14세 미만은 법정대리인의 동의가 필요합니다.<br>
+                            · 동의 철회·열람·정정·삭제는 <a href="tel:055-339-9110">055-339-9110</a> 또는
+                            <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>으로
+                            요청하실 수 있습니다.
+                        </p>
+                    </div>
                     <button type="submit">소식 받아보기</button>
+                    <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
                     <p class="form-note">
-                        새 공연이 확정되면 문자로 안내해 드립니다. 알려주신 연락처는 공연 안내 목적으로만 쓰고,
-                        수신 거부를 원하시면 언제든 <a href="tel:055-339-9110">055-339-9110</a>으로 말씀해 주세요.<br>
-                        누르시면 메일 앱이 열립니다. 열리지 않으면 아래 연락처로 직접 연락해 주세요.
+                        새 공연이 확정되면 문자로 안내해 드립니다.<br>
+                        잘 안 되면 <a href="tel:055-339-9110">055-339-9110</a>으로 전화 주시거나
+                        <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>으로
+                        메일 보내주세요.
                     </p>
                 </form>
                 <div class="contact-info fade-in">
@@ -1305,26 +1422,87 @@
                 });
             }
 
-            // 구독 신청: 입력 내용을 메일 앱으로 넘긴다 (서버가 없어 전송 자체는 메일 클라이언트가 담당)
+            /* ── 구독 신청 ─────────────────────────────────────────────
+               입력 내용을 구글 시트로 보낸다. 시트에 직접 쓸 수는 없어서,
+               시트에 붙여둔 Apps Script 웹앱이 중간에서 받아 한 줄씩 적는다.
+               ▶ 배포 후 받은 https://script.google.com/macros/s/.../exec 주소를
+                 아래 SHEET_ENDPOINT 에 넣으세요. 넣기 전까지는 메일 앱 방식으로 동작합니다.
+               시트: 말그미극단 소식 구독자 명단
+               ───────────────────────────────────────────────────────── */
+            const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbywXwIjpd9i-LnPCAqnb6Owj4b0jQvRZ3OE1FvixJLFydaIDIz3sZFsz3GIQx4zA03W/exec';
+
             const form = document.getElementById('contactForm');
             if (form) {
-                form.addEventListener('submit', (e) => {
+                // 브라우저 UI 언어가 한국어가 아니면 기본 검증 문구가 영어로 뜨므로 직접 지정한다
+                const consentEl = document.getElementById('cf-consent');
+                consentEl.addEventListener('invalid', () => {
+                    consentEl.setCustomValidity('개인정보 수집·이용에 동의해 주세요.');
+                });
+                consentEl.addEventListener('change', () => {
+                    consentEl.setCustomValidity('');   // 비우지 않으면 체크한 뒤에도 계속 무효 상태로 남는다
+                });
+
+                const button = form.querySelector('button[type="submit"]');
+                const status = document.getElementById('cf-status');
+                const say = (msg, kind) => {
+                    status.textContent = msg;
+                    status.className = 'form-status' + (kind ? ' is-' + kind : '');
+                };
+
+                form.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const val = (id) => document.getElementById(id).value.trim();
                     const name = val('cf-name');
                     const phone = val('cf-phone');
                     const email = val('cf-email');
                     const message = val('cf-message');
-                    const subject = `[소식 구독 신청] ${name}`;
-                    const body = [
-                        `이름: ${name}`,
-                        `휴대전화: ${phone}`,
-                        `이메일: ${email || '(미입력)'}`,
-                        '',
-                        message || '(남기신 말씀 없음)',
-                    ].join('\n');
-                    window.location.href = 'mailto:hoehyeon.theater@gmail.com'
-                        + `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    // required가 먼저 막지만, novalidate가 붙는 등의 변경에 대비한 이중 방어
+                    if (!consentEl.checked) {
+                        consentEl.focus();
+                        return;
+                    }
+
+                    // 웹앱 주소가 아직 없으면 예전 방식(메일 앱)으로 넘긴다
+                    if (!SHEET_ENDPOINT) {
+                        const subject = `[소식 구독 신청] ${name}`;
+                        const body = [
+                            `이름: ${name}`,
+                            `휴대전화: ${phone}`,
+                            `이메일: ${email || '(미입력)'}`,
+                            '개인정보 수집·이용 및 공연 안내 문자 수신: 동의함',
+                            `동의 일시: ${new Date().toLocaleString('ko-KR')}`,
+                            '',
+                            message || '(남기신 말씀 없음)',
+                        ].join('\n');
+                        window.location.href = 'mailto:hoehyeon.theater@gmail.com'
+                            + `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                        return;
+                    }
+
+                    // FormData로 보내면 preflight 없이 단순 요청이 된다 (헤더를 직접 붙이면 CORS에 걸린다)
+                    const data = new FormData();
+                    data.append('name', name);
+                    data.append('phone', phone);
+                    data.append('email', email);
+                    data.append('message', message);
+                    data.append('consent', 'y');
+
+                    button.disabled = true;
+                    const label = button.textContent;
+                    button.textContent = '보내는 중…';
+                    say('');
+
+                    try {
+                        const res = await fetch(SHEET_ENDPOINT, { method: 'POST', body: data });
+                        const out = await res.json();
+                        if (!out.ok) throw new Error(out.error || '기록 실패');
+                        form.reset();
+                        say('신청이 접수되었습니다. 새 공연이 확정되면 문자로 안내해 드릴게요.', 'ok');
+                    } catch (err) {
+                        button.disabled = false;
+                        button.textContent = label;
+                        say('전송에 실패했습니다. 055-339-9110으로 전화 주시거나 잠시 후 다시 시도해 주세요.', 'error');
+                    }
                 });
             }
         });
