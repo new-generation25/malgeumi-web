@@ -565,6 +565,32 @@
             font-weight: 600;
         }
 
+        /* 소극장 상세 페이지로 보내는 링크 */
+        .space-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.75rem;
+            padding: 0.7rem 1.6rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .space-more:hover {
+            border-color: var(--accent);
+            background: var(--surface);
+        }
+
+        .space-more i {
+            transition: transform 0.3s ease;
+        }
+
+        .space-more:hover i {
+            transform: translateX(4px);
+        }
+
         .map-placeholder {
             flex: 1;
             height: 350px;
@@ -576,6 +602,24 @@
             align-items: center;
             border: 2px dashed var(--border);
             color: var(--text-secondary);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        a.map-placeholder:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .map-placeholder,
+            .space-more i {
+                transition: none;
+            }
+
+            a.map-placeholder:hover {
+                transform: none;
+            }
         }
 
         .map-placeholder i {
@@ -899,7 +943,7 @@
                 <a href="#philosophy">활동 철학</a>
                 <a href="#project">공연 안내</a>
                 <a href="#archive">지난 활동</a>
-                <a href="#space">소극장</a>
+                <a href="theater.html">소극장</a>
                 <a href="#contact" class="btn-primary">소식 구독</a>
             </div>
         </div>
@@ -1039,18 +1083,17 @@
                             <span class="value">경남 김해시 분성로 259, 4층</span>
                         </div>
                         <div class="space-detail-item">
-                            <span class="label">시설</span>
-                            <span class="value">가족 친화적 아늑한 소극장</span>
-                        </div>
-                        <div class="space-detail-item">
                             <span class="label">문의</span>
                             <span class="value"><a href="tel:055-339-9110">055-339-9110</a></span>
                         </div>
                     </div>
+                    <a class="space-more" href="theater.html">소극장 둘러보기 <i
+                            class="fa-solid fa-arrow-right"></i></a>
                 </div>
-                <div class="map-placeholder fade-in" style="border: none; overflow: hidden;">
+                <a class="map-placeholder fade-in" href="theater.html" aria-label="회현동 소극장 상세 안내 보기"
+                    style="border: none; overflow: hidden;">
                     <img src="images/map.jpg" alt="회현동 소극장 위치" loading="lazy" width="1024" height="851" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
+                </a>
             </div>
         </div>
     </section>
