@@ -114,11 +114,17 @@ figcaption{
   letter-spacing:.02em;line-height:1.6;
 }
 .band--paper figcaption{color:#8A7B62}
-/* 리드 문단 바로 아래 가로 띠 — 배경으로 깔지 않고 그대로 보여준다 */
-.hero-strip{width:100%;margin:2rem 0 .5rem;max-width:34rem}
+/* 리드 문단 아래 가로 띠 — 윗변을 배경으로 녹여 본문과 자연스럽게 이어붙인다 */
+.hero-strip{
+  width:100%;max-width:34rem;
+  /* 투명해진 윗부분만큼 위로 끌어올려 본문과 겹친다 */
+  margin:-1.5rem 0 .75rem;
+}
 .hero-strip img{
-  display:block;width:100%;border-radius:2px;
+  display:block;width:100%;
   aspect-ratio:16/9;object-fit:cover;object-position:center 58%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 20%,rgba(0,0,0,.75) 42%,#000 62%);
+          mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 20%,rgba(0,0,0,.75) 42%,#000 62%);
 }
 .person figure{margin:0 0 1.35rem}
 .person figure img{aspect-ratio:4/5}
@@ -456,31 +462,17 @@ figcaption{
         <p>회현동에서 온 수호 도깨비. 잔소리가 많고 참견이 심하지만, 덕이 곁을 끝까지 떠나지 않습니다.</p>
       </article>
       <article class="person">
-        <!-- 세종은 이미지 없이 텍스트만 노출한다 (어진 재현 금지) -->
-        <h3>세종</h3>
-        <p class="who">한글을 만든 사람</p>
-        <p>훈민정음이 무너지는 것을 보고 초비를 부릅니다. 무대는 이때 빛으로 가득 찹니다.</p>
-      </article>
-      <article class="person">
-        <!-- ┌───────────────────────────────────────────────────────────┐
-             │ 이미지 ⑤ 이윤재   img/p-yunjae.jpg   4:5                   │
-             │ ⚠ 실존 인물. AI로 얼굴을 만들지 말 것                       │
-             │ ★ 빈 액자를 생성한 뒤 실제 사료 사진을 후반 합성 (큐31 방식)  │
-             │   또는 공공누리 개방 사료 사진을 출처 표기와 함께 그대로 사용  │
-             └───────────────────────────────────────────────────────────┘
-        Cinematic photorealistic vertical still life, 4:5. An empty antique
-        wooden picture frame standing on a worn desk in a dim 1942 study room.
-        Beside it: stacks of handwritten manuscript paper, a fountain pen, a
-        brass desk lamp casting warm light, a dictionary card box. Frame
-        interior is plain empty aged paper, no portrait inside, no face.
-        Amber sepia colour grading, dust in the air, deep shadows. Realistic
-        paper and wood grain texture. No readable text, no logos, no watermark.
-        -->
         <figure><img src="img/p-yunjae.jpg" alt="서재에 선 한뫼 이윤재 선생 (일러스트)"
                 loading="lazy" onerror="this.closest('figure').remove()"></figure>
         <h3>이윤재</h3>
         <p class="who">한뫼 이윤재 · 국어학자 · 김해 사람</p>
         <p>덕이가 1942년에서 만나는 어른. 실제로 살았던 사람이고, 김해에서 태어났습니다. 그가 그 방에서 무엇을 하고 있었는지는 무대에서.</p>
+      </article>
+      <article class="person">
+        <!-- 세종은 이미지 없이 텍스트만 노출한다 (어진 재현 금지) -->
+        <h3>세종</h3>
+        <p class="who">한글을 만든 사람</p>
+        <p>훈민정음이 무너지는 것을 보고 초비를 부릅니다. 무대는 이때 빛으로 가득 찹니다.</p>
       </article>
     </div>
   </div>
@@ -517,7 +509,7 @@ figcaption{
     <figure>
       <img src="img/sec-1942.jpg" alt="1942년 경성, 낱말 카드가 쌓인 비밀의 방"
            loading="lazy" onerror="this.closest('figure').remove()">
-      <figcaption>극 중 1942년 경성. 덕이가 도착하는 방입니다.</figcaption>
+      <figcaption>초비와 덕이는 앞에 어떤 이야기가 펼쳐질까요.</figcaption>
     </figure>
 
     <p style="margin-top:2.5rem">
