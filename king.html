@@ -114,17 +114,11 @@ figcaption{
   letter-spacing:.02em;line-height:1.6;
 }
 .band--paper figcaption{color:#8A7B62}
-/* 히어로 하단 가로 띠 — 배경으로 깔지 않고 그대로 보여준다 */
-.hero-strip{position:relative;width:100%;margin-top:2.75rem}
+/* 리드 문단 바로 아래 가로 띠 — 배경으로 깔지 않고 그대로 보여준다 */
+.hero-strip{width:100%;margin:2rem 0 .5rem;max-width:34rem}
 .hero-strip img{
-  display:block;width:100%;
+  display:block;width:100%;border-radius:2px;
   aspect-ratio:16/9;object-fit:cover;object-position:center 58%;
-}
-@media(min-width:48rem){.hero-strip img{aspect-ratio:21/9}}
-.hero-strip::before{
-  content:"";position:absolute;inset:0 0 auto 0;height:38%;
-  background:linear-gradient(to bottom,var(--ink),transparent);
-  pointer-events:none;
 }
 .person figure{margin:0 0 1.35rem}
 .person figure img{aspect-ratio:4/5}
@@ -133,7 +127,7 @@ figcaption{
 .hero{
   position:relative;min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;
-  padding:4.5rem 0 0;overflow:hidden;
+  padding:4.5rem 0 3.5rem;overflow:hidden;
 }
 .hero > *{position:relative;z-index:2}
 
@@ -353,6 +347,11 @@ figcaption{
       잃어버린 글자를 되찾으러.
     </p>
 
+    <div class="hero-strip">
+      <img src="img/king-hero.jpg" alt="국립한글박물관 간판에서 ㄱ과 ㅎ이 떨어져 나간 장면" loading="eager"
+           onerror="this.closest('.hero-strip').remove()">
+    </div>
+
     <div class="facts">
       <span><b>날짜</b>2026. 8. 16 – 8. 23</span>
       <span><b>장소</b>회현동소극장 (김해)</span>
@@ -365,11 +364,6 @@ figcaption{
          class="btn btn--gold" data-book>예매 신청하기</a>
       <a href="tel:055-339-9110" class="btn btn--ghost">055-339-9110</a>
     </div>
-  </div>
-
-  <div class="hero-strip">
-    <img src="img/king-hero.jpg" alt="국립한글박물관 간판에서 ㄱ과 ㅎ이 떨어져 나간 장면" loading="eager"
-         onerror="this.closest('.hero-strip').remove()">
   </div>
 </header>
 
@@ -462,20 +456,7 @@ figcaption{
         <p>회현동에서 온 수호 도깨비. 잔소리가 많고 참견이 심하지만, 덕이 곁을 끝까지 떠나지 않습니다.</p>
       </article>
       <article class="person">
-        <!-- ┌───────────────────────────────────────────────────────────┐
-             │ 이미지 ④ 세종   img/p-sejong.jpg   4:5                     │
-             │ ⚠ 어진(초상) 재현 금지 → 역광 실루엣으로 얼굴 비식별 처리    │
-             └───────────────────────────────────────────────────────────┘
-        Cinematic photorealistic vertical shot, 4:5. Backlit silhouette of a
-        seated figure in Korean royal robes and a winged headdress, viewed
-        against a blazing golden light source. Face completely obscured by
-        backlight, no facial features visible. Floating Korean consonant and
-        vowel characters drift through the light around the figure. Golden
-        backlight grading, volumetric light rays, dust particles in air.
-        Realistic silk texture. No text, no logos, no watermark.
-        -->
-        <figure><img src="img/p-sejong.jpg" alt="역광 속 세종의 실루엣"
-                loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <!-- 세종은 이미지 없이 텍스트만 노출한다 (어진 재현 금지) -->
         <h3>세종</h3>
         <p class="who">한글을 만든 사람</p>
         <p>훈민정음이 무너지는 것을 보고 초비를 부릅니다. 무대는 이때 빛으로 가득 찹니다.</p>

@@ -78,6 +78,8 @@
 
         img {
             max-width: 100%;
+            /* width/height 속성을 넣었으므로 필수. 없으면 속성 높이가 그대로 적용돼 비율이 깨진다 */
+            height: auto;
             display: block;
         }
 
@@ -741,8 +743,41 @@
                 justify-content: center;
             }
 
+            /* 모바일에서 한 카드가 화면을 통째로 먹지 않도록 여백과 크기를 줄인다 */
+            section {
+                padding: 3rem 1.25rem;
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.95rem;
+            }
+
             .philosophy-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .philosophy-card {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .philosophy-card .icon {
+                width: 52px;
+                height: 52px;
+                margin-bottom: 0.85rem;
+                font-size: 1.4rem;
+            }
+
+            .philosophy-card h3 {
+                margin-bottom: 0.4rem;
             }
 
             .space-container {
@@ -865,7 +900,7 @@
                 <a href="#project">공연 안내</a>
                 <a href="#archive">지난 활동</a>
                 <a href="#space">소극장</a>
-                <a href="#contact" class="btn-primary">문의하기</a>
+                <a href="#contact" class="btn-primary">소식 구독</a>
             </div>
         </div>
     </nav>
@@ -885,7 +920,7 @@
             </p>
             <div class="hero-btns">
                 <a href="#project" class="btn-primary">공연 알아보기</a>
-                <a href="#contact" class="btn-secondary">문의하기</a>
+                <a href="#contact" class="btn-secondary">소식 구독하기</a>
             </div>
         </div>
         <div class="hero-image-wrapper fade-in">
@@ -1024,8 +1059,8 @@
     <section id="contact" class="contact-section">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">📬 공연 문의</h2>
-                <p class="section-subtitle">공연 섭외, 단체 관람 문의를 남겨주세요</p>
+                <h2 class="section-title">📬 말그미극단 × 회현동소극장 소식 구독하기</h2>
+                <p class="section-subtitle">구독하시면 새 공연이 열릴 때마다 가장 먼저 안내해 드립니다</p>
             </div>
 
 
@@ -1060,12 +1095,19 @@
                 <form class="contact-form fade-in" id="contactForm">
                     <label class="sr-only" for="cf-name">이름</label>
                     <input id="cf-name" type="text" placeholder="이름" autocomplete="name" required>
-                    <label class="sr-only" for="cf-email">회신받을 이메일</label>
-                    <input id="cf-email" type="email" placeholder="회신받을 이메일" autocomplete="email" required>
-                    <label class="sr-only" for="cf-message">문의 내용</label>
-                    <textarea id="cf-message" placeholder="문의 내용을 입력해주세요" required></textarea>
-                    <button type="submit">문의 보내기</button>
-                    <p class="form-note">누르시면 메일 앱이 열립니다. 열리지 않으면 아래 연락처로 직접 연락해 주세요.</p>
+                    <label class="sr-only" for="cf-phone">휴대전화 번호</label>
+                    <input id="cf-phone" type="tel" placeholder="휴대전화 번호 (예: 010-1234-5678)" autocomplete="tel"
+                        inputmode="tel" pattern="[0-9\-\s]{9,}" required>
+                    <label class="sr-only" for="cf-email">이메일 (선택)</label>
+                    <input id="cf-email" type="email" placeholder="이메일 (선택)" autocomplete="email">
+                    <label class="sr-only" for="cf-message">남기실 말씀 (선택)</label>
+                    <textarea id="cf-message" placeholder="남기실 말씀이 있으면 적어주세요 (선택)"></textarea>
+                    <button type="submit">소식 받아보기</button>
+                    <p class="form-note">
+                        새 공연이 확정되면 문자로 안내해 드립니다. 알려주신 연락처는 공연 안내 목적으로만 쓰고,
+                        수신 거부를 원하시면 언제든 <a href="tel:055-339-9110">055-339-9110</a>으로 말씀해 주세요.<br>
+                        누르시면 메일 앱이 열립니다. 열리지 않으면 아래 연락처로 직접 연락해 주세요.
+                    </p>
                 </form>
                 <div class="contact-info fade-in">
                     <a class="contact-info-item" href="tel:055-339-9110">
@@ -1136,16 +1178,24 @@
 
             document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-            // 문의 폼: 입력 내용을 메일 앱으로 넘긴다 (서버가 없어 전송 자체는 메일 클라이언트가 담당)
+            // 구독 신청: 입력 내용을 메일 앱으로 넘긴다 (서버가 없어 전송 자체는 메일 클라이언트가 담당)
             const form = document.getElementById('contactForm');
             if (form) {
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    const name = document.getElementById('cf-name').value.trim();
-                    const email = document.getElementById('cf-email').value.trim();
-                    const message = document.getElementById('cf-message').value.trim();
-                    const subject = `[홈페이지 문의] ${name}`;
-                    const body = `이름: ${name}\n회신 이메일: ${email}\n\n${message}`;
+                    const val = (id) => document.getElementById(id).value.trim();
+                    const name = val('cf-name');
+                    const phone = val('cf-phone');
+                    const email = val('cf-email');
+                    const message = val('cf-message');
+                    const subject = `[소식 구독 신청] ${name}`;
+                    const body = [
+                        `이름: ${name}`,
+                        `휴대전화: ${phone}`,
+                        `이메일: ${email || '(미입력)'}`,
+                        '',
+                        message || '(남기신 말씀 없음)',
+                    ].join('\n');
                     window.location.href = 'mailto:hoehyeon.theater@gmail.com'
                         + `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
