@@ -14,9 +14,9 @@
      │ 이미지 ⑧ 공유 썸네일   img/king-og.jpg   1200×630                │
      │ ★ 새로 만들지 말고 기존 공연 포스터를 1200×630으로 재편집할 것      │
      │   (인스타·카톡 공유 시 뜨는 이미지. 제목이 잘리지 않게 중앙 정렬)    │
-     │ ▶ 아래 절대주소로 교체 : https://malgeumi.vercel.app/img/...     │
+     │ ▶ 아래 절대주소로 교체 : https://malgeumi-play.vercel.app/img/...     │
      └───────────────────────────────────────────────────────────────┘ -->
-<meta property="og:image" content="https://malgeumi.vercel.app/img/king-og.jpg">
+<meta property="og:image" content="https://malgeumi-play.vercel.app/img/king-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="King받은 이도 : 한글 폼 미쳤다! — 2026.8.16~8.23 회현동소극장">
@@ -114,11 +114,17 @@ figcaption{
   letter-spacing:.02em;line-height:1.6;
 }
 .band--paper figcaption{color:#8A7B62}
-.hero > .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.3;filter:saturate(.65)}
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(100deg,var(--ink) 10%,rgba(14,19,25,.82) 52%,rgba(14,19,25,.5));
+/* 히어로 하단 가로 띠 — 배경으로 깔지 않고 그대로 보여준다 */
+.hero-strip{position:relative;width:100%;margin-top:2.75rem}
+.hero-strip img{
+  display:block;width:100%;
+  aspect-ratio:16/9;object-fit:cover;object-position:center 58%;
+}
+@media(min-width:48rem){.hero-strip img{aspect-ratio:21/9}}
+.hero-strip::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:38%;
+  background:linear-gradient(to bottom,var(--ink),transparent);
+  pointer-events:none;
 }
 .person figure{margin:0 0 1.35rem}
 .person figure img{aspect-ratio:4/5}
@@ -127,12 +133,7 @@ figcaption{
 .hero{
   position:relative;min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;
-  padding:4.5rem 0 3rem;overflow:hidden;
-}
-.hero::after{
-  content:"";position:absolute;inset:auto 0 0 0;height:45%;
-  background:linear-gradient(to top,rgba(72,96,122,.16),transparent);
-  pointer-events:none;
+  padding:4.5rem 0 0;overflow:hidden;
 }
 .hero > *{position:relative;z-index:2}
 
@@ -243,7 +244,7 @@ figcaption{
 
 /* ── 회차 안내 ─────────────────────────── */
 .times{
-  display:grid;gap:1px;background:var(--line);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
   border:1px solid var(--line);border-radius:2px;
   margin:2.25rem 0 2.5rem;text-align:left;
 }
@@ -334,11 +335,6 @@ figcaption{
   and glass texture, high resolution. Wide empty sky and dark left side for
   text overlay. No text captions, no logos, no watermark.
   -->
-  <div class="hero-bg" aria-hidden="true">
-    <img src="img/king-hero.jpg" alt="" loading="eager"
-         onerror="this.style.display='none'">
-  </div>
-
   <div class="wrap">
     <div class="jamo" aria-hidden="true">
       <span class="drop">ㄱ</span><span>ㄴ</span><span>ㄷ</span><span>ㄹ</span><span>ㅁ</span>
@@ -369,6 +365,11 @@ figcaption{
          class="btn btn--gold" data-book>예매 신청하기</a>
       <a href="tel:055-339-9110" class="btn btn--ghost">055-339-9110</a>
     </div>
+  </div>
+
+  <div class="hero-strip">
+    <img src="img/king-hero.jpg" alt="국립한글박물관 간판에서 ㄱ과 ㅎ이 떨어져 나간 장면" loading="eager"
+         onerror="this.closest('.hero-strip').remove()">
   </div>
 </header>
 

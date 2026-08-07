@@ -5,6 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>말그미 극단 - 아이들의 놀이가 예술이 되는 순간</title>
+    <meta name="description"
+        content="김해 회현동에서 만나는 하이퍼-로컬 참여형 어린이 연극. 말그미 극단은 아이들이 관객이 아닌 주인공이 되는 무대를 만듭니다. 공연 섭외·단체 관람 문의 055-339-9110.">
+    <link rel="canonical" href="https://malgeumi-play.vercel.app/">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="말그미 극단">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:url" content="https://malgeumi-play.vercel.app/">
+    <meta property="og:title" content="말그미 극단 - 아이들의 놀이가 예술이 되는 순간">
+    <meta property="og:description" content="김해 회현동에서 만나는 하이퍼-로컬 참여형 어린이 연극. 아이들이 관객이 아닌 주인공이 되는 무대.">
+    <meta property="og:image" content="https://malgeumi-play.vercel.app/images/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="말그미 극단 공연 장면">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap"
@@ -665,6 +683,26 @@
             color: var(--accent);
         }
 
+        /* 스크린리더 전용 라벨 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.75rem;
+            line-height: 1.6;
+        }
+
         /* Animations */
         .fade-in {
             opacity: 0;
@@ -980,8 +1018,8 @@
                             <span class="value">가족 친화적 아늑한 소극장</span>
                         </div>
                         <div class="space-detail-item">
-                            <span class="label">대표</span>
-                            <span class="value">이정화</span>
+                            <span class="label">문의</span>
+                            <span class="value"><a href="tel:055-339-9110">055-339-9110</a></span>
                         </div>
                     </div>
                 </div>
@@ -1004,52 +1042,60 @@
             <div class="instagram-feed fade-in">
                 <h3>📢 말그미 극단 소식</h3>
                 <div class="insta-grid">
-                    <div class="insta-item">
-                        <img src="images/20260105_222409.png" alt="Insta 1">
+                    <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
+                        rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
+                        <img src="images/20260105_222409.png" alt="무대 위 배우들과 관객" loading="lazy" width="1205"
+                            height="906">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
-                    </div>
-                    <div class="insta-item">
-                        <img src="images/20260105_222432.png" alt="Insta 2">
+                    </a>
+                    <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
+                        rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
+                        <img src="images/20260105_222432.png" alt="공연 중인 무대" loading="lazy" width="1206" height="801">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
-                    </div>
-                    <div class="insta-item">
-                        <img src="images/play3.png" alt="Insta 3">
+                    </a>
+                    <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
+                        rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
+                        <img src="images/play3.png" alt="공연 장면" loading="lazy" width="403" height="284">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
-                    </div>
-                    <div class="insta-item">
-                        <img src="images/kkone.png" alt="Insta 4">
+                    </a>
+                    <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
+                        rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
+                        <img src="images/kkone.png" alt="꼬네와 초비 공연 장면" loading="lazy" width="518" height="576">
                         <div class="overlay"><i class="fa-brands fa-instagram"></i></div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <div class="contact-grid">
-                <form class="contact-form fade-in">
-                    <input type="text" placeholder="이름" required>
-                    <input type="email" placeholder="이메일" required>
-                    <textarea placeholder="문의 내용을 입력해주세요"></textarea>
+                <form class="contact-form fade-in" id="contactForm">
+                    <label class="sr-only" for="cf-name">이름</label>
+                    <input id="cf-name" type="text" placeholder="이름" autocomplete="name" required>
+                    <label class="sr-only" for="cf-email">회신받을 이메일</label>
+                    <input id="cf-email" type="email" placeholder="회신받을 이메일" autocomplete="email" required>
+                    <label class="sr-only" for="cf-message">문의 내용</label>
+                    <textarea id="cf-message" placeholder="문의 내용을 입력해주세요" required></textarea>
                     <button type="submit">문의 보내기</button>
+                    <p class="form-note">누르시면 메일 앱이 열립니다. 열리지 않으면 아래 연락처로 직접 연락해 주세요.</p>
                 </form>
                 <div class="contact-info fade-in">
-                    <div class="contact-info-item">
+                    <a class="contact-info-item" href="tel:055-339-9110">
                         <i class="fa-solid fa-phone"></i>
                         <span>055-339-9110</span>
-                    </div>
-                    <div class="contact-info-item">
+                    </a>
+                    <a class="contact-info-item" href="mailto:hoehyeon.theater@gmail.com">
                         <i class="fa-solid fa-envelope"></i>
                         <span>hoehyeon.theater@gmail.com</span>
-                    </div>
-                    <div class="contact-info-item">
+                    </a>
+                    <a class="contact-info-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
+                        rel="noopener">
                         <i class="fa-brands fa-instagram"></i>
                         <span>@hoehyeon.theater</span>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
-        </div>
     </section>
 
-    <!-- Footer -->
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
@@ -1057,13 +1103,14 @@
                 <h3>말그미 극단</h3>
                 <p><strong>대표:</strong> 김미경</p>
                 <p><strong>주소:</strong> 경남 김해시 분성로 259, 4층</p>
-                <p><strong>문의:</strong> hoehyeon.theater@gmail.com / 055-339-9110</p>
+                <p><strong>문의:</strong> <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a> /
+                    <a href="tel:055-339-9110">055-339-9110</a>
+                </p>
             </div>
             <div class="footer-social">
                 <div class="footer-links">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/hoehyeon.theater/" target="_blank" rel="noopener"
+                        aria-label="말그미 극단 인스타그램"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
         </div>
@@ -1091,6 +1138,21 @@
             }, observerOptions);
 
             document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // 문의 폼: 입력 내용을 메일 앱으로 넘긴다 (서버가 없어 전송 자체는 메일 클라이언트가 담당)
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('cf-name').value.trim();
+                    const email = document.getElementById('cf-email').value.trim();
+                    const message = document.getElementById('cf-message').value.trim();
+                    const subject = `[홈페이지 문의] ${name}`;
+                    const body = `이름: ${name}\n회신 이메일: ${email}\n\n${message}`;
+                    window.location.href = 'mailto:hoehyeon.theater@gmail.com'
+                        + `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                });
+            }
         });
     </script>
 </body>
