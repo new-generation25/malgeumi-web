@@ -1,3 +1,7 @@
 node_modules
 .DS_Store
 *.log
+
+# 사진 고르기용 임시 파일 (선택 끝나면 삭제)
+_pick.html
+images/_cand-*

@@ -763,7 +763,7 @@
         }
 
         .space-info h2 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
         }
@@ -822,6 +822,7 @@
         }
 
         .map-placeholder {
+            position: relative;
             flex: 1;
             height: 350px;
             background: var(--bg-color);
@@ -833,6 +834,29 @@
             border: 2px dashed var(--border);
             color: var(--text-secondary);
             transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        /* 지도를 누르면 네이버 지도로 나간다는 걸 알린다 */
+        .map-cta {
+            position: absolute;
+            left: 50%;
+            bottom: 1rem;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+            padding: 0.55rem 1.1rem;
+            border-radius: var(--radius-full);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+        }
+
+        .map-placeholder:hover .map-cta {
+            background: var(--accent);
         }
 
         a.map-placeholder:hover {
@@ -1550,9 +1574,12 @@
                     <a class="space-more" href="theater.html">소극장 둘러보기 <i
                             class="fa-solid fa-arrow-right"></i></a>
                 </div>
-                <a class="map-placeholder fade-in" href="theater.html" aria-label="회현동 소극장 상세 안내 보기"
+                <a class="map-placeholder fade-in" href="https://map.naver.com/p/entry/place/1044803603"
+                    target="_blank" rel="noopener" aria-label="네이버 지도에서 회현동 소극장 위치와 길찾기 보기"
                     style="border: none; overflow: hidden;">
-                    <img src="images/map.jpg" alt="회현동 소극장 위치" loading="lazy" width="1024" height="851" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="images/map.jpg" alt="회현동 소극장 위치" loading="lazy" width="1024" height="851"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                    <span class="map-cta"><i class="fa-solid fa-location-dot"></i> 네이버 지도에서 길찾기</span>
                 </a>
             </div>
         </div>
