@@ -562,6 +562,114 @@
         }
 
         /* Archive Section */
+        /* 가로 스크롤 목록. 옆에 더 있다는 걸 알리려고
+           ① 다음 카드를 살짝 걸치게 두고 ② 양끝을 페이드시키고 ③ 화살표를 얹는다 */
+        .archive-viewport {
+            position: relative;
+        }
+
+        .archive-viewport::before,
+        .archive-viewport::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 1rem;
+            width: 3.5rem;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .archive-viewport::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-color), transparent);
+        }
+
+        .archive-viewport::after {
+            right: 0;
+            background: linear-gradient(270deg, var(--bg-color), transparent);
+        }
+
+        /* 스크롤 위치에 따라 JS가 켜고 끈다 */
+        .archive-viewport.can-prev::before,
+        .archive-viewport.can-next::after {
+            opacity: 1;
+        }
+
+        .archive-nav {
+            position: absolute;
+            top: calc(50% - 0.5rem);
+            z-index: 3;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .archive-viewport.can-prev .is-prev,
+        .archive-viewport.can-next .is-next {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .archive-nav:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .archive-nav.is-prev {
+            left: -20px;
+            transform: translateY(-50%);
+        }
+
+        .archive-nav.is-next {
+            right: -20px;
+            transform: translateY(-50%);
+        }
+
+        .archive-hint {
+            display: none;
+            margin: 1rem 0 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: opacity 0.4s ease;
+        }
+
+        .archive-hint::after {
+            content: ' →';
+            display: inline-block;
+            animation: nudge 1.4s ease-in-out infinite;
+        }
+
+        @keyframes nudge {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* 한 번 넘겨본 사람에게는 더 보여줄 이유가 없다 */
+        .archive-hint.is-done {
+            opacity: 0;
+        }
+
         .archive-scroll {
             display: flex;
             gap: 2rem;
@@ -1088,6 +1196,43 @@
             .consent-detail {
                 padding-left: calc(22px + 0.6rem);
             }
+
+            /* 카드 350px은 화면(375px)보다 넓어 다음 카드가 아예 안 보였다.
+               섹션 좌우 여백을 상쇄해 화면 끝까지 쓰고, 카드를 좁혀 다음 장이 걸치게 한다.
+               아래 음수 마진이 섹션 밖으로 삐져나가 페이지에 가로 스크롤을 만들므로 여기서 잘라준다 */
+            #archive {
+                overflow-x: hidden;
+            }
+
+            .archive-scroll {
+                margin-inline: -2rem;
+                padding-inline: 2rem;
+                scroll-padding-inline: 2rem;
+                gap: 1rem;
+            }
+
+            .archive-card {
+                flex-basis: 74vw;
+                max-width: 300px;
+            }
+
+            /* 세로 4:5 포스터에 본문까지 붙으면 한 화면을 넘긴다. 이미지를 낮춰 카드를 줄인다 */
+            .archive-card img {
+                aspect-ratio: 1 / 1;
+            }
+
+            .archive-card-content {
+                padding: 1.1rem;
+            }
+
+            .archive-hint {
+                display: block;
+            }
+
+            /* 화살표는 포스터를 가린다. 모바일은 걸침과 페이드로 충분하다 */
+            .archive-nav {
+                display: none;
+            }
         }
 
 
@@ -1317,7 +1462,9 @@
                 <p class="section-subtitle">2019년 창단 이후 무대에 올린 작품들입니다</p>
             </div>
 
-            <div class="archive-scroll fade-in">
+            <div class="archive-viewport fade-in">
+                <div class="archive-scroll" id="archiveScroll" tabindex="0" role="region"
+                    aria-label="지난 활동 작품 목록 — 좌우로 넘겨 보세요">
                 <div class="archive-card">
                     <img src="images/work-chobi.jpg" alt="창작 아동극 〈소원 도깨비 초비〉 포스터" loading="lazy" width="900"
                         height="1125">
@@ -1368,7 +1515,15 @@
                         <p class="archive-meta">2020~2021 · 함안 초등학교 11곳 순회<br>총 14회 · 관객 900명</p>
                     </div>
                 </div>
+                </div>
+                <button type="button" class="archive-nav is-prev" id="archivePrev" aria-label="이전 작품 보기">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button type="button" class="archive-nav is-next" id="archiveNext" aria-label="다음 작품 보기">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
+            <p class="archive-hint" id="archiveHint">옆으로 넘겨 다른 작품도 보실 수 있습니다</p>
         </div>
     </section>
 
@@ -1561,6 +1716,54 @@
                         toggle.setAttribute('aria-label', '메뉴 열기');
                     }
                 });
+            }
+
+            // 지난 활동 가로 스크롤: 끝에 닿았는지에 따라 페이드와 화살표를 켜고 끈다
+            const scroller = document.getElementById('archiveScroll');
+            if (scroller) {
+                const viewport = scroller.parentElement;
+                const hint = document.getElementById('archiveHint');
+                const smooth = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                    ? 'auto' : 'smooth';
+
+                // 카드 한 장 + 간격만큼 움직인다
+                const step = () => {
+                    const card = scroller.querySelector('.archive-card');
+                    if (!card) return scroller.clientWidth * 0.8;
+                    const gap = parseFloat(getComputedStyle(scroller).columnGap) || 0;
+                    return card.getBoundingClientRect().width + gap;
+                };
+
+                const update = () => {
+                    const max = scroller.scrollWidth - scroller.clientWidth;
+                    viewport.classList.toggle('can-prev', scroller.scrollLeft > 4);
+                    viewport.classList.toggle('can-next', scroller.scrollLeft < max - 4);
+                };
+
+                scroller.addEventListener('scroll', () => {
+                    update();
+                    if (hint && scroller.scrollLeft > 8) hint.classList.add('is-done');
+                }, { passive: true });
+                window.addEventListener('resize', update);
+                update();
+
+                const go = (delta) => {
+                    const from = scroller.scrollLeft;
+                    scroller.scrollBy({ left: delta, behavior: smooth });
+                    // scroll-snap 컨테이너에서 smooth 스크롤을 취소해버리는 브라우저가 있다.
+                    // 잠시 뒤에도 안 움직였으면 그냥 옮겨 버튼이 먹통이 되지 않게 한다.
+                    setTimeout(() => {
+                        if (smooth === 'smooth' && Math.abs(scroller.scrollLeft - from) < 2) {
+                            scroller.scrollTo({ left: from + delta, behavior: 'auto' });
+                        }
+                        update();   // scroll 이벤트에만 기대지 않는다
+                    }, 350);
+                };
+
+                document.getElementById('archivePrev')
+                    .addEventListener('click', () => go(-step()));
+                document.getElementById('archiveNext')
+                    .addEventListener('click', () => go(step()));
             }
 
             /* ── 구독 신청 ─────────────────────────────────────────────
