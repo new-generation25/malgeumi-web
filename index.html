@@ -846,6 +846,21 @@
             display: none;
         }
 
+        /* 지도 위 극장 이름표. 지도 안에 심어지므로 이 규칙을 지우면 마커가 맨 글씨로 나온다 */
+        .map-pin {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 0.4rem 0.75rem;
+            border-radius: var(--radius-full);
+            background: var(--text-primary);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+            border: 2px solid var(--accent);
+        }
+
         /* 지도가 떴을 때만 보이는 길찾기 버튼. 지도를 끌어 움직이는 걸 막지 않도록 작게 얹는다 */
         .map-open {
             position: absolute;
@@ -1934,7 +1949,8 @@
             const mapBox = document.getElementById('mapBox');
             if (mapBox) {
                 const NAVER_KEY = 'ywa9tndcag';
-                const SPOT = { lat: 35.2326627, lng: 128.8721532 };   // 분성로 259, 봉황동
+                // 극장의 네이버 플레이스에 등록된 좌표 (x=경도, y=위도). 김해도서관 앞 건물이다.
+                const SPOT = { lat: 35.232767, lng: 128.8744441 };
                 let started = false;
 
                 const drawMap = () => {
@@ -1950,7 +1966,18 @@
                         zoomControl: true,
                         zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT },
                     });
-                    new naver.maps.Marker({ position: center, map: map, title: '회현동 소극장' });
+                    // 기본 핀 대신 이름표를 쓴다. 확대하면 그 자리에 다른 상호가 뜨는데,
+                    // 이름표가 그 위를 덮어 어느 건물인지 헷갈리지 않게 한다.
+                    new naver.maps.Marker({
+                        position: center,
+                        map: map,
+                        title: '회현동 소극장',
+                        zIndex: 100,
+                        icon: {
+                            content: '<div class="map-pin">회현동 소극장</div>',
+                            anchor: new naver.maps.Point(52, 34),
+                        },
+                    });
                 };
 
                 const loadMap = () => {
