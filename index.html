@@ -980,6 +980,68 @@
             text-decoration: underline;
         }
 
+        /* 구독 완료 팝업.
+           맨 위 * { margin: 0 } 이 dialog의 기본 가운데 정렬(margin:auto)을 덮어버려
+           팝업이 화면 좌상단에 붙는다. 여기서 되돌린다. */
+        .modal {
+            margin: auto;
+            border: none;
+            padding: 0;
+            background: transparent;
+            max-width: min(24rem, calc(100vw - 2.5rem));
+        }
+
+        .modal::backdrop {
+            background: rgba(30, 58, 95, 0.55);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-in {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 2.25rem 1.75rem 1.75rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-icon {
+            font-size: 2.6rem;
+            line-height: 1;
+            margin-bottom: 0.9rem;
+        }
+
+        .modal-in h3 {
+            margin: 0 0 0.6rem;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .modal-in p {
+            margin: 0 0 1.6rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            word-break: keep-all;
+        }
+
+        .modal-close {
+            width: 100%;
+            padding: 0.85rem;
+            border: none;
+            border-radius: var(--radius-full);
+            background: var(--accent);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-hover);
+        }
+
         /* 전송 결과 안내. 내용이 없을 때는 자리를 차지하지 않는다 */
         .form-status {
             margin: 0;
@@ -1681,6 +1743,16 @@
         </div>
     </section>
 
+    <!-- 구독 완료 알림 -->
+    <dialog class="modal" id="subscribeDone" aria-labelledby="subscribeDoneTitle">
+        <div class="modal-in">
+            <div class="modal-icon" aria-hidden="true">📬</div>
+            <h3 id="subscribeDoneTitle">구독이 완료되었습니다</h3>
+            <p>새 공연이 확정되면 문자로 안내해 드릴게요.<br>말그미극단을 찾아주셔서 고맙습니다.</p>
+            <button type="button" class="modal-close" autofocus>확인</button>
+        </div>
+    </dialog>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
@@ -1820,6 +1892,24 @@
                     status.className = 'form-status' + (kind ? ' is-' + kind : '');
                 };
 
+                // 구독 완료 팝업. <dialog>를 못 쓰는 오래된 브라우저에서는 폼 아래 문구로 대신한다
+                const done = document.getElementById('subscribeDone');
+                const openDone = () => {
+                    if (done && typeof done.showModal === 'function') {
+                        done.showModal();
+                    } else {
+                        say('구독이 완료되었습니다. 새 공연이 확정되면 문자로 안내해 드릴게요.', 'ok');
+                    }
+                };
+                if (done) {
+                    done.querySelector('.modal-close')
+                        .addEventListener('click', () => done.close());
+                    // 배경(백드롭)을 눌러도 닫히게 한다
+                    done.addEventListener('click', (e) => {
+                        if (e.target === done) done.close();
+                    });
+                }
+
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const val = (id) => document.getElementById(id).value.trim();
@@ -1858,8 +1948,8 @@
                     data.append('message', message);
                     data.append('consent', 'y');
 
-                    button.disabled = true;
                     const label = button.textContent;
+                    button.disabled = true;
                     button.textContent = '보내는 중…';
                     say('');
 
@@ -1868,11 +1958,13 @@
                         const out = await res.json();
                         if (!out.ok) throw new Error(out.error || '기록 실패');
                         form.reset();
-                        say('신청이 접수되었습니다. 새 공연이 확정되면 문자로 안내해 드릴게요.', 'ok');
+                        openDone();
                     } catch (err) {
+                        say('전송에 실패했습니다. 055-339-9110으로 전화 주시거나 잠시 후 다시 시도해 주세요.', 'error');
+                    } finally {
+                        // 성공이든 실패든 버튼은 반드시 되돌린다. 안 그러면 '보내는 중…'에서 멈춘다
                         button.disabled = false;
                         button.textContent = label;
-                        say('전송에 실패했습니다. 055-339-9110으로 전화 주시거나 잠시 후 다시 시도해 주세요.', 'error');
                     }
                 });
             }
