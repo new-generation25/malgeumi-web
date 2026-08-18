@@ -184,6 +184,76 @@ figcaption{
   .hero-strip{margin:-6rem 0 .5rem}
   .hero-strip img{aspect-ratio:24/9}
 }
+/* ── 관람 후기 (카카오톡 화면) ─────────────
+   히어로 이미지 바로 아래. 공연 후 설문에 들어온 실제 소감을
+   대화창 모양으로 보여준다. 원문에서 줄인 곳이 있고,
+   보낸 사람은 ㄱㄴㄷ 익명으로만 적는다 (6절 개인정보) */
+.talk{
+  width:100%;max-width:30rem;margin:1.75rem 0 0;
+  /* 카톡 화면답게 보이도록 이 블록만 시스템 폰트를 쓴다 */
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 18px 44px rgba(0,0,0,.45);
+}
+.talk-bar{
+  display:flex;align-items:center;gap:.45rem;
+  background:#9FB6C9;color:#1B2733;
+  padding:.7rem .9rem;font-size:.88rem;font-weight:600;line-height:1.4;
+}
+.talk-bar .cnt{color:rgba(27,39,51,.55);font-weight:500}
+.talk-bar .dots{margin-left:auto;color:rgba(27,39,51,.5)}
+.talk-body{
+  background:#B2C7D9;padding:1rem .85rem 1.2rem;
+  display:flex;flex-direction:column;gap:.85rem;
+}
+.talk-day{
+  align-self:center;max-width:100%;
+  background:rgba(20,32,44,.22);color:#EEF4F9;
+  font-size:.72rem;font-weight:400;line-height:1.5;
+  padding:.28rem .85rem;border-radius:999px;
+  text-align:center;word-break:keep-all;
+}
+.msg{display:flex;gap:.5rem;align-items:flex-start}
+.msg .ava{
+  flex:0 0 2.2rem;width:2.2rem;height:2.2rem;border-radius:.75rem;
+  background:var(--ink);color:var(--gold);
+  font-family:var(--display);font-size:1.05rem;font-weight:600;
+  display:grid;place-items:center;
+}
+.msg .said{min-width:0}
+.msg .nick{font-size:.74rem;font-weight:400;color:#2A3A48;line-height:1.4;margin-bottom:.32rem}
+.line{display:flex;align-items:flex-end;gap:.35rem}
+.line + .line{margin-top:.28rem}
+.bub{
+  position:relative;max-width:17rem;
+  background:#fff;color:#1B1B1B;
+  font-size:.86rem;font-weight:400;line-height:1.62;
+  padding:.6rem .78rem;border-radius:.35rem;
+  word-break:keep-all;
+}
+.bub::after{
+  content:"";position:absolute;top:.62rem;left:-.3rem;width:0;height:0;
+  border-top:.28rem solid transparent;border-bottom:.28rem solid transparent;
+  border-right:.34rem solid #fff;
+}
+/* 같은 사람이 이어서 보낸 말풍선에는 꼬리를 달지 않는다 */
+.line + .line .bub::after{display:none}
+.line time{font-size:.66rem;color:rgba(27,39,51,.55);white-space:nowrap;flex:0 0 auto}
+.msg--me{flex-direction:row-reverse}
+.msg--me .line{flex-direction:row-reverse}
+.msg--me .bub{background:#FEE500;color:#2B1F00}
+.msg--me .bub::after{
+  left:auto;right:-.3rem;
+  border-right:0;border-left:.34rem solid #FEE500;
+}
+.talk-note{
+  max-width:30rem;margin:.85rem 0 0;
+  font-size:.78rem;line-height:1.65;color:var(--slate);
+}
+@media(max-width:26rem){
+  .bub{max-width:none}
+}
+
 .person figure{margin:0 0 1.35rem}
 .person figure img{aspect-ratio:4/5}
 
@@ -448,6 +518,112 @@ figcaption{
       <img src="images/king-hero.jpg" alt="국립한글박물관 간판에서 ㄱ과 ㅎ이 떨어져 나간 장면" loading="eager"
            onerror="this.closest('.hero-strip').remove()">
     </div>
+
+    <!-- ══════════ 관람 후기 ══════════
+         2026년 공연 후 설문에 들어온 실제 소감입니다. 길어서 줄인 곳이 있고,
+         쓴 사람이 누구인지는 적지 않습니다. 문장을 새로 지어 넣지 마세요. -->
+    <section class="talk" aria-label="공연을 본 학부모들의 소감">
+      <header class="talk-bar">
+        <span>King받은 이도 · 관람 후기</span>
+        <span class="cnt">7</span>
+        <span class="dots" aria-hidden="true">⋮</span>
+      </header>
+
+      <div class="talk-body">
+        <p class="talk-day">공연이 끝난 뒤 설문에 남겨주신 소감입니다</p>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㄱ</span>
+          <div class="said">
+            <p class="nick">학부모 ㄱ</p>
+            <div class="line">
+              <p class="bub">아이들이 한글에 대해 소중한 마음을 가지게 되었습니다.</p>
+              <time>12:07</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㄴ</span>
+          <div class="said">
+            <p class="nick">학부모 ㄴ</p>
+            <div class="line">
+              <p class="bub">이윤재 선생님이 김해 사람인 걸 아이는 오늘 처음 알았대요. 한글박물관을 두 번이나 다녀왔는데도요.</p>
+              <time>12:09</time>
+            </div>
+            <div class="line">
+              <p class="bub">그분들이 지켜주신 덕에 지금 우리가 일본말을 쓰지 않고 산다는 걸 느낀 시간이었습니다.</p>
+              <time>12:10</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㄷ</span>
+          <div class="said">
+            <p class="nick">학부모 ㄷ</p>
+            <div class="line">
+              <p class="bub">세종대왕이 초비에게 전화 거는 장면 너무 재밌었어요 ㅋㅋ</p>
+              <time>12:14</time>
+            </div>
+            <div class="line">
+              <p class="bub">이어폰 끼고 직접 참여하는 것도 좋았습니다.</p>
+              <time>12:14</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㄹ</span>
+          <div class="said">
+            <p class="nick">학부모 ㄹ</p>
+            <div class="line">
+              <p class="bub">초비가 덕이를 꾸짖는 장면요. 맷돌에 갈아엎는다는 그 표현, 저도 한 수 배웠습니다 ㅎㅎ 초등학교로 초빙되어야 해요!!</p>
+              <time>12:18</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㅁ</span>
+          <div class="said">
+            <p class="nick">학부모 ㅁ</p>
+            <div class="line">
+              <p class="bub">마지막에 이윤재 선생님이 AI 영상으로 남긴 말에 울었어요. 그때 지켜내신 한글로 지금 우리가 말하고 있네요.</p>
+              <time>12:23</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <span class="ava" aria-hidden="true">ㅂ</span>
+          <div class="said">
+            <p class="nick">학부모 ㅂ</p>
+            <div class="line">
+              <p class="bub">연극 보고 한글박물관에 갔는데 아이가 이윤재 선생님을 바로 찾았어요. “엄마, 오늘 연극에서 봤던 선생님이 여기 있어!”</p>
+              <time>12:41</time>
+            </div>
+            <div class="line">
+              <p class="bub">다른 열사분들 이야기도 연극으로 보고 싶어요. 또 보러 올게요!</p>
+              <time>12:42</time>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg msg--me">
+          <div class="said">
+            <div class="line">
+              <p class="bub">소감 하나하나 배우들과 같이 읽었습니다. 고맙습니다 🙏</p>
+              <time>13:02</time>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="talk-note">
+      2026년 공연 관람객 설문에 들어온 소감입니다. 길이를 줄인 곳이 있고, 쓴 분의 이름은 밝히지 않습니다.
+    </p>
 
     <div class="facts">
       <span><b>날짜</b>2026. 8. 16 – 8. 23</span>
