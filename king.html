@@ -190,10 +190,12 @@ figcaption{
    원문에서 줄인 곳이 있고, 쓴 사람은 ㄱㄴㄷ 익명으로만 적는다 */
 .voices{
   display:grid;gap:1rem;
-  width:100%;max-width:52rem;margin:2rem 0 0;
+  /* 폭은 .wrap(68rem)을 그대로 채운다. 좁혀두면 위의 히어로 이미지·
+     아래 정보줄과 왼끝 오른끝이 어긋나 안으로 들어간 것처럼 보인다 */
+  width:100%;margin:2rem 0 0;
 }
 @media(min-width:40rem){
-  .voices{grid-template-columns:repeat(2,1fr);gap:1.1rem 1.15rem}
+  .voices{grid-template-columns:repeat(2,1fr);gap:1.2rem 1.25rem}
 }
 .voice{display:flex;flex-direction:column;margin:0}
 .voice-who{display:flex;align-items:center;gap:.5rem;margin-bottom:.45rem}
@@ -223,7 +225,7 @@ figcaption{
   border-bottom:.36rem solid #fff;
 }
 .voices-note{
-  max-width:52rem;margin:1rem 0 0;
+  margin:1rem 0 0;
   font-size:.78rem;line-height:1.65;color:var(--slate);
 }
 
@@ -518,7 +520,7 @@ figcaption{
 
       <figure class="voice">
         <figcaption class="voice-who"><span class="ava" aria-hidden="true">ㅁ</span><b>학부모 ㅁ</b></figcaption>
-        <blockquote class="voice-bub">마지막에 이윤재 선생님이 AI 영상으로 남긴 말에 울었어요. 그때 지켜내신 한글로 지금 우리가 말하고 있네요.</blockquote>
+        <blockquote class="voice-bub">마지막에 이윤재 선생님이 영상으로 남긴 말에 울었어요. 그때 지켜내신 한글로 지금 우리가 말하고 있네요.</blockquote>
       </figure>
 
       <figure class="voice">
