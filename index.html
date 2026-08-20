@@ -7,11 +7,11 @@
     <title>말그미 극단 - 아이들의 놀이가 예술이 되는 순간</title>
     <meta name="description"
         content="엄마들이 아이를 위해 시작한 김해의 극단. 2019년 창단, 경상남도 전문예술단체 제252호. 인형극과 창작 아동극으로 학교와 회현동소극장을 오갑니다. 공연 섭외·단체 관람 문의 055-339-9110.">
-    <meta name="theme-color" content="#F4EDDE">
+    <meta name="theme-color" content="#F0F9FF">
     <link rel="canonical" href="https://malgeumi-play.vercel.app/">
     <!-- 무대 막(幕)을 본뜬 표식. 세 페이지가 같은 아이콘을 쓴다 -->
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%230E1319%22/><rect x=%226%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23F4EDDE%22/><rect x=%2219%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23B93A2B%22/></svg>">
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%231E3A5F%22/><rect x=%226%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23F0F9FF%22/><rect x=%2219%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23FFD700%22/></svg>">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="말그미 극단">
@@ -36,27 +36,28 @@
     <style>
         /* ═══════════════════════════════════════════════════════════
            말그미극단 첫 페이지.
-           king.html·theater.html이 어두운 무대라면 이 페이지는 그 무대를
-           설명하는 종이 — 미색 인쇄물 위에 먹(墨)과 주묵(朱墨)으로 짠다.
-           둥근 모서리와 그림자를 걷어내고 괘선과 여백으로 칸을 나눈다.
+           색은 원래 쓰던 팔레트 그대로 — 하늘색 종이 위에 남색 글씨,
+           강조는 노랑 하나. 노랑은 밝은 배경에서 글자로 쓰면 안 읽히므로
+           면(단추·뱃지)과 밑줄 띠로만 쓰고, 남색 바탕 위에서는 글자로 쓴다.
+           조판은 괘선과 여백으로 칸을 나눈다.
            ═══════════════════════════════════════════════════════════ */
         :root {
-            --paper: #F4EDDE;
-            /* 표면 — 카드·인용처럼 한 겹 떠 있는 것 */
-            --paper-2: #FBF7EE;
-            /* 한 단 어두운 바탕 — 구역을 나눌 때 */
-            --paper-3: #EBE2CE;
-            --ink: #0E1319;
-            --ink-2: #161E28;
-            --slate: #4A6076;
-            --fog: #96A6B6;
-            /* 종이 위 괘선 / 먹 바탕 위 괘선 */
-            --line: #DBD0B8;
-            --line-dark: rgba(244, 237, 222, .16);
-            /* 도장의 붉은색. 번호·표식·강조에만 쓰고 넓은 면에는 쓰지 않는다 */
-            --jumuk: #B93A2B;
-            --gold: #C98A3C;
-            --gold-l: #E8B54B;
+            --bg: #F0F9FF;
+            /* 표면 — 카드처럼 한 겹 떠 있는 것 */
+            --surface: #FFFFFF;
+            /* 한 단 다른 바탕 — 구역을 나눌 때 */
+            --surface-alt: #FFF8DC;
+            --navy: #1E3A5F;
+            --navy-2: #2C4A6E;
+            --slate: #5A7A9A;
+            /* 남색 바탕 위 보조 글자 */
+            --fog: #A9C0D6;
+            /* 밝은 바탕 위 괘선 / 남색 바탕 위 괘선 */
+            --line: #E0E8F0;
+            --line-dark: rgba(255, 255, 255, .18);
+            --accent: #FFD700;
+            --accent-hover: #FFC107;
+            --accent-blue: #87CEEB;
 
             --display: "Hahmlet", "Nanum Myeongjo", serif;
             --body: "IBM Plex Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
@@ -77,8 +78,8 @@
         }
 
         body {
-            background: var(--paper);
-            color: var(--ink);
+            background: var(--bg);
+            color: var(--navy);
             font-family: var(--body);
             font-size: 16px;
             font-weight: 400;
@@ -103,12 +104,12 @@
         }
 
         ::selection {
-            background: var(--jumuk);
-            color: var(--paper);
+            background: var(--accent);
+            color: var(--navy);
         }
 
         :focus-visible {
-            outline: 2px solid var(--jumuk);
+            outline: 2px solid var(--navy);
             outline-offset: 3px;
         }
 
@@ -138,7 +139,7 @@
             width: 100%;
             padding: 16px 32px;
             z-index: 1000;
-            background: rgba(244, 237, 222, .92);
+            background: rgba(240, 249, 255, .92);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--line);
         }
@@ -157,11 +158,11 @@
             font-size: 24px;
             line-height: 1.4;
             letter-spacing: -.01em;
-            color: var(--ink);
+            color: var(--navy);
         }
 
         .nav-logo span {
-            color: var(--jumuk);
+            color: var(--slate);
         }
 
         .nav-links {
@@ -180,7 +181,7 @@
 
         .nav-links a:hover,
         .nav-links a[aria-current="page"] {
-            color: var(--ink);
+            color: var(--navy);
         }
 
         /* 모바일 메뉴 토글 — 데스크톱에서는 숨긴다 */
@@ -191,7 +192,7 @@
             cursor: pointer;
             padding: 8px;
             font-size: 22.4px;
-            color: var(--ink);
+            color: var(--navy);
             line-height: 1;
         }
 
@@ -217,25 +218,25 @@
         }
 
         .btn-primary {
-            background: var(--ink);
-            color: var(--paper);
-            border: 1px solid var(--ink);
+            background: var(--accent);
+            color: var(--navy);
+            border: 1px solid var(--accent);
         }
 
         .btn-primary:hover {
-            background: var(--jumuk);
-            border-color: var(--jumuk);
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--ink);
-            border: 1px solid var(--ink);
+            color: var(--navy);
+            border: 1px solid var(--navy);
         }
 
         .btn-secondary:hover {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         /* ── 첫 화면 ──────────────────────────────────────────
@@ -252,7 +253,7 @@
 
         .eyebrow {
             display: block;
-            color: var(--jumuk);
+            color: var(--slate);
             margin-bottom: 22px;
         }
 
@@ -260,10 +261,10 @@
         .eyebrow::before {
             content: '';
             display: inline-block;
-            width: 28px;
-            height: 1px;
+            width: 26px;
+            height: 3px;
             margin-right: 12px;
-            background: var(--jumuk);
+            background: var(--accent);
             vertical-align: middle;
         }
 
@@ -277,7 +278,9 @@
         }
 
         .hero-title .highlight {
-            color: var(--jumuk);
+            /* 노랑을 글자색으로 쓰면 밝은 배경에서 안 읽힌다. 띠로 깐다 */
+            background: linear-gradient(transparent 72%, var(--accent) 72%);
+            padding: 0 .04em;
         }
 
         .hero-desc {
@@ -290,9 +293,9 @@
         }
 
         .hero-desc strong {
-            color: var(--ink);
+            color: var(--navy);
             font-weight: 500;
-            box-shadow: inset 0 -2px 0 var(--jumuk);
+            background: linear-gradient(transparent 68%, var(--accent) 68%);
         }
 
         .hero-btns {
@@ -309,7 +312,7 @@
             width: 100%;
             aspect-ratio: 4 / 3;
             object-fit: cover;
-            border: 1px solid var(--ink);
+            border: 1px solid var(--navy);
         }
 
         /* 사진 모서리에 찍는 도장. 극단 이름을 새겨 넣었다 */
@@ -321,10 +324,9 @@
             height: 96px;
             display: grid;
             place-items: center;
-            border: 2px solid var(--jumuk);
             border-radius: 50%;
-            background: var(--paper);
-            color: var(--jumuk);
+            background: var(--accent);
+            color: var(--navy);
             font-family: var(--display);
             font-weight: 800;
             font-size: 17px;
@@ -356,7 +358,13 @@
         }
 
         .section-index {
-            color: var(--jumuk);
+            color: var(--navy);
+        }
+
+        /* 남색 바탕 구역에서는 번호가 노랑이라야 보인다 */
+        .project-section .section-index,
+        .contact-section .section-index {
+            color: var(--accent);
         }
 
         .section-title {
@@ -380,7 +388,7 @@
         .creed {
             margin: 0 0 64px;
             padding: 4px 0 4px 32px;
-            border-left: 2px solid var(--jumuk);
+            border-left: 3px solid var(--accent);
             max-width: 54rem;
         }
 
@@ -396,7 +404,9 @@
         .creed-line em {
             font-style: normal;
             font-weight: 800;
-            color: var(--jumuk);
+            /* 노란 강조색은 밝은 배경에서 글자로 쓰면 안 읽혀 밑줄 띠로 쓴다 */
+            background: linear-gradient(transparent 62%, var(--accent) 62%);
+            padding: 0 .08em;
         }
 
         .creed-sub {
@@ -434,12 +444,12 @@
         }
 
         .philosophy-card:hover {
-            background: var(--paper-2);
+            background: var(--surface);
         }
 
         .card-index {
             display: block;
-            color: var(--jumuk);
+            color: var(--navy);
             margin-bottom: 16px;
         }
 
@@ -466,9 +476,9 @@
             gap: 22px;
             margin-top: 44px;
             padding: 20px 26px;
-            background: var(--paper-2);
+            background: var(--surface);
             border: 1px solid var(--line);
-            border-left: 3px solid var(--jumuk);
+            border-left: 3px solid var(--accent);
         }
 
         .credential img {
@@ -495,8 +505,8 @@
         /* ── 공연 안내 ────────────────────────────────────────
            표를 파는 자리다. 여기만 먹 바탕으로 눌러 시선을 붙잡는다 */
         .project-section {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         .project-section .section-header {
@@ -522,14 +532,14 @@
             gap: 40px;
             align-items: center;
             padding: 32px;
-            background: var(--ink-2);
+            background: var(--navy-2);
             border: 1px solid var(--line-dark);
             color: inherit;
             transition: border-color .25s;
         }
 
         .show-card:hover {
-            border-color: var(--gold);
+            border-color: var(--accent);
         }
 
         .show-card-thumb {
@@ -549,8 +559,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: var(--jumuk);
-            color: var(--paper);
+            background: var(--accent);
+            color: var(--navy);
             padding: 7px 14px;
             font-size: 12px;
             font-weight: 600;
@@ -558,8 +568,8 @@
         }
 
         .show-card-badge.is-upcoming {
-            background: var(--paper-2);
-            color: var(--ink);
+            background: var(--surface);
+            color: var(--navy);
         }
 
         .show-card-body {
@@ -577,13 +587,17 @@
             letter-spacing: -.02em;
         }
 
+        .show-card-meta i {
+            color: var(--accent-blue);
+        }
+
         .show-card-meta {
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 14px;
             font-weight: 500;
-            color: var(--gold-l);
+            color: var(--accent);
             letter-spacing: .01em;
         }
 
@@ -600,10 +614,10 @@
             align-items: center;
             gap: 10px;
             padding-bottom: 4px;
-            border-bottom: 1px solid var(--gold);
+            border-bottom: 1px solid var(--accent);
             font-size: 14.5px;
             font-weight: 600;
-            color: var(--gold-l);
+            color: var(--accent);
         }
 
         .show-card-cta i {
@@ -636,12 +650,12 @@
 
         .archive-viewport::before {
             left: 0;
-            background: linear-gradient(90deg, var(--paper), transparent);
+            background: linear-gradient(90deg, var(--bg), transparent);
         }
 
         .archive-viewport::after {
             right: 0;
-            background: linear-gradient(270deg, var(--paper), transparent);
+            background: linear-gradient(270deg, var(--bg), transparent);
         }
 
         /* 스크롤 위치에 따라 JS가 켜고 끈다 */
@@ -657,10 +671,10 @@
             z-index: 3;
             width: 42px;
             height: 42px;
-            border: 1px solid var(--ink);
+            border: 1px solid var(--navy);
             border-radius: 0;
-            background: var(--paper-2);
-            color: var(--ink);
+            background: var(--surface);
+            color: var(--navy);
             font-size: 14px;
             display: grid;
             place-items: center;
@@ -677,8 +691,8 @@
         }
 
         .archive-nav:hover {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         .archive-nav.is-prev {
@@ -726,14 +740,14 @@
 
         .archive-card {
             flex: 0 0 320px;
-            background: var(--paper-2);
+            background: var(--surface);
             border: 1px solid var(--line);
             scroll-snap-align: start;
             transition: border-color .2s;
         }
 
         .archive-card:hover {
-            border-color: var(--ink);
+            border-color: var(--navy);
         }
 
         /* 포스터가 세로라 4:5로 잡는다. 가로 공연사진도 같은 비율로 잘라 넣었다 */
@@ -741,7 +755,7 @@
             width: 100%;
             aspect-ratio: 4 / 5;
             object-fit: cover;
-            background: var(--paper-3);
+            background: var(--surface-alt);
             border-bottom: 1px solid var(--line);
         }
 
@@ -751,7 +765,7 @@
 
         .archive-tag {
             display: block;
-            color: var(--jumuk);
+            color: var(--slate);
             margin-bottom: 10px;
         }
 
@@ -784,7 +798,7 @@
 
         /* ── 소극장 ──────────────────────────────────────────── */
         .space-section {
-            background: var(--paper-3);
+            background: var(--surface-alt);
             border-top: 1px solid var(--line);
             border-bottom: 1px solid var(--line);
         }
@@ -807,7 +821,7 @@
 
         .space-info .section-index {
             display: block;
-            color: var(--jumuk);
+            color: var(--navy);
             margin-bottom: 14px;
         }
 
@@ -835,7 +849,7 @@
         .space-detail-item .label {
             flex: none;
             width: 64px;
-            color: var(--jumuk);
+            color: var(--slate);
         }
 
         .space-detail-item .value {
@@ -844,7 +858,8 @@
         }
 
         .space-detail-item .value a:hover {
-            color: var(--jumuk);
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         .space-more {
@@ -853,7 +868,7 @@
             gap: 10px;
             margin-top: 32px;
             padding: 14px 30px;
-            border: 1px solid var(--ink);
+            border: 1px solid var(--navy);
             border-radius: 2px;
             font-size: 15px;
             font-weight: 600;
@@ -861,8 +876,8 @@
         }
 
         .space-more:hover {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         .space-more i {
@@ -877,7 +892,7 @@
         .map-box {
             position: relative;
             height: 400px;
-            border: 1px solid var(--ink);
+            border: 1px solid var(--navy);
             overflow: hidden;
         }
 
@@ -902,14 +917,14 @@
             display: inline-block;
             white-space: nowrap;
             padding: 6px 12px;
-            background: var(--ink);
-            color: var(--paper);
-            border-left: 3px solid var(--jumuk);
+            background: var(--navy);
+            color: var(--bg);
+            border-left: 3px solid var(--accent);
             font-family: var(--body);
             font-size: 13px;
             font-weight: 600;
             line-height: 1.2;
-            box-shadow: 0 3px 10px rgba(14, 19, 25, .35);
+            box-shadow: 0 3px 10px rgba(30, 58, 95, .35);
         }
 
         /* 지도가 떴을 때만 보이는 길찾기 버튼. 지도를 끌어 움직이는 걸 막지 않도록 작게 얹는다 */
@@ -922,9 +937,9 @@
             align-items: center;
             gap: 8px;
             padding: 10px 16px;
-            background: var(--paper-2);
-            border: 1px solid var(--ink);
-            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--navy);
+            color: var(--navy);
             font-size: 13.5px;
             font-weight: 600;
         }
@@ -934,8 +949,8 @@
         }
 
         .map-open:hover {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         .map-placeholder {
@@ -943,7 +958,7 @@
             display: block;
             width: 100%;
             height: 100%;
-            background: var(--paper-3);
+            background: var(--surface-alt);
         }
 
         /* 지도를 누르면 네이버 지도로 나간다는 걸 알린다 */
@@ -956,22 +971,22 @@
             gap: 8px;
             white-space: nowrap;
             padding: 10px 16px;
-            background: var(--paper-2);
-            border: 1px solid var(--ink);
-            color: var(--ink);
+            background: var(--surface);
+            border: 1px solid var(--navy);
+            color: var(--navy);
             font-size: 13.5px;
             font-weight: 600;
         }
 
         .map-placeholder:hover .map-cta {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         /* ── 소식 구독 ────────────────────────────────────────── */
         .contact-section {
-            background: var(--ink);
-            color: var(--paper);
+            background: var(--navy);
+            color: var(--bg);
         }
 
         .contact-section .section-header {
@@ -987,7 +1002,7 @@
         }
 
         .instagram-feed h3 {
-            color: var(--gold-l);
+            color: var(--accent);
             margin-bottom: 16px;
         }
 
@@ -1019,7 +1034,7 @@
         .insta-item .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(185, 58, 43, .55);
+            background: rgba(30, 58, 95, .62);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1032,7 +1047,7 @@
         }
 
         .insta-item .overlay i {
-            color: var(--paper);
+            color: var(--bg);
             font-size: 24px;
         }
 
@@ -1058,7 +1073,7 @@
             border: none;
             border-bottom: 1px solid var(--line-dark);
             border-radius: 0;
-            color: var(--paper);
+            color: var(--bg);
             font-size: 16px;
             font-family: inherit;
             transition: border-color .2s;
@@ -1072,15 +1087,15 @@
         .contact-form input:not([type="checkbox"]):focus,
         .contact-form textarea:focus {
             outline: none;
-            border-bottom-color: var(--gold-l);
+            border-bottom-color: var(--accent);
         }
 
         /* 크롬 자동완성이 입력칸을 흰 상자로 칠해버리는 것을 막는다 */
         .contact-form input:-webkit-autofill,
         .contact-form input:-webkit-autofill:focus {
-            -webkit-text-fill-color: var(--paper);
-            -webkit-box-shadow: 0 0 0 60px var(--ink) inset;
-            caret-color: var(--paper);
+            -webkit-text-fill-color: var(--bg);
+            -webkit-box-shadow: 0 0 0 60px var(--navy) inset;
+            caret-color: var(--bg);
         }
 
         .contact-form textarea {
@@ -1111,13 +1126,13 @@
             width: 20px;
             height: 20px;
             margin-top: 3px;
-            accent-color: var(--gold-l);
+            accent-color: var(--accent);
             color-scheme: light;
             cursor: pointer;
         }
 
         .consent-required {
-            color: var(--gold-l);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -1133,7 +1148,7 @@
         /* 전역 a { text-decoration: none } 때문에 폼 안 링크가 일반 텍스트와 구분되지 않는다 */
         .form-note a,
         .consent-detail a {
-            color: var(--gold-l);
+            color: var(--accent);
             text-decoration: underline;
             text-underline-offset: 2px;
         }
@@ -1141,10 +1156,10 @@
         .contact-form button {
             align-self: flex-start;
             padding: 15px 40px;
-            background: var(--gold-l);
-            border: 1px solid var(--gold-l);
+            background: var(--accent);
+            border: 1px solid var(--accent);
             border-radius: 2px;
-            color: var(--ink);
+            color: var(--navy);
             font-family: inherit;
             font-size: 15.5px;
             font-weight: 600;
@@ -1154,7 +1169,7 @@
 
         .contact-form button:hover {
             background: transparent;
-            color: var(--gold-l);
+            color: var(--accent);
         }
 
         .contact-form button:disabled {
@@ -1208,7 +1223,7 @@
         }
 
         .contact-info-item:hover {
-            color: var(--gold-l);
+            color: var(--accent);
         }
 
         .contact-info-item i {
@@ -1233,22 +1248,22 @@
         }
 
         .modal::backdrop {
-            background: rgba(14, 19, 25, .68);
+            background: rgba(30, 58, 95, .55);
         }
 
         .modal-in {
-            background: var(--paper-2);
-            border: 1px solid var(--ink);
-            border-top: 3px solid var(--jumuk);
+            background: var(--surface);
+            border: 1px solid var(--navy);
+            border-top: 3px solid var(--accent);
             padding: 36px 32px 32px;
         }
 
         .modal-mark {
             display: block;
             width: 28px;
-            height: 2px;
+            height: 3px;
             margin-bottom: 20px;
-            background: var(--jumuk);
+            background: var(--accent);
         }
 
         .modal-in h3 {
@@ -1257,7 +1272,7 @@
             font-size: 23px;
             font-weight: 800;
             letter-spacing: -.02em;
-            color: var(--ink);
+            color: var(--navy);
         }
 
         .modal-in p {
@@ -1271,10 +1286,10 @@
         .modal-close {
             width: 100%;
             padding: 14px;
-            background: var(--ink);
-            border: 1px solid var(--ink);
+            background: var(--accent);
+            border: 1px solid var(--accent);
             border-radius: 2px;
-            color: var(--paper);
+            color: var(--navy);
             font-family: inherit;
             font-size: 15px;
             font-weight: 600;
@@ -1283,14 +1298,14 @@
         }
 
         .modal-close:hover {
-            background: var(--jumuk);
-            border-color: var(--jumuk);
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
         /* ── 꼬리말 ──────────────────────────────────────────── */
         .footer {
             padding: 56px 32px 24px;
-            background: var(--ink);
+            background: var(--navy);
             color: var(--fog);
             border-top: 1px solid var(--line-dark);
         }
@@ -1309,7 +1324,7 @@
             font-size: 22px;
             font-weight: 800;
             letter-spacing: -.02em;
-            color: var(--paper);
+            color: var(--bg);
             margin-bottom: 14px;
         }
 
@@ -1321,11 +1336,11 @@
 
         .footer-info strong {
             font-weight: 500;
-            color: var(--paper);
+            color: var(--bg);
         }
 
         .footer-info a:hover {
-            color: var(--gold-l);
+            color: var(--accent);
         }
 
         .footer-links {
@@ -1345,8 +1360,8 @@
         }
 
         .footer-links a:hover {
-            background: var(--paper);
-            color: var(--ink);
+            background: var(--accent);
+            color: var(--navy);
         }
 
         .copyright {
@@ -1444,7 +1459,7 @@
                 align-items: stretch;
                 gap: 0;
                 padding: 8px 32px 20px;
-                background: var(--paper);
+                background: var(--bg);
                 border-bottom: 1px solid var(--line);
             }
 
