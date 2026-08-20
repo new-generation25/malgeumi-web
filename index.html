@@ -7,10 +7,11 @@
     <title>말그미 극단 - 아이들의 놀이가 예술이 되는 순간</title>
     <meta name="description"
         content="엄마들이 아이를 위해 시작한 김해의 극단. 2019년 창단, 경상남도 전문예술단체 제252호. 인형극과 창작 아동극으로 학교와 회현동소극장을 오갑니다. 공연 섭외·단체 관람 문의 055-339-9110.">
-    <meta name="theme-color" content="#F0F9FF">
+    <meta name="theme-color" content="#F4EDDE">
     <link rel="canonical" href="https://malgeumi-play.vercel.app/">
+    <!-- 무대 막(幕)을 본뜬 표식. 세 페이지가 같은 아이콘을 쓴다 -->
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%230E1319%22/><rect x=%226%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23F4EDDE%22/><rect x=%2219%22 y=%225%22 width=%227%22 height=%2222%22 fill=%22%23B93A2B%22/></svg>">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="말그미 극단">
@@ -24,37 +25,43 @@
     <meta property="og:image:alt" content="말그미 극단 공연 장면">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Fonts -->
+    <!-- 글꼴 — king.html과 같은 조합(Hahmlet + IBM Plex Sans KR)이라 한 번 받으면 두 페이지가 같이 쓴다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* CSS Variables - New Color Theme */
+        /* ═══════════════════════════════════════════════════════════
+           말그미극단 첫 페이지.
+           king.html·theater.html이 어두운 무대라면 이 페이지는 그 무대를
+           설명하는 종이 — 미색 인쇄물 위에 먹(墨)과 주묵(朱墨)으로 짠다.
+           둥근 모서리와 그림자를 걷어내고 괘선과 여백으로 칸을 나눈다.
+           ═══════════════════════════════════════════════════════════ */
         :root {
-            --bg-color: #F0F9FF;
-            --text-primary: #1E3A5F;
-            --text-secondary: #5A7A9A;
-            --accent: #FFD700;
-            --accent-hover: #FFC107;
-            --accent-blue: #87CEEB;
-            --surface: #FFFFFF;
-            --surface-alt: #FFF8DC;
-            --border: #E0E8F0;
+            --paper: #F4EDDE;
+            /* 표면 — 카드·인용처럼 한 겹 떠 있는 것 */
+            --paper-2: #FBF7EE;
+            /* 한 단 어두운 바탕 — 구역을 나눌 때 */
+            --paper-3: #EBE2CE;
+            --ink: #0E1319;
+            --ink-2: #161E28;
+            --slate: #4A6076;
+            --fog: #96A6B6;
+            /* 종이 위 괘선 / 먹 바탕 위 괘선 */
+            --line: #DBD0B8;
+            --line-dark: rgba(244, 237, 222, .16);
+            /* 도장의 붉은색. 번호·표식·강조에만 쓰고 넓은 면에는 쓰지 않는다 */
+            --jumuk: #B93A2B;
+            --gold: #C98A3C;
+            --gold-l: #E8B54B;
 
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 2rem;
-            --spacing-lg: 4rem;
+            --display: "Hahmlet", "Nanum Myeongjo", serif;
+            --body: "IBM Plex Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
 
-            --container-max: 1200px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-full: 9999px;
-
-            --shadow-sm: 0 4px 12px rgba(30, 58, 95, 0.08);
-            --shadow-md: 0 8px 24px rgba(30, 58, 95, 0.12);
+            --wrap: 1200px;
         }
 
         * {
@@ -63,18 +70,29 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            /* 고정 네비 높이. 없으면 #philosophy 같은 앵커가 네비 아래로 숨는다 */
+            scroll-padding-top: 88px;
+        }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.7;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--body);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.8;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            line-break: strict;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         a {
-            text-decoration: none;
             color: inherit;
-            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         img {
@@ -84,8 +102,32 @@
             display: block;
         }
 
-        /* Navbar */
-        /* ── 공통 네비 (king.html · theater.html과 수치 동일) ──
+        ::selection {
+            background: var(--jumuk);
+            color: var(--paper);
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--jumuk);
+            outline-offset: 3px;
+        }
+
+        /* 작은 글자로 붙이는 이름표 — 번호, 분류, 눈썹줄이 모두 이 꼴을 쓴다 */
+        .eyebrow,
+        .section-index,
+        .card-index,
+        .archive-tag,
+        .space-detail-item .label,
+        .instagram-feed h3 {
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            line-height: 1.6;
+        }
+
+        /* ── 네비 ────────────────────────────────────────────────
+           index·king·theater 세 페이지 수치가 같아야 페이지를 옮겨도
+           메뉴가 제자리에 있다 —
            padding 16/32 · 로고 24 · 간격 32 · 링크 15.2 · CTA 11.2/28.8 */
         .navbar {
             /* 세 페이지 네비 글자 폭을 맞추기 위해 공통 시스템 폰트를 쓴다 */
@@ -96,9 +138,9 @@
             width: 100%;
             padding: 16px 32px;
             z-index: 1000;
-            background: rgba(240, 249, 255, 0.9);
+            background: rgba(244, 237, 222, .92);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--line);
         }
 
         .nav-container {
@@ -114,12 +156,12 @@
             font-weight: 800;
             font-size: 24px;
             line-height: 1.4;
-            letter-spacing: -0.01em;
-            color: var(--text-primary);
+            letter-spacing: -.01em;
+            color: var(--ink);
         }
 
         .nav-logo span {
-            color: var(--accent);
+            color: var(--jumuk);
         }
 
         .nav-links {
@@ -132,12 +174,13 @@
             font-weight: 500;
             font-size: 15.2px;
             line-height: 1.7;
-            color: var(--text-secondary);
+            color: var(--slate);
+            transition: color .2s;
         }
 
         .nav-links a:hover,
         .nav-links a[aria-current="page"] {
-            color: var(--text-primary);
+            color: var(--ink);
         }
 
         /* 모바일 메뉴 토글 — 데스크톱에서는 숨긴다 */
@@ -148,317 +191,345 @@
             cursor: pointer;
             padding: 8px;
             font-size: 22.4px;
-            color: var(--text-primary);
+            color: var(--ink);
             line-height: 1;
         }
 
+        /* 네비 안 CTA는 king·theater와 같은 알약 꼴을 지킨다 */
         .nav-links .btn-primary {
             padding: 11.2px 28.8px;
             font-size: 15.2px;
+            border-radius: 9999px;
+            letter-spacing: 0;
+        }
+
+        /* ── 단추 ────────────────────────────────────────────── */
+        .btn-primary,
+        .btn-secondary {
+            display: inline-block;
+            padding: 15px 34px;
+            border-radius: 2px;
+            font-family: var(--body);
+            font-size: 15.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .2s, color .2s, border-color .2s;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-            color: var(--text-primary);
-            padding: 0.7rem 1.8rem;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            background: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background: var(--jumuk);
+            border-color: var(--jumuk);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--text-primary);
-            padding: 0.7rem 1.8rem;
-            border-radius: var(--radius-full);
-            font-weight: 500;
-            border: 2px solid var(--border);
+            color: var(--ink);
+            border: 1px solid var(--ink);
         }
 
         .btn-secondary:hover {
-            border-color: var(--accent);
-            background: var(--surface);
+            background: var(--ink);
+            color: var(--paper);
         }
 
-        /* Hero Section */
+        /* ── 첫 화면 ──────────────────────────────────────────
+           왼쪽에 글, 오른쪽에 사진. 사진 위에는 붉은 도장을 얹는다 */
         .hero {
-            min-height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 140px 2rem 80px;
-            max-width: var(--container-max);
+            max-width: var(--wrap);
             margin: 0 auto;
-            gap: 4rem;
-        }
-
-        .hero-content {
-            flex: 1;
-            max-width: 550px;
+            padding: 148px 32px 72px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+            gap: 56px;
+            align-items: center;
         }
 
         .eyebrow {
+            display: block;
+            color: var(--jumuk);
+            margin-bottom: 22px;
+        }
+
+        /* 눈썹줄 앞의 짧은 붉은 선 */
+        .eyebrow::before {
+            content: '';
             display: inline-block;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-secondary);
-            background: var(--surface);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-full);
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
+            width: 28px;
+            height: 1px;
+            margin-right: 12px;
+            background: var(--jumuk);
+            vertical-align: middle;
         }
 
         .hero-title {
-            font-size: 3.2rem;
-            line-height: 1.25;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            word-break: keep-all;
+            font-family: var(--display);
+            font-size: clamp(38px, 5.6vw, 68px);
+            line-height: 1.16;
+            font-weight: 800;
+            letter-spacing: -.025em;
+            margin-bottom: 28px;
         }
 
         .hero-title .highlight {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--jumuk);
         }
 
         .hero-desc {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            line-height: 1.9;
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--slate);
+            line-height: 1.95;
+            margin-bottom: 36px;
+            max-width: 30em;
+        }
+
+        .hero-desc strong {
+            color: var(--ink);
+            font-weight: 500;
+            box-shadow: inset 0 -2px 0 var(--jumuk);
         }
 
         .hero-btns {
             display: flex;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .hero-image-wrapper {
-            flex: 1;
             position: relative;
         }
 
         .hero-image-wrapper img {
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
             width: 100%;
-            max-width: 500px;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border: 1px solid var(--ink);
         }
 
-        .deco-blob {
+        /* 사진 모서리에 찍는 도장. 극단 이름을 새겨 넣었다 */
+        .hero-seal {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent) 100%);
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            z-index: -1;
-            top: -30px;
-            right: -30px;
-            opacity: 0.3;
-            animation: blob-morph 8s ease-in-out infinite;
+            left: -26px;
+            bottom: -22px;
+            width: 96px;
+            height: 96px;
+            display: grid;
+            place-items: center;
+            border: 2px solid var(--jumuk);
+            border-radius: 50%;
+            background: var(--paper);
+            color: var(--jumuk);
+            font-family: var(--display);
+            font-weight: 800;
+            font-size: 17px;
+            line-height: 1.25;
+            text-align: center;
+            letter-spacing: .02em;
+            transform: rotate(-8deg);
         }
 
-        @keyframes blob-morph {
-
-            0%,
-            100% {
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            }
-
-            50% {
-                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-            }
-        }
-
-        /* Section Common */
+        /* ── 구역 공통 ────────────────────────────────────────── */
         section {
-            padding: 5rem 2rem;
+            padding: 88px 32px;
         }
 
         .section-container {
-            max-width: var(--container-max);
+            max-width: var(--wrap);
             margin: 0 auto;
         }
 
+        /* 번호 · 제목 · (오른쪽 끝) 부제를 한 줄에 걸고 아래로 괘선을 긋는다 */
         .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding-bottom: 16px;
+            margin-bottom: 44px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-index {
+            color: var(--jumuk);
         }
 
         .section-title {
-            font-size: 2.2rem;
+            font-family: var(--display);
+            font-size: clamp(25px, 3.2vw, 36px);
             font-weight: 800;
-            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            letter-spacing: -.02em;
         }
 
         .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+            margin-left: auto;
+            color: var(--slate);
+            font-size: 15px;
+            font-weight: 300;
         }
 
-        /* Philosophy Section */
+        /* ── 활동 철학 ────────────────────────────────────────── */
 
         /* 극단이 스스로를 설명하는 문장. 카드보다 먼저 읽히도록 크게 둔다 */
         .creed {
-            margin: 0 0 3rem;
-            padding: 0;
-            text-align: center;
+            margin: 0 0 64px;
+            padding: 4px 0 4px 32px;
+            border-left: 2px solid var(--jumuk);
+            max-width: 54rem;
         }
 
         .creed-line {
-            font-size: clamp(1.25rem, 3.4vw, 1.85rem);
-            line-height: 1.65;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin: 0 0 1.25rem;
-            word-break: keep-all;
+            font-family: var(--display);
+            font-size: clamp(21px, 2.8vw, 31px);
+            line-height: 1.6;
+            font-weight: 600;
+            letter-spacing: -.02em;
+            margin: 0 0 20px;
         }
 
         .creed-line em {
             font-style: normal;
-            font-weight: 700;
-            /* 노란 강조색은 밝은 배경에서 글자로 쓰면 안 읽혀 밑줄 띠로 쓴다 */
-            background: linear-gradient(transparent 62%, var(--accent) 62%);
-            padding: 0 0.1em;
+            font-weight: 800;
+            color: var(--jumuk);
         }
 
         .creed-sub {
-            max-width: 42rem;
-            margin: 0 auto;
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: var(--slate);
+            font-size: 15.5px;
+            font-weight: 300;
             line-height: 1.95;
-            word-break: keep-all;
+            max-width: 40rem;
         }
 
-        /* 전문예술단체 지정 — 작게, 카드 아래에 한 줄로 */
+        /* 세 칸을 세로 괘선으로만 나눈다 */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .philosophy-card {
+            padding: 36px 34px 40px;
+            transition: background-color .2s;
+        }
+
+        .philosophy-card+.philosophy-card {
+            border-left: 1px solid var(--line);
+        }
+
+        /* 첫 칸 글머리는 제목과, 마지막 칸 끝은 괘선 끝과 같은 선에 선다 */
+        .philosophy-card:first-child {
+            padding-left: 0;
+        }
+
+        .philosophy-card:last-child {
+            padding-right: 0;
+        }
+
+        .philosophy-card:hover {
+            background: var(--paper-2);
+        }
+
+        .card-index {
+            display: block;
+            color: var(--jumuk);
+            margin-bottom: 16px;
+        }
+
+        .philosophy-card h3 {
+            font-family: var(--display);
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.4;
+            letter-spacing: -.02em;
+            margin-bottom: 12px;
+        }
+
+        .philosophy-card p {
+            color: var(--slate);
+            font-size: 14.8px;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+
+        /* 전문예술단체 지정 — 지정서를 실물처럼 왼쪽에 붙이고 옆에 적는다 */
         .credential {
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            max-width: 30rem;
-            margin: 3rem auto 0;
-            padding: 1rem 1.25rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
+            gap: 22px;
+            margin-top: 44px;
+            padding: 20px 26px;
+            background: var(--paper-2);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--jumuk);
         }
 
         .credential img {
             flex: none;
-            width: 54px;
+            width: 56px;
             height: auto;
-            border: 1px solid var(--border);
-            border-radius: 3px;
+            border: 1px solid var(--line);
         }
 
         .credential-title {
-            margin: 0 0 0.3rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            word-break: keep-all;
+            margin: 0 0 4px;
+            font-size: 15.5px;
+            font-weight: 600;
         }
 
         .credential-sub {
             margin: 0;
-            font-size: 0.8rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--slate);
         }
 
-        .philosophy-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .philosophy-card {
-            background: var(--surface);
-            padding: 2.5rem 2rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .philosophy-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--accent);
-        }
-
-        .philosophy-card .icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .philosophy-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-        }
-
-        .philosophy-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* Project Section */
+        /* ── 공연 안내 ────────────────────────────────────────
+           표를 파는 자리다. 여기만 먹 바탕으로 눌러 시선을 붙잡는다 */
         .project-section {
-            background: linear-gradient(180deg, var(--surface-alt) 0%, var(--bg-color) 100%);
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .project-section .section-header {
+            border-bottom-color: var(--line-dark);
+        }
+
+        .project-section .section-subtitle {
+            color: var(--fog);
         }
 
         .show-grid {
-            /* 카드 수가 1개든 3개든 폭이 흔들리지 않도록 grid 대신 flex로 둔다 */
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
+            gap: 32px;
         }
 
+        /* 공연이 한 편이든 세 편이든 한 편씩 가로로 눕힌다.
+           포스터가 세로로 길어 옆에 정보를 두는 쪽이 덜 허전하다 */
         .show-card {
-            flex: 0 1 360px;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            text-decoration: none;
+            flex: 1 1 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+            gap: 40px;
+            align-items: center;
+            padding: 32px;
+            background: var(--ink-2);
+            border: 1px solid var(--line-dark);
             color: inherit;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color .25s;
         }
 
         .show-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .show-card:focus-visible {
-            outline: 3px solid var(--accent);
-            outline-offset: 3px;
+            border-color: var(--gold);
         }
 
         .show-card-thumb {
@@ -472,98 +543,80 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .show-card:hover .show-card-thumb img {
-            transform: scale(1.05);
         }
 
         .show-card-badge {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--accent);
-            color: var(--text-primary);
-            padding: 0.35rem 0.9rem;
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            font-weight: 700;
+            top: 0;
+            left: 0;
+            background: var(--jumuk);
+            color: var(--paper);
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1em;
         }
 
         .show-card-badge.is-upcoming {
-            background: var(--surface);
-            color: var(--text-secondary);
+            background: var(--paper-2);
+            color: var(--ink);
         }
 
         .show-card-body {
             display: flex;
             flex-direction: column;
-            flex: 1;
-            gap: 0.75rem;
-            padding: 1.5rem;
+            align-items: flex-start;
+            gap: 18px;
         }
 
         .show-card-body h3 {
-            font-size: 1.25rem;
+            font-family: var(--display);
+            font-size: clamp(24px, 3vw, 34px);
             font-weight: 800;
-            line-height: 1.35;
+            line-height: 1.3;
+            letter-spacing: -.02em;
         }
 
         .show-card-meta {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .show-card-meta i {
-            color: var(--accent-blue);
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gold-l);
+            letter-spacing: .01em;
         }
 
         .show-card-desc {
-            flex: 1;
-            color: var(--text-secondary);
-            font-size: 0.92rem;
+            max-width: 40em;
+            color: var(--fog);
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.9;
         }
 
         .show-card-cta {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.9rem;
-            font-weight: 700;
+            gap: 10px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--gold);
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--gold-l);
         }
 
         .show-card-cta i {
-            transition: transform 0.3s ease;
+            transition: transform .25s;
         }
 
         .show-card:hover .show-card-cta i {
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-
-            .show-card,
-            .show-card-thumb img,
-            .show-card-cta i {
-                transition: none;
-            }
-
-            .show-card:hover {
-                transform: none;
-            }
-
-            .show-card:hover .show-card-thumb img {
-                transform: none;
-            }
-        }
-
-        /* Archive Section */
-        /* 가로 스크롤 목록. 옆에 더 있다는 걸 알리려고
-           ① 다음 카드를 살짝 걸치게 두고 ② 양끝을 페이드시키고 ③ 화살표를 얹는다 */
+        /* ── 지난 활동 ────────────────────────────────────────
+           가로로 넘겨 보는 목록. 옆에 더 있다는 걸 알리려고
+           ① 다음 카드를 살짝 걸치게 두고 ② 양끝을 흐리고 ③ 화살표를 얹는다 */
         .archive-viewport {
             position: relative;
         }
@@ -574,21 +627,21 @@
             position: absolute;
             top: 0;
             bottom: 1rem;
-            width: 3.5rem;
+            width: 56px;
             z-index: 2;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.25s ease;
+            transition: opacity .25s ease;
         }
 
         .archive-viewport::before {
             left: 0;
-            background: linear-gradient(90deg, var(--bg-color), transparent);
+            background: linear-gradient(90deg, var(--paper), transparent);
         }
 
         .archive-viewport::after {
             right: 0;
-            background: linear-gradient(270deg, var(--bg-color), transparent);
+            background: linear-gradient(270deg, var(--paper), transparent);
         }
 
         /* 스크롤 위치에 따라 JS가 켜고 끈다 */
@@ -599,22 +652,22 @@
 
         .archive-nav {
             position: absolute;
-            top: calc(50% - 0.5rem);
+            top: calc(50% - .5rem);
+            transform: translateY(-50%);
             z-index: 3;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            box-shadow: var(--shadow-sm);
-            color: var(--text-primary);
-            font-size: 0.95rem;
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--ink);
+            border-radius: 0;
+            background: var(--paper-2);
+            color: var(--ink);
+            font-size: 14px;
             display: grid;
             place-items: center;
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: opacity .25s ease, background-color .2s, color .2s;
         }
 
         .archive-viewport.can-prev .is-prev,
@@ -624,45 +677,30 @@
         }
 
         .archive-nav:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-50%) scale(1.08);
+            background: var(--ink);
+            color: var(--paper);
         }
 
         .archive-nav.is-prev {
-            left: -20px;
-            transform: translateY(-50%);
+            left: -21px;
         }
 
         .archive-nav.is-next {
-            right: -20px;
-            transform: translateY(-50%);
+            right: -21px;
         }
 
         .archive-hint {
             display: none;
-            margin: 1rem 0 0;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            transition: opacity 0.4s ease;
+            margin: 14px 0 0;
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--slate);
+            transition: opacity .4s ease;
         }
 
         .archive-hint::after {
             content: ' →';
             display: inline-block;
-            animation: nudge 1.4s ease-in-out infinite;
-        }
-
-        @keyframes nudge {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            50% {
-                transform: translateX(5px);
-            }
         }
 
         /* 한 번 넘겨본 사람에게는 더 보여줄 이유가 없다 */
@@ -672,34 +710,30 @@
 
         .archive-scroll {
             display: flex;
-            gap: 2rem;
+            gap: 24px;
             overflow-x: auto;
             padding-bottom: 1rem;
             scroll-snap-type: x mandatory;
         }
 
         .archive-scroll::-webkit-scrollbar {
-            height: 6px;
+            height: 4px;
         }
 
         .archive-scroll::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
+            background: var(--line);
         }
 
         .archive-card {
-            flex: 0 0 350px;
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            flex: 0 0 320px;
+            background: var(--paper-2);
+            border: 1px solid var(--line);
             scroll-snap-align: start;
-            transition: all 0.3s ease;
+            transition: border-color .2s;
         }
 
         .archive-card:hover {
-            transform: scale(1.02);
-            box-shadow: var(--shadow-md);
+            border-color: var(--ink);
         }
 
         /* 포스터가 세로라 4:5로 잡는다. 가로 공연사진도 같은 비율로 잘라 넣었다 */
@@ -707,114 +741,132 @@
             width: 100%;
             aspect-ratio: 4 / 5;
             object-fit: cover;
-            background: var(--surface-alt);
+            background: var(--paper-3);
+            border-bottom: 1px solid var(--line);
         }
 
         .archive-card-content {
-            padding: 1.5rem;
+            padding: 22px 22px 24px;
         }
 
         .archive-tag {
-            display: inline-block;
-            font-size: 0.72rem;
-            letter-spacing: 0.04em;
-            color: var(--text-primary);
-            background: var(--accent);
-            border-radius: var(--radius-full);
-            padding: 0.2rem 0.7rem;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
+            display: block;
+            color: var(--jumuk);
+            margin-bottom: 10px;
         }
 
         .archive-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-family: var(--display);
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.4;
+            letter-spacing: -.02em;
+            margin-bottom: 10px;
         }
 
         .archive-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: var(--slate);
+            font-size: 14.5px;
+            font-weight: 300;
+            line-height: 1.85;
         }
 
         /* 언제 어디서 한 공연인지. 줄거리와 구분되게 한 단계 낮춘다.
            위 `.archive-card p`(0,1,1)를 이기려고 선택자를 둘로 겹쳤다 */
         .archive-card .archive-meta {
-            margin-top: 0.9rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.8rem;
-            line-height: 1.65;
-            color: var(--text-secondary);
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            font-size: 12.5px;
+            line-height: 1.7;
+            color: var(--slate);
         }
 
-        /* Space Section */
+        /* ── 소극장 ──────────────────────────────────────────── */
         .space-section {
-            background: var(--surface);
+            background: var(--paper-3);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
 
         .space-container {
-            display: flex;
-            gap: 4rem;
+            display: grid;
+            grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+            gap: 56px;
             align-items: center;
         }
 
-        .space-info {
-            flex: 1;
+        .space-info h2 {
+            font-family: var(--display);
+            font-size: clamp(25px, 3.2vw, 36px);
+            font-weight: 800;
+            line-height: 1.3;
+            letter-spacing: -.02em;
+            margin-bottom: 18px;
         }
 
-        .space-info h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+        .space-info .section-index {
+            display: block;
+            color: var(--jumuk);
+            margin-bottom: 14px;
         }
 
         .space-info .desc {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
+            color: var(--slate);
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.9;
+            margin-bottom: 32px;
         }
 
+        /* 주소·문의는 표처럼 괘선으로 나눠 적는다 */
         .space-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            border-top: 1px solid var(--line);
         }
 
         .space-detail-item {
             display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
+            align-items: baseline;
+            gap: 20px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
         }
 
         .space-detail-item .label {
-            color: var(--text-secondary);
+            flex: none;
+            width: 64px;
+            color: var(--jumuk);
         }
 
         .space-detail-item .value {
-            font-weight: 600;
+            font-size: 15.5px;
+            font-weight: 500;
         }
 
-        /* 소극장 상세 페이지로 보내는 링크 */
+        .space-detail-item .value a:hover {
+            color: var(--jumuk);
+        }
+
         .space-more {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.75rem;
-            padding: 0.7rem 1.6rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-full);
+            gap: 10px;
+            margin-top: 32px;
+            padding: 14px 30px;
+            border: 1px solid var(--ink);
+            border-radius: 2px;
+            font-size: 15px;
             font-weight: 600;
-            font-size: 0.95rem;
+            transition: background-color .2s, color .2s;
         }
 
         .space-more:hover {
-            border-color: var(--accent);
-            background: var(--surface);
+            background: var(--ink);
+            color: var(--paper);
         }
 
         .space-more i {
-            transition: transform 0.3s ease;
+            transition: transform .25s;
         }
 
         .space-more:hover i {
@@ -824,9 +876,8 @@
         /* 지도 자리. 안에 실제 네이버 지도와 대체 이미지가 겹쳐 있다 */
         .map-box {
             position: relative;
-            flex: 1;
-            height: 350px;
-            border-radius: var(--radius-lg);
+            height: 400px;
+            border: 1px solid var(--ink);
             overflow: hidden;
         }
 
@@ -850,33 +901,32 @@
         .map-pin {
             display: inline-block;
             white-space: nowrap;
-            padding: 0.4rem 0.75rem;
-            border-radius: var(--radius-full);
-            background: var(--text-primary);
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 700;
+            padding: 6px 12px;
+            background: var(--ink);
+            color: var(--paper);
+            border-left: 3px solid var(--jumuk);
+            font-family: var(--body);
+            font-size: 13px;
+            font-weight: 600;
             line-height: 1.2;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
-            border: 2px solid var(--accent);
+            box-shadow: 0 3px 10px rgba(14, 19, 25, .35);
         }
 
         /* 지도가 떴을 때만 보이는 길찾기 버튼. 지도를 끌어 움직이는 걸 막지 않도록 작게 얹는다 */
         .map-open {
             position: absolute;
-            right: 0.75rem;
-            bottom: 0.75rem;
+            right: 12px;
+            bottom: 12px;
             z-index: 10;
             display: none;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 0.95rem;
-            border-radius: var(--radius-full);
-            background: var(--surface);
-            color: var(--text-primary);
-            font-size: 0.85rem;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--paper-2);
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            font-size: 13.5px;
             font-weight: 600;
-            box-shadow: var(--shadow-md);
         }
 
         .map-box.is-live .map-open {
@@ -884,237 +934,240 @@
         }
 
         .map-open:hover {
-            background: var(--accent);
+            background: var(--ink);
+            color: var(--paper);
         }
 
         .map-placeholder {
             position: relative;
-            flex: 1;
-            height: 350px;
-            background: var(--bg-color);
-            border-radius: var(--radius-lg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 2px dashed var(--border);
-            color: var(--text-secondary);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: var(--paper-3);
         }
 
         /* 지도를 누르면 네이버 지도로 나간다는 걸 알린다 */
         .map-cta {
             position: absolute;
-            left: 50%;
-            bottom: 1rem;
-            transform: translateX(-50%);
+            left: 12px;
+            bottom: 12px;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 8px;
             white-space: nowrap;
-            padding: 0.55rem 1.1rem;
-            border-radius: var(--radius-full);
-            background: var(--surface);
-            color: var(--text-primary);
-            font-size: 0.88rem;
+            padding: 10px 16px;
+            background: var(--paper-2);
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            font-size: 13.5px;
             font-weight: 600;
-            box-shadow: var(--shadow-md);
         }
 
         .map-placeholder:hover .map-cta {
-            background: var(--accent);
+            background: var(--ink);
+            color: var(--paper);
         }
 
-        a.map-placeholder:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            .map-placeholder,
-            .space-more i {
-                transition: none;
-            }
-
-            a.map-placeholder:hover {
-                transform: none;
-            }
-        }
-
-        .map-placeholder i {
-            font-size: 3rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        /* Contact Section */
+        /* ── 소식 구독 ────────────────────────────────────────── */
         .contact-section {
-            background: linear-gradient(135deg, var(--text-primary) 0%, #2C4A6E 100%);
-            color: white;
+            background: var(--ink);
+            color: var(--paper);
         }
 
-        .contact-section .section-title {
-            color: white;
+        .contact-section .section-header {
+            border-bottom-color: var(--line-dark);
         }
 
         .contact-section .section-subtitle {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--fog);
+        }
+
+        .instagram-feed {
+            margin-bottom: 64px;
+        }
+
+        .instagram-feed h3 {
+            color: var(--gold-l);
+            margin-bottom: 16px;
+        }
+
+        .insta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .insta-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border: 1px solid var(--line-dark);
+        }
+
+        .insta-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(.15);
+            transition: filter .3s ease;
+        }
+
+        .insta-item:hover img {
+            filter: none;
+        }
+
+        .insta-item .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(185, 58, 43, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+
+        .insta-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .insta-item .overlay i {
+            color: var(--paper);
+            font-size: 24px;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 2rem;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+            gap: 64px;
         }
 
+        /* 입력칸은 상자 대신 밑줄로 둔다. 종이에 적어 넣는 꼴 */
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 22px;
         }
 
         /* 체크박스를 제외한 '글자 입력칸' 전용 규칙이다.
-           :not()을 빼면 동의 체크박스가 padding 1rem을 물려받아 거대한 상자로 렌더된다. */
+           :not()을 빼면 동의 체크박스가 padding을 물려받아 거대한 상자로 렌더된다. */
         .contact-form input:not([type="checkbox"]),
         .contact-form textarea {
-            padding: 1rem;
-            border-radius: var(--radius-md);
+            padding: 12px 2px;
+            background: transparent;
             border: none;
-            font-size: 1rem;
+            border-bottom: 1px solid var(--line-dark);
+            border-radius: 0;
+            color: var(--paper);
+            font-size: 16px;
             font-family: inherit;
+            transition: border-color .2s;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--fog);
+        }
+
+        .contact-form input:not([type="checkbox"]):focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-bottom-color: var(--gold-l);
+        }
+
+        /* 크롬 자동완성이 입력칸을 흰 상자로 칠해버리는 것을 막는다 */
+        .contact-form input:-webkit-autofill,
+        .contact-form input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--paper);
+            -webkit-box-shadow: 0 0 0 60px var(--ink) inset;
+            caret-color: var(--paper);
         }
 
         .contact-form textarea {
-            min-height: 120px;
+            min-height: 96px;
             resize: vertical;
         }
 
-        /* 개인정보 수집·이용 동의 — 폼의 한 칸으로 취급해 gap 1rem 리듬을 지킨다 */
+        /* 개인정보 수집·이용 동의 — 폼의 한 칸으로 취급해 gap 리듬을 지킨다 */
         .consent {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
         .consent-label {
             display: flex;
             align-items: flex-start;
-            gap: 0.6rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            word-break: keep-all;
+            gap: 10px;
+            font-size: 14.5px;
+            line-height: 1.6;
             cursor: pointer;
         }
 
         /* color-scheme을 고정하지 않으면 OS 다크 모드에서 어두운 체크박스가
-           짙은 남색 배경 위에 놓여 사실상 보이지 않는다. */
+           짙은 먹색 배경 위에 놓여 사실상 보이지 않는다. */
         .contact-form input[type="checkbox"] {
             flex: none;
             width: 20px;
             height: 20px;
-            margin-top: 0.15rem;
-            accent-color: var(--accent);
+            margin-top: 3px;
+            accent-color: var(--gold-l);
             color-scheme: light;
             cursor: pointer;
         }
 
-        .contact-form input[type="checkbox"]:focus-visible {
-            outline: 3px solid var(--accent);
-            outline-offset: 3px;
-        }
-
         .consent-required {
-            color: var(--accent);
+            color: var(--gold-l);
             font-weight: 600;
         }
 
         .consent-detail {
             margin: 0;
-            padding-left: calc(20px + 0.6rem);
-            font-size: 0.8rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.72);
-            word-break: keep-all;
+            padding-left: 30px;
+            font-size: 12.5px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--fog);
         }
 
         /* 전역 a { text-decoration: none } 때문에 폼 안 링크가 일반 텍스트와 구분되지 않는다 */
         .form-note a,
         .consent-detail a {
-            color: var(--accent);
+            color: var(--gold-l);
             text-decoration: underline;
+            text-underline-offset: 2px;
         }
 
-        /* 구독 완료 팝업.
-           맨 위 * { margin: 0 } 이 dialog의 기본 가운데 정렬(margin:auto)을 덮어버려
-           팝업이 화면 좌상단에 붙는다. 여기서 되돌린다. */
-        .modal {
-            margin: auto;
-            border: none;
-            padding: 0;
-            background: transparent;
-            max-width: min(24rem, calc(100vw - 2.5rem));
-        }
-
-        .modal::backdrop {
-            background: rgba(30, 58, 95, 0.55);
-            backdrop-filter: blur(2px);
-        }
-
-        .modal-in {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 2.25rem 1.75rem 1.75rem;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-        }
-
-        .modal-icon {
-            font-size: 2.6rem;
-            line-height: 1;
-            margin-bottom: 0.9rem;
-        }
-
-        .modal-in h3 {
-            margin: 0 0 0.6rem;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-        }
-
-        .modal-in p {
-            margin: 0 0 1.6rem;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            word-break: keep-all;
-        }
-
-        .modal-close {
-            width: 100%;
-            padding: 0.85rem;
-            border: none;
-            border-radius: var(--radius-full);
-            background: var(--accent);
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-weight: 600;
+        .contact-form button {
+            align-self: flex-start;
+            padding: 15px 40px;
+            background: var(--gold-l);
+            border: 1px solid var(--gold-l);
+            border-radius: 2px;
+            color: var(--ink);
             font-family: inherit;
+            font-size: 15.5px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background-color .2s, color .2s;
         }
 
-        .modal-close:hover {
-            background: var(--accent-hover);
+        .contact-form button:hover {
+            background: transparent;
+            color: var(--gold-l);
+        }
+
+        .contact-form button:disabled {
+            opacity: .55;
+            cursor: progress;
         }
 
         /* 전송 결과 안내. 내용이 없을 때는 자리를 차지하지 않는다 */
         .form-status {
             margin: 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.7;
             font-weight: 500;
-            word-break: keep-all;
         }
 
         .form-status:empty {
@@ -1129,75 +1182,182 @@
             color: #FFB4A8;
         }
 
-        .contact-form button:disabled {
-            opacity: 0.6;
-            cursor: progress;
-            transform: none;
+        .form-note {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--fog);
         }
 
-        .contact-form button {
-            background: var(--accent);
-            color: var(--text-primary);
-            padding: 1rem;
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .contact-form button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
+        /* 전화·메일·SNS — 한 줄에 하나씩, 괘선으로 나눈다 */
         .contact-info {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 1.5rem;
+            border-top: 1px solid var(--line-dark);
         }
 
         .contact-info-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 18px;
+            padding: 20px 4px;
+            border-bottom: 1px solid var(--line-dark);
+            font-size: 15.5px;
+            transition: color .2s;
+        }
+
+        .contact-info-item:hover {
+            color: var(--gold-l);
         }
 
         .contact-info-item i {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            flex: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--line-dark);
+            display: grid;
+            place-items: center;
+            font-size: 15px;
         }
 
-        /* Footer */
+        /* ── 구독 완료 팝업 ────────────────────────────────────
+           맨 위 * { margin: 0 } 이 dialog의 기본 가운데 정렬(margin:auto)을 덮어버려
+           팝업이 화면 좌상단에 붙는다. 여기서 되돌린다. */
+        .modal {
+            margin: auto;
+            border: none;
+            padding: 0;
+            background: transparent;
+            max-width: min(26rem, calc(100vw - 2.5rem));
+        }
+
+        .modal::backdrop {
+            background: rgba(14, 19, 25, .68);
+        }
+
+        .modal-in {
+            background: var(--paper-2);
+            border: 1px solid var(--ink);
+            border-top: 3px solid var(--jumuk);
+            padding: 36px 32px 32px;
+        }
+
+        .modal-mark {
+            display: block;
+            width: 28px;
+            height: 2px;
+            margin-bottom: 20px;
+            background: var(--jumuk);
+        }
+
+        .modal-in h3 {
+            margin: 0 0 12px;
+            font-family: var(--display);
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            color: var(--ink);
+        }
+
+        .modal-in p {
+            margin: 0 0 28px;
+            font-size: 14.5px;
+            font-weight: 300;
+            line-height: 1.85;
+            color: var(--slate);
+        }
+
+        .modal-close {
+            width: 100%;
+            padding: 14px;
+            background: var(--ink);
+            border: 1px solid var(--ink);
+            border-radius: 2px;
+            color: var(--paper);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .2s;
+        }
+
+        .modal-close:hover {
+            background: var(--jumuk);
+            border-color: var(--jumuk);
+        }
+
+        /* ── 꼬리말 ──────────────────────────────────────────── */
         .footer {
-            padding: 2rem;
-            background: var(--text-primary);
-            color: rgba(255, 255, 255, 0.6);
-            text-align: center;
+            padding: 56px 32px 24px;
+            background: var(--ink);
+            color: var(--fog);
+            border-top: 1px solid var(--line-dark);
+        }
+
+        .footer-container {
+            max-width: var(--wrap);
+            margin: 0 auto 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 32px;
+        }
+
+        .footer-info h3 {
+            font-family: var(--display);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            color: var(--paper);
+            margin-bottom: 14px;
+        }
+
+        .footer-info p {
+            font-size: 13.5px;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+
+        .footer-info strong {
+            font-weight: 500;
+            color: var(--paper);
+        }
+
+        .footer-info a:hover {
+            color: var(--gold-l);
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
+            gap: 10px;
         }
 
         .footer-links a {
-            font-size: 1.5rem;
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line-dark);
+            font-size: 17px;
             color: inherit;
+            transition: background-color .2s, color .2s;
         }
 
         .footer-links a:hover {
-            color: var(--accent);
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        .copyright {
+            max-width: var(--wrap);
+            font-size: 12.5px;
+            font-weight: 300;
+            letter-spacing: .04em;
+            margin: 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--line-dark);
+            color: var(--fog);
         }
 
         /* 스크린리더 전용 라벨 */
@@ -1213,26 +1373,60 @@
             border: 0;
         }
 
-        .form-note {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 0.75rem;
-            line-height: 1.6;
-        }
-
-        /* Animations */
+        /* 화면에 들어올 때 살짝 올라온다. 눈에 띄면 안 되므로 짧고 작게 */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(12px);
+            transition: opacity .5s ease-out, transform .5s ease-out;
         }
 
         .fade-in.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
-        /* Responsive */
+        /* ── 좁은 화면 ────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 124px;
+                gap: 40px;
+            }
+
+            .hero-image-wrapper {
+                order: -1;
+            }
+
+            .hero-seal {
+                left: auto;
+                right: 16px;
+                bottom: -24px;
+                width: 82px;
+                height: 82px;
+                font-size: 15px;
+            }
+
+            .space-container,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .show-card {
+                grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+                gap: 28px;
+            }
+
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .philosophy-card+.philosophy-card {
+                border-left: none;
+                border-top: 1px solid var(--line);
+            }
+        }
+
         @media (max-width: 768px) {
 
             /* 데스크톱 가로 메뉴 → 토글로 여닫는 드롭다운 */
@@ -1250,9 +1444,8 @@
                 align-items: stretch;
                 gap: 0;
                 padding: 8px 32px 20px;
-                background: var(--bg-color);
-                border-bottom: 1px solid var(--border);
-                box-shadow: var(--shadow-md);
+                background: var(--paper);
+                border-bottom: 1px solid var(--line);
             }
 
             .nav-links.open {
@@ -1262,7 +1455,7 @@
             .nav-links a {
                 padding: 13.6px 4px;
                 font-size: 16px;
-                border-bottom: 1px solid var(--border);
+                border-bottom: 1px solid var(--line);
             }
 
             .nav-links a:last-child {
@@ -1275,81 +1468,61 @@
                 padding: 13.6px 28.8px;
             }
 
-            .hero {
-                flex-direction: column-reverse;
-                padding-top: 120px;
-                text-align: center;
-                gap: 2rem;
-            }
-
-            .hero-title {
-                font-size: 2.2rem;
-            }
-
-            .hero-btns {
-                justify-content: center;
-            }
-
-            /* 모바일에서 한 카드가 화면을 통째로 먹지 않도록 여백과 크기를 줄인다 */
             section {
-                padding: 3rem 1.25rem;
+                padding: 56px 20px;
+            }
+
+            .hero {
+                padding: 108px 20px 56px;
+            }
+
+            .hero-btns .btn-primary,
+            .hero-btns .btn-secondary {
+                flex: 1 1 auto;
+                text-align: center;
+                padding: 14px 20px;
             }
 
             .section-header {
-                margin-bottom: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
+                margin-bottom: 32px;
             }
 
             .section-subtitle {
-                font-size: 0.95rem;
+                margin-left: 0;
+                flex-basis: 100%;
             }
 
-            .philosophy-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            .creed {
+                margin-bottom: 44px;
+                padding-left: 22px;
             }
 
             .philosophy-card {
-                padding: 1.5rem 1.25rem;
+                padding: 26px 0 28px;
             }
 
-            .philosophy-card .icon {
-                width: 52px;
-                height: 52px;
-                margin-bottom: 0.85rem;
-                font-size: 1.4rem;
+            .philosophy-card:hover {
+                background: none;
             }
 
-            .philosophy-card h3 {
-                margin-bottom: 0.4rem;
+            .credential {
+                padding: 18px;
+                gap: 16px;
             }
 
-            .space-container {
-                flex-direction: column;
-            }
-
-            .contact-grid {
+            /* 세로로 세우면 포스터가 화면을 다 먹는다. 포스터를 위에 눕히고 글을 아래로 */
+            .show-card {
                 grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 20px;
             }
 
-            /* 손가락으로 누를 수 있게 동의 줄의 세로 여백을 키운다 (패딩은 .consent 안쪽이라 폼 gap은 그대로) */
-            .consent-label {
-                padding: 0.6rem 0;
+            .show-card-thumb {
+                aspect-ratio: 3 / 4;
+                max-width: 300px;
             }
 
-            .contact-form input[type="checkbox"] {
-                width: 22px;
-                height: 22px;
-            }
-
-            .consent-detail {
-                padding-left: calc(22px + 0.6rem);
-            }
-
-            /* 카드 350px은 화면(375px)보다 넓어 다음 카드가 아예 안 보였다.
+            /* 카드 320px은 화면(375px)보다 넓어 다음 카드가 아예 안 보였다.
                섹션 좌우 여백을 상쇄해 화면 끝까지 쓰고, 카드를 좁혀 다음 장이 걸치게 한다.
                아래 음수 마진이 섹션 밖으로 삐져나가 페이지에 가로 스크롤을 만들므로 여기서 잘라준다 */
             #archive {
@@ -1357,15 +1530,15 @@
             }
 
             .archive-scroll {
-                margin-inline: -2rem;
-                padding-inline: 2rem;
-                scroll-padding-inline: 2rem;
-                gap: 1rem;
+                margin-inline: -20px;
+                padding-inline: 20px;
+                scroll-padding-inline: 20px;
+                gap: 14px;
             }
 
             .archive-card {
                 flex-basis: 74vw;
-                max-width: 300px;
+                max-width: 290px;
             }
 
             /* 세로 4:5 포스터에 본문까지 붙으면 한 화면을 넘긴다. 이미지를 낮춰 카드를 줄인다 */
@@ -1374,114 +1547,66 @@
             }
 
             .archive-card-content {
-                padding: 1.1rem;
+                padding: 18px;
             }
 
             .archive-hint {
                 display: block;
             }
 
-            /* 화살표는 포스터를 가린다. 모바일은 걸침과 페이드로 충분하다 */
+            /* 화살표는 포스터를 가린다. 모바일은 걸침과 흐림으로 충분하다 */
             .archive-nav {
                 display: none;
             }
-        }
 
-
-
-        .instagram-feed h3 {
-            color: white;
-            margin-bottom: 1rem;
-        }
-
-        .insta-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .insta-item {
-            position: relative;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            aspect-ratio: 1;
-        }
-
-        .insta-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .insta-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .insta-item .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .insta-item:hover .overlay {
-            opacity: 1;
-        }
-
-        .insta-item .overlay i {
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        /* Footer Update */
-        .footer-container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .footer-info h3 {
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-info p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin: 0.2rem 0;
-        }
-
-        .copyright {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1rem;
-            text-align: center;
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
-
-        @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
+            .map-box {
+                height: 300px;
             }
 
             .insta-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .instagram-feed {
+                margin-bottom: 44px;
+            }
+
+            /* 손가락으로 누를 수 있게 동의 줄의 세로 여백을 키운다 */
+            .consent-label {
+                padding: 6px 0;
+            }
+
+            .contact-form button {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .footer {
+                padding: 40px 20px 24px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 28px;
+            }
+        }
+
+        /* 움직임을 줄여달라는 설정을 존중한다 */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+            }
+
+            .fade-in {
+                opacity: 1;
+                transform: none;
             }
         }
     </style>
@@ -1525,7 +1650,7 @@
         </div>
         <div class="hero-image-wrapper fade-in">
             <img src="images/stage-1.jpg" alt="아이들이 뛰어노는 무대" width="1205" height="906" fetchpriority="high">
-            <div class="deco-blob"></div>
+            <span class="hero-seal" aria-hidden="true">말그미<br>극단</span>
         </div>
     </section>
 
@@ -1533,7 +1658,8 @@
     <section id="philosophy">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">🌟 우리가 하는 일</h2>
+                <span class="section-index">01</span>
+                <h2 class="section-title">우리가 하는 일</h2>
             </div>
 
             <blockquote class="creed fade-in">
@@ -1547,17 +1673,17 @@
 
             <div class="philosophy-grid">
                 <div class="philosophy-card fade-in">
-                    <div class="icon">🧸</div>
+                    <span class="card-index">01</span>
                     <h3>아이들 눈높이로</h3>
                     <p>인형극과 창작 아동극이 출발점입니다. 장애인식개선, 환경, 한글까지 — 어려운 주제를 아이가 웃으며 받아들이는 이야기로 바꿉니다.</p>
                 </div>
                 <div class="philosophy-card fade-in">
-                    <div class="icon">🏫</div>
+                    <span class="card-index">02</span>
                     <h3>학교로 찾아갑니다</h3>
                     <p>공연장에 오기 어려운 아이들을 위해 강당으로 갑니다. 함안·함양의 초등학교 열한 곳을 순회하며 인형극을 올렸습니다.</p>
                 </div>
                 <div class="philosophy-card fade-in">
-                    <div class="icon">📍</div>
+                    <span class="card-index">03</span>
                     <h3>지역의 이야기를 씁니다</h3>
                     <p>김해 희망모자원의 사연, 화포천의 새와 사람, 부원동의 골목. 이 동네가 품은 이야기를 직접 쓰고 무대에 올립니다.</p>
                 </div>
@@ -1578,7 +1704,8 @@
     <section id="project" class="project-section">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">🎭 공연 안내</h2>
+                <span class="section-index">02</span>
+                <h2 class="section-title">공연 안내</h2>
                 <p class="section-subtitle">지금 예매할 수 있는 공연입니다</p>
             </div>
 
@@ -1587,7 +1714,7 @@
                     <div class="show-card-thumb">
                         <img src="images/king-poster.jpg" alt="King받은 이도 : 말모이 작전 공연 포스터" loading="lazy" width="900"
                             height="1118">
-                        <span class="show-card-badge">🎫 예매 중</span>
+                        <span class="show-card-badge">예매 중</span>
                     </div>
                     <div class="show-card-body">
                         <h3>King받은 이도<br>: 한글 폼 미쳤다!</h3>
@@ -1610,7 +1737,8 @@
     <section id="archive">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">📚 지난 활동</h2>
+                <span class="section-index">03</span>
+                <h2 class="section-title">지난 활동</h2>
                 <p class="section-subtitle">2019년 창단 이후 무대에 올린 작품들입니다</p>
             </div>
 
@@ -1684,7 +1812,8 @@
         <div class="section-container">
             <div class="space-container">
                 <div class="space-info fade-in">
-                    <h2>🏠 회현동 소극장</h2>
+                    <span class="section-index">04</span>
+                    <h2>회현동 소극장</h2>
                     <p class="desc">
                         김해 원도심 봉황동, 낡은 건물 4층.<br>
                         여든 개의 의자가 있는 극장입니다.
@@ -1725,13 +1854,14 @@
     <section id="contact" class="contact-section">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2 class="section-title">📬 말그미극단 × 회현동소극장 소식 구독하기</h2>
+                <span class="section-index">05</span>
+                <h2 class="section-title">말그미극단 × 회현동소극장 소식 구독하기</h2>
                 <p class="section-subtitle">새 공연이 확정되면 문자로 알려드립니다</p>
             </div>
 
 
             <div class="instagram-feed fade-in">
-                <h3>📢 말그미 극단 소식</h3>
+                <h3>말그미 극단 소식</h3>
                 <div class="insta-grid">
                     <a class="insta-item" href="https://www.instagram.com/hoehyeon.theater/" target="_blank"
                         rel="noopener" aria-label="인스타그램에서 말그미 극단 소식 보기">
@@ -1820,7 +1950,7 @@
     <!-- 구독 완료 알림 -->
     <dialog class="modal" id="subscribeDone" aria-labelledby="subscribeDoneTitle">
         <div class="modal-in">
-            <div class="modal-icon" aria-hidden="true">📬</div>
+            <span class="modal-mark" aria-hidden="true"></span>
             <h3 id="subscribeDoneTitle">구독이 완료되었습니다</h3>
             <p>새 공연이 확정되면 문자로 안내해 드릴게요.<br>말그미극단을 찾아주셔서 고맙습니다.</p>
             <button type="button" class="modal-close" autofocus>확인</button>
@@ -2118,4 +2248,3 @@
     </script>
 </body>
 
-</html>
