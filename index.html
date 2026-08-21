@@ -1625,24 +1625,13 @@
             }
         }
     </style>
-<!-- ═══════════════════════════════════════════════════════════
-     Google Analytics 4
-     아래 GA_ID 한 곳에만 측정 ID(G-로 시작)를 넣으면 켜집니다.
-     비어 있으면 스크립트를 아예 불러오지 않습니다.
-     ═══════════════════════════════════════════════════════════ -->
+<!-- Google tag (gtag.js) — 말그미극단 홈페이지 속성 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV5OC"></script>
 <script>
-window.GA_ID = 'G-LGQHMEV5OC';   /* 말그미극단 홈페이지 속성 */
-(function (id) {
-  if (!id) return;
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function () { window.dataLayer.push(arguments); };
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', id);
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
-  document.head.appendChild(s);
-})(window.GA_ID);
+  gtag('config', 'G-LGQHMEV5OC');
 </script>
 
 </head>
@@ -2294,7 +2283,7 @@ window.GA_ID = 'G-LGQHMEV5OC';   /* 말그미극단 홈페이지 속성 */
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
-<!-- ─── 전환 추적: 예매·전화·이메일·블로그 클릭 (GA_ID를 넣어야 동작) ─── -->
+<!-- ─── 전환 추적: 예매·전화·이메일·블로그 클릭 ─── -->
 <script>
 document.addEventListener('click', function (e) {
   if (!window.gtag) return;
