@@ -24,55 +24,91 @@ function safeEqual(a, b) {
   return require('crypto').timingSafeEqual(bufA, bufB);
 }
 
-function reportsFor(days) {
+function reportsFor(days, path) {
   const current = { startDate: `${days}daysAgo`, endDate: 'today' };
   const previous = { startDate: `${days * 2}daysAgo`, endDate: `${days + 1}daysAgo` };
 
+  // 경로가 주어지면 그 페이지에서 일어난 것만 센다.
+  const onlyThisPage = path
+    ? { dimensionFilter: { filter: { fieldName: 'pagePath',
+                                     stringFilter: { matchType: 'EXACT', value: path } } } }
+    : null;
+  const scoped = (report) => (onlyThisPage ? { ...report, ...onlyThisPage } : report);
+
   return [
     // 0. 일자별 추이 + 직전 같은 기간 (dateRange 차원이 자동으로 붙는다)
-    {
+    scoped({
       dateRanges: [current, previous],
       dimensions: [{ name: 'date' }],
       metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
       orderBys: [{ dimension: { dimensionName: 'date' } }],
       limit: 400,
-    },
+    }),
     // 1. 유입 경로
-    {
+    scoped({
       dateRanges: [current],
       dimensions: [{ name: 'sessionDefaultChannelGroup' }, { name: 'sessionSource' }],
       metrics: [{ name: 'sessions' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
       limit: 10,
-    },
+    }),
     // 2. 인기 페이지
-    {
+    scoped({
       dateRanges: [current],
       dimensions: [{ name: 'pagePath' }, { name: 'pageTitle' }],
       metrics: [{ name: 'screenPageViews' }],
       orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
       limit: 10,
-    },
+    }),
     // 3. 이벤트
-    {
+    scoped({
       dateRanges: [current],
       dimensions: [{ name: 'eventName' }],
       metrics: [{ name: 'eventCount' }],
       orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
       limit: 20,
-    },
+    }),
     // 4. 기기
-    {
+    scoped({
       dateRanges: [current],
       dimensions: [{ name: 'deviceCategory' }],
       metrics: [{ name: 'activeUsers' }],
       orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
       limit: 5,
-    },
+    }),
   ];
 }
 
-function parseSite(site, batch, realtime) {
+// GA는 batchRunReports 하나에 리포트 5개까지만 받는다. 그래서 두 묶음으로 나눈다.
+function extraReportsFor(days, path) {
+  const current = { startDate: `${days}daysAgo`, endDate: 'today' };
+  const onlyThisPage = path
+    ? { dimensionFilter: { filter: { fieldName: 'pagePath',
+                                     stringFilter: { matchType: 'EXACT', value: path } } } }
+    : null;
+  const scoped = (report) => (onlyThisPage ? { ...report, ...onlyThisPage } : report);
+
+  return [
+    // 0. 지역 (도시 · 나라)
+    scoped({
+      dateRanges: [current],
+      dimensions: [{ name: 'city' }, { name: 'country' }],
+      metrics: [{ name: 'activeUsers' }],
+      orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
+      limit: 10,
+    }),
+    // 1. 운영체제
+    scoped({
+      dateRanges: [current],
+      dimensions: [{ name: 'operatingSystem' }],
+      metrics: [{ name: 'activeUsers' }],
+      orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
+      limit: 8,
+    }),
+  ];
+}
+
+function parseSite(site, batch, extraBatch, realtime) {
   const reports = batch.reports || [];
   const daily = [];
   const totals = { users: 0, sessions: 0, views: 0 };
@@ -123,14 +159,32 @@ function parseSite(site, batch, realtime) {
     users: metric(row, 0),
   }));
 
-  let live = 0;
-  for (const row of (realtime && realtime.rows) || []) live += metric(row, 0);
+  const extra = (extraBatch && extraBatch.reports) || [];
+
+  const regions = ((extra[0] || {}).rows || []).map((row) => ({
+    city: dim(row, 0) || '(알 수 없음)',
+    country: dim(row, 1),
+    users: metric(row, 0),
+  }));
+
+  const os = ((extra[1] || {}).rows || []).map((row) => ({
+    name: dim(row, 0) || '(알 수 없음)',
+    users: metric(row, 0),
+  }));
+
+  // 경로 단위 항목은 실시간을 재지 않는다 (아래 fetchSite 주석 참고)
+  let live = null;
+  if (realtime) {
+    live = 0;
+    for (const row of realtime.rows || []) live += metric(row, 0);
+  }
 
   return {
     id: site.id,
     label: site.label,
     url: site.url || '',
     propertyId: site.propertyId,
+    path: site.path || null,
     live,
     totals,
     prevTotals,
@@ -139,17 +193,25 @@ function parseSite(site, batch, realtime) {
     pages,
     events,
     devices,
+    regions,
+    os,
   };
 }
 
 async function fetchSite(site, days) {
-  const [batch, realtime] = await Promise.all([
-    callGa(site.propertyId, 'batchRunReports', { requests: reportsFor(days) }),
-    callGa(site.propertyId, 'runRealtimeReport', {
-      metrics: [{ name: 'activeUsers' }],
-    }).catch(() => ({ rows: [] })), // 실시간은 실패해도 나머지를 살린다
+  // GA 실시간 보고서는 pagePath 필터를 지원하지 않는다. 페이지 단위 항목에서는
+  // 속성 전체 숫자가 그 페이지 것인 양 보이는 편이 더 나쁘므로 아예 비워 둔다.
+  const wantsRealtime = !site.path;
+
+  const [batch, extraBatch, realtime] = await Promise.all([
+    callGa(site.propertyId, 'batchRunReports', { requests: reportsFor(days, site.path) }),
+    callGa(site.propertyId, 'batchRunReports', { requests: extraReportsFor(days, site.path) }),
+    wantsRealtime
+      ? callGa(site.propertyId, 'runRealtimeReport', { metrics: [{ name: 'activeUsers' }] })
+          .catch(() => ({ rows: [] })) // 실시간은 실패해도 나머지를 살린다
+      : Promise.resolve(null),
   ]);
-  return parseSite(site, batch, realtime);
+  return parseSite(site, batch, extraBatch, realtime);
 }
 
 module.exports = async (req, res) => {
@@ -187,6 +249,7 @@ module.exports = async (req, res) => {
           label: site.label,
           url: site.url || '',
           propertyId: site.propertyId,
+          path: site.path || null,
           error: e.message || '알 수 없는 오류',
         };
       }

@@ -219,13 +219,16 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
     const sites = data.sites;
     const ok = sites.filter((s) => !s.error);
 
-    const sum = (f) => ok.reduce((a, s) => a + f(s), 0);
+    // 페이지 단위 항목은 속성 단위 항목과 같은 데이터를 잘라 본 것이다.
+    // 합계에 함께 더하면 같은 방문을 두 번 세게 된다.
+    const whole = ok.filter((s) => !s.path);
+    const sum = (f) => whole.reduce((a, s) => a + (f(s) || 0), 0);
     document.getElementById('totals').innerHTML = `
       <div><dt>지금 접속 중</dt><dd>${num(sum((s) => s.live))}</dd></div>
       <div><dt>사용자 (${days}일)</dt><dd>${num(sum((s) => s.totals.users))}</dd></div>
       <div><dt>세션</dt><dd>${num(sum((s) => s.totals.sessions))}</dd></div>
       <div><dt>페이지 조회</dt><dd>${num(sum((s) => s.totals.views))}</dd></div>
-      <div><dt>사이트</dt><dd>${ok.length}<span class="sub" style="font-size:13px;font-weight:400;color:var(--dim)"> / ${sites.length}</span></dd></div>`;
+      <div><dt>항목</dt><dd>${ok.length}<span class="sub" style="font-size:13px;font-weight:400;color:var(--dim)"> / ${sites.length}</span></dd></div>`;
 
     document.getElementById('cards').innerHTML = sites.map((s) => {
       if (s.error) {
@@ -287,7 +290,7 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
           <div><dt>사용자</dt><dd>${num(s.totals.users)} ${deltaHtml(s.totals.users, s.prevTotals.users)}</dd></div>
           <div><dt>세션</dt><dd>${num(s.totals.sessions)} ${deltaHtml(s.totals.sessions, s.prevTotals.sessions)}</dd></div>
           <div><dt>페이지 조회</dt><dd>${num(s.totals.views)} ${deltaHtml(s.totals.views, s.prevTotals.views)}</dd></div>
-          <div><dt>지금 접속 중</dt><dd>${num(s.live)}</dd></div>
+          ${s.live === null ? '' : `<div><dt>지금 접속 중</dt><dd>${num(s.live)}</dd></div>`}
         </div>
       </div>
 
@@ -307,6 +310,15 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
 
       <div class="panel"><h2>기기</h2>${table(s.devices.map((d) => ({
         label: esc({ mobile: '모바일', desktop: '데스크톱', tablet: '태블릿' }[d.name] || d.name), value: d.users,
+      })))}</div>
+
+      <div class="panel"><h2>지역</h2>${table((s.regions || []).map((r) => ({
+        label: `${esc(r.city)}${r.country && r.country !== 'South Korea' ? `<small>${esc(r.country)}</small>` : ''}`,
+        value: r.users,
+      })))}</div>
+
+      <div class="panel"><h2>운영체제</h2>${table((s.os || []).map((o) => ({
+        label: esc(o.name), value: o.users,
       })))}</div>
 
       <div class="panel wide"><h2>전체 이벤트</h2>${table(s.events.map((e) => ({
