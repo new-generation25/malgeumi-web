@@ -8,14 +8,9 @@
  */
 
 const { callGa, metric, dim } = require('../lib/ga');
-const { loadSites } = require('../lib/sites');
+const { SITES } = require('../lib/sites');
 
 const ALLOWED_DAYS = [7, 28, 90];
-const CACHE_TTL_MS = 60 * 1000;
-
-// 함수 인스턴스가 살아 있는 동안만 유효한 캐시. GA API 할당량을 아끼고
-// 새로고침을 눌러댈 때 응답을 빠르게 한다.
-const cache = new Map();
 
 function safeEqual(a, b) {
   const bufA = Buffer.from(String(a));
@@ -230,17 +225,8 @@ module.exports = async (req, res) => {
   let days = parseInt((req.query && req.query.days) || '28', 10);
   if (!ALLOWED_DAYS.includes(days)) days = 28;
 
-  const cacheKey = `days:${days}`;
-  const hit = cache.get(cacheKey);
-  if (hit && Date.now() - hit.at < CACHE_TTL_MS) {
-    res.setHeader('x-cache', 'hit');
-    res.status(200).json(hit.payload);
-    return;
-  }
-
-  const sites = loadSites();
   const results = await Promise.all(
-    sites.map(async (site) => {
+    SITES.map(async (site) => {
       try {
         return await fetchSite(site, days);
       } catch (e) {
@@ -262,8 +248,6 @@ module.exports = async (req, res) => {
     sites: results,
   };
 
-  cache.set(cacheKey, { at: Date.now(), payload });
   res.setHeader('cache-control', 'no-store');
-  res.setHeader('x-cache', 'miss');
   res.status(200).json(payload);
 };
