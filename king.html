@@ -841,5 +841,17 @@ new IntersectionObserver(es => {
   dock.classList.toggle('on', !es[0].isIntersecting);
 }, {threshold:.15}).observe(hero);
 </script>
+<!-- ═══════════════════════════════════════════════════════════
+     Vercel 유입 분석 — 방문자·유입 경로·페이지별 조회수
+     Vercel 대시보드 > 이 프로젝트 > Analytics / Speed Insights 에서
+     각각 [Enable]을 눌러야 데이터가 쌓입니다. 코드는 그대로 두면 됩니다.
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
 </body>
 </html>
