@@ -152,32 +152,26 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
   const num = (n) => (n || 0).toLocaleString('ko-KR');
 
   /* ── 데이터 ─────────────────────────────────────── */
-  async function load(showGateError) {
+  async function load() {
     const key = sessionStorage.getItem(KEY);
-    if (!key) return showGate();
+    if (!key) return showGate('');
 
     document.getElementById('stamp').textContent = '불러오는 중…';
-    let res;
+    let res, body;
     try {
       res = await fetch(`/api/stats?days=${days}`, { headers: { 'x-dash-key': key } });
+      body = await res.json().catch(() => ({}));
     } catch (e) {
-      document.getElementById('stamp').textContent = '연결 실패';
-      return;
+      return fail('연결 실패');
     }
 
-    if (res.status === 401) {
-      sessionStorage.removeItem(KEY);
-      return showGate(showGateError ? '비밀번호가 맞지 않습니다.' : '');
-    }
     if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      document.getElementById('stamp').textContent = body.error || `오류 ${res.status}`;
-      gate.classList.add('hidden');
-      app.classList.remove('hidden');
-      return;
+      // 비밀번호가 틀렸을 때만 지운다. 서버 설정 문제로 지울 이유는 없다.
+      if (res.status === 401) sessionStorage.removeItem(KEY);
+      return fail(body.error || `오류 ${res.status}`);
     }
 
-    data = await res.json();
+    data = body;
     gate.classList.add('hidden');
     app.classList.remove('hidden');
     if (!selected || !data.sites.some((s) => s.id === selected)) {
@@ -192,6 +186,12 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
     app.classList.add('hidden');
     gateMsg.textContent = msg || '';
     document.getElementById('pw').focus();
+  }
+
+  // 보여줄 데이터가 아직 없으면 비밀번호 화면으로 되돌린다. 그래야 갇히지 않는다.
+  function fail(msg) {
+    if (!data) return showGate(msg);
+    document.getElementById('stamp').textContent = msg;
   }
 
   /* ── 그리기 ─────────────────────────────────────── */
@@ -327,7 +327,7 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
     if (!v) return;
     sessionStorage.setItem(KEY, v);
     document.getElementById('pw').value = '';
-    load(true);
+    load();
   });
 
   document.getElementById('range').addEventListener('click', (e) => {
