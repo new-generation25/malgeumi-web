@@ -5,3 +5,7 @@ node_modules
 # 사진 고르기용 임시 파일 (선택 끝나면 삭제)
 _pick.html
 images/_cand-*
+
+# 서비스 계정 키 — 절대 커밋하지 않는다
+*.json
+!package.json
