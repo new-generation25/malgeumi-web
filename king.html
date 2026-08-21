@@ -432,6 +432,26 @@ figcaption{
   .jamo .drop{opacity:.25}
 }
 </style>
+<!-- ═══════════════════════════════════════════════════════════
+     Google Analytics 4
+     아래 GA_ID 한 곳에만 측정 ID(G-로 시작)를 넣으면 켜집니다.
+     비어 있으면 스크립트를 아예 불러오지 않습니다.
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+window.GA_ID = '';   /* 예: 'G-ABCD123XYZ' */
+(function (id) {
+  if (!id) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', id);
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+  document.head.appendChild(s);
+})(window.GA_ID);
+</script>
+
 </head>
 <body>
 
@@ -852,6 +872,21 @@ new IntersectionObserver(es => {
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
+
+<!-- ─── 전환 추적: 예매·전화·이메일·블로그 클릭 (GA_ID를 넣어야 동작) ─── -->
+<script>
+document.addEventListener('click', function (e) {
+  if (!window.gtag) return;
+  var a = e.target && e.target.closest && e.target.closest('a');
+  if (!a) return;
+  var href = a.getAttribute('href') || '';
+  var where = { page_path: location.pathname };
+  if (a.hasAttribute('data-book'))                gtag('event', 'booking_click', where);
+  else if (href.indexOf('tel:') === 0)            gtag('event', 'phone_click',   where);
+  else if (href.indexOf('mailto:') === 0)         gtag('event', 'email_click',   where);
+  else if (href.indexOf('blog.naver.com') !== -1) gtag('event', 'blog_click',    where);
+});
+</script>
 
 </body>
 </html>
