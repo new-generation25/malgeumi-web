@@ -1373,6 +1373,19 @@
             padding-top: 20px;
             border-top: 1px solid var(--line-dark);
             color: var(--fog);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .copyright a {
+            color: inherit;
+        }
+
+        .copyright a:hover {
+            color: var(--accent);
         }
 
         /* 스크린리더 전용 라벨 */
@@ -2003,6 +2016,7 @@
         </div>
         <div class="copyright">
             <p>© 2026 말그미 극단. All rights reserved.</p>
+            <a href="/dashboard.html" rel="nofollow">관리자 로그인</a>
         </div>
     </footer>
 
