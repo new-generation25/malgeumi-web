@@ -1,0 +1,206 @@
+/**
+ * GET /api/stats?days=28
+ *
+ * 등록된 모든 사이트의 GA4 지표를 한 번에 내려준다. 대시보드가 사이트를
+ * 바꿀 때마다 다시 부르지 않도록, 개요와 상세를 함께 담는다.
+ *
+ * 인증: x-dash-key 헤더가 DASH_PASSWORD와 같아야 한다.
+ */
+
+const { callGa, metric, dim } = require('../lib/ga');
+const { loadSites } = require('../lib/sites');
+
+const ALLOWED_DAYS = [7, 28, 90];
+const CACHE_TTL_MS = 60 * 1000;
+
+// 함수 인스턴스가 살아 있는 동안만 유효한 캐시. GA API 할당량을 아끼고
+// 새로고침을 눌러댈 때 응답을 빠르게 한다.
+const cache = new Map();
+
+function safeEqual(a, b) {
+  const bufA = Buffer.from(String(a));
+  const bufB = Buffer.from(String(b));
+  if (bufA.length !== bufB.length) return false;
+  return require('crypto').timingSafeEqual(bufA, bufB);
+}
+
+function reportsFor(days) {
+  const current = { startDate: `${days}daysAgo`, endDate: 'today' };
+  const previous = { startDate: `${days * 2}daysAgo`, endDate: `${days + 1}daysAgo` };
+
+  return [
+    // 0. 일자별 추이 + 직전 같은 기간 (dateRange 차원이 자동으로 붙는다)
+    {
+      dateRanges: [current, previous],
+      dimensions: [{ name: 'date' }],
+      metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
+      orderBys: [{ dimension: { dimensionName: 'date' } }],
+      limit: 400,
+    },
+    // 1. 유입 경로
+    {
+      dateRanges: [current],
+      dimensions: [{ name: 'sessionDefaultChannelGroup' }, { name: 'sessionSource' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+      limit: 10,
+    },
+    // 2. 인기 페이지
+    {
+      dateRanges: [current],
+      dimensions: [{ name: 'pagePath' }, { name: 'pageTitle' }],
+      metrics: [{ name: 'screenPageViews' }],
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+      limit: 10,
+    },
+    // 3. 이벤트
+    {
+      dateRanges: [current],
+      dimensions: [{ name: 'eventName' }],
+      metrics: [{ name: 'eventCount' }],
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 20,
+    },
+    // 4. 기기
+    {
+      dateRanges: [current],
+      dimensions: [{ name: 'deviceCategory' }],
+      metrics: [{ name: 'activeUsers' }],
+      orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
+      limit: 5,
+    },
+  ];
+}
+
+function parseSite(site, batch, realtime) {
+  const reports = batch.reports || [];
+  const daily = [];
+  const totals = { users: 0, sessions: 0, views: 0 };
+  const prevTotals = { users: 0, sessions: 0, views: 0 };
+
+  // 리포트 0: dateRange 차원이 마지막에 붙는다.
+  const r0 = reports[0] || {};
+  const dateRangeIndex = (r0.dimensionHeaders || []).findIndex((h) => h.name === 'dateRange');
+  for (const row of r0.rows || []) {
+    const isPrev = dateRangeIndex >= 0 && dim(row, dateRangeIndex) === 'date_range_1';
+    const bucket = isPrev ? prevTotals : totals;
+    const users = metric(row, 0);
+    const sessions = metric(row, 1);
+    const views = metric(row, 2);
+    bucket.users += users;
+    bucket.sessions += sessions;
+    bucket.views += views;
+    if (!isPrev) {
+      const d = dim(row, 0); // YYYYMMDD
+      daily.push({
+        date: `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`,
+        users,
+        sessions,
+        views,
+      });
+    }
+  }
+
+  const channels = ((reports[1] || {}).rows || []).map((row) => ({
+    channel: dim(row, 0) || '(기타)',
+    source: dim(row, 1) || '(직접)',
+    sessions: metric(row, 0),
+  }));
+
+  const pages = ((reports[2] || {}).rows || []).map((row) => ({
+    path: dim(row, 0),
+    title: dim(row, 1),
+    views: metric(row, 0),
+  }));
+
+  const events = ((reports[3] || {}).rows || []).map((row) => ({
+    name: dim(row, 0),
+    count: metric(row, 0),
+  }));
+
+  const devices = ((reports[4] || {}).rows || []).map((row) => ({
+    name: dim(row, 0),
+    users: metric(row, 0),
+  }));
+
+  let live = 0;
+  for (const row of (realtime && realtime.rows) || []) live += metric(row, 0);
+
+  return {
+    id: site.id,
+    label: site.label,
+    url: site.url || '',
+    propertyId: site.propertyId,
+    live,
+    totals,
+    prevTotals,
+    daily,
+    channels,
+    pages,
+    events,
+    devices,
+  };
+}
+
+async function fetchSite(site, days) {
+  const [batch, realtime] = await Promise.all([
+    callGa(site.propertyId, 'batchRunReports', { requests: reportsFor(days) }),
+    callGa(site.propertyId, 'runRealtimeReport', {
+      metrics: [{ name: 'activeUsers' }],
+    }).catch(() => ({ rows: [] })), // 실시간은 실패해도 나머지를 살린다
+  ]);
+  return parseSite(site, batch, realtime);
+}
+
+module.exports = async (req, res) => {
+  const password = process.env.DASH_PASSWORD;
+  if (!password) {
+    res.status(500).json({ error: 'DASH_PASSWORD 환경변수가 설정되지 않았습니다.' });
+    return;
+  }
+
+  const given = req.headers['x-dash-key'] || '';
+  if (!given || !safeEqual(given, password)) {
+    res.status(401).json({ error: '비밀번호가 맞지 않습니다.' });
+    return;
+  }
+
+  let days = parseInt((req.query && req.query.days) || '28', 10);
+  if (!ALLOWED_DAYS.includes(days)) days = 28;
+
+  const cacheKey = `days:${days}`;
+  const hit = cache.get(cacheKey);
+  if (hit && Date.now() - hit.at < CACHE_TTL_MS) {
+    res.setHeader('x-cache', 'hit');
+    res.status(200).json(hit.payload);
+    return;
+  }
+
+  const sites = loadSites();
+  const results = await Promise.all(
+    sites.map(async (site) => {
+      try {
+        return await fetchSite(site, days);
+      } catch (e) {
+        return {
+          id: site.id,
+          label: site.label,
+          url: site.url || '',
+          propertyId: site.propertyId,
+          error: e.message || '알 수 없는 오류',
+        };
+      }
+    })
+  );
+
+  const payload = {
+    updatedAt: new Date().toISOString(),
+    days,
+    sites: results,
+  };
+
+  cache.set(cacheKey, { at: Date.now(), payload });
+  res.setHeader('cache-control', 'no-store');
+  res.setHeader('x-cache', 'miss');
+  res.status(200).json(payload);
+};

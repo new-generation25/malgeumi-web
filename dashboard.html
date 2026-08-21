@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>유입 대시보드 — 말그미</title>
+<style>
+:root{
+  --bg:#F7F8FA; --panel:#FFFFFF; --line:#E4E8EE;
+  --ink:#141A21; --mid:#5A6976; --dim:#8B98A5;
+  --accent:#2F6FED; --good:#16A06B; --bad:#D8503C;
+  --chip:#EEF2F8;
+}
+:root:not([data-theme="light"]) { color-scheme: light; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1319; --panel:#161E28; --line:#26313D;
+    --ink:#E9EEF4; --mid:#9AA9B8; --dim:#6E7E8E;
+    --accent:#5B92FF; --good:#3FBF8B; --bad:#F0705A;
+    --chip:#1E2833;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif;
+  font-size:14px; line-height:1.55;
+}
+.wrap{max-width:1240px; margin:0 auto; padding:24px 20px 64px}
+
+/* ── 상단 ─────────────────────────────────────────── */
+header{display:flex; flex-wrap:wrap; gap:12px; align-items:baseline; margin-bottom:20px}
+h1{font-size:19px; font-weight:700; margin:0; letter-spacing:-.2px}
+.meta{color:var(--dim); font-size:12px; margin-left:auto; display:flex; align-items:center; gap:10px}
+.seg{display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--panel)}
+.seg button{
+  appearance:none; border:0; background:transparent; color:var(--mid);
+  padding:6px 12px; font:inherit; font-size:13px; cursor:pointer;
+}
+.seg button[aria-pressed="true"]{background:var(--accent); color:#fff}
+.ghost{
+  appearance:none; border:1px solid var(--line); background:var(--panel); color:var(--mid);
+  padding:6px 12px; border-radius:8px; font:inherit; font-size:13px; cursor:pointer;
+}
+.ghost:hover{color:var(--ink)}
+
+/* ── 합계 스트립 ───────────────────────────────────── */
+.totals{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:12px;
+  overflow:hidden; margin-bottom:20px;
+}
+.totals div{background:var(--panel); padding:14px 16px}
+.totals dt{color:var(--mid); font-size:12px; margin:0 0 4px}
+.totals dd{margin:0; font-size:24px; font-weight:700; letter-spacing:-.5px; font-variant-numeric:tabular-nums}
+
+/* ── 사이트 카드 ───────────────────────────────────── */
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-bottom:26px}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:14px 16px; cursor:pointer; text-align:left; font:inherit; color:inherit;
+  display:flex; flex-direction:column; gap:8px; position:relative;
+}
+.card[aria-selected="true"]{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent)}
+.card .name{font-weight:600; font-size:14px; display:flex; align-items:center; gap:6px}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--good); flex:none}
+.card .num{font-size:26px; font-weight:700; letter-spacing:-.5px; font-variant-numeric:tabular-nums; line-height:1.1}
+.card .sub{color:var(--dim); font-size:12px}
+.delta{font-size:12px; font-weight:600; font-variant-numeric:tabular-nums}
+.up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--dim)}
+.spark{display:block; width:100%; height:34px}
+.card .err{color:var(--bad); font-size:12px; line-height:1.4}
+
+/* ── 상세 ─────────────────────────────────────────── */
+.detail{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px}
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px}
+.panel h2{font-size:13px; font-weight:600; color:var(--mid); margin:0 0 12px; letter-spacing:.1px}
+.panel.wide{grid-column:1/-1}
+table{width:100%; border-collapse:collapse; font-size:13px}
+td{padding:6px 0; vertical-align:baseline}
+tr+tr td{border-top:1px solid var(--line)}
+td.n{text-align:right; font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; padding-left:12px}
+td.k{color:var(--ink); word-break:break-all}
+td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
+.bar{height:3px; background:var(--accent); border-radius:2px; margin-top:5px; opacity:.75}
+.chip{display:inline-block; background:var(--chip); color:var(--mid); border-radius:5px; padding:1px 6px; font-size:11px}
+.empty{color:var(--dim); font-size:13px; padding:6px 0}
+
+/* ── 로그인 ───────────────────────────────────────── */
+.gate{max-width:340px; margin:14vh auto; background:var(--panel); border:1px solid var(--line);
+  border-radius:14px; padding:26px}
+.gate h1{margin-bottom:6px}
+.gate p{color:var(--mid); font-size:13px; margin:0 0 16px}
+.gate input{
+  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px;
+  background:var(--bg); color:var(--ink); font:inherit; margin-bottom:10px;
+}
+.gate button{
+  width:100%; padding:10px; border:0; border-radius:8px; background:var(--accent);
+  color:#fff; font:inherit; font-weight:600; cursor:pointer;
+}
+.gate .msg{color:var(--bad); font-size:12px; min-height:17px; margin-top:8px}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<!-- 비밀번호 -->
+<div class="gate" id="gate">
+  <h1>유입 대시보드</h1>
+  <p>비밀번호를 넣어 주세요.</p>
+  <form id="gateForm">
+    <input type="password" id="pw" autocomplete="current-password" placeholder="비밀번호">
+    <button type="submit">들어가기</button>
+    <div class="msg" id="gateMsg"></div>
+  </form>
+</div>
+
+<!-- 본문 -->
+<div class="wrap hidden" id="app">
+  <header>
+    <h1>유입 대시보드</h1>
+    <div class="meta">
+      <div class="seg" id="range">
+        <button data-days="7">7일</button>
+        <button data-days="28" aria-pressed="true">28일</button>
+        <button data-days="90">90일</button>
+      </div>
+      <button class="ghost" id="refresh">새로고침</button>
+      <span id="stamp"></span>
+    </div>
+  </header>
+
+  <dl class="totals" id="totals"></dl>
+  <div class="cards" id="cards"></div>
+  <div class="detail" id="detail"></div>
+</div>
+
+<script>
+(() => {
+  const KEY = 'dash-key';
+  const gate = document.getElementById('gate');
+  const app = document.getElementById('app');
+  const gateMsg = document.getElementById('gateMsg');
+
+  let days = 28;
+  let data = null;
+  let selected = null;
+
+  const num = (n) => (n || 0).toLocaleString('ko-KR');
+
+  /* ── 데이터 ─────────────────────────────────────── */
+  async function load(showGateError) {
+    const key = sessionStorage.getItem(KEY);
+    if (!key) return showGate();
+
+    document.getElementById('stamp').textContent = '불러오는 중…';
+    let res;
+    try {
+      res = await fetch(`/api/stats?days=${days}`, { headers: { 'x-dash-key': key } });
+    } catch (e) {
+      document.getElementById('stamp').textContent = '연결 실패';
+      return;
+    }
+
+    if (res.status === 401) {
+      sessionStorage.removeItem(KEY);
+      return showGate(showGateError ? '비밀번호가 맞지 않습니다.' : '');
+    }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      document.getElementById('stamp').textContent = body.error || `오류 ${res.status}`;
+      gate.classList.add('hidden');
+      app.classList.remove('hidden');
+      return;
+    }
+
+    data = await res.json();
+    gate.classList.add('hidden');
+    app.classList.remove('hidden');
+    if (!selected || !data.sites.some((s) => s.id === selected)) {
+      const first = data.sites.find((s) => !s.error) || data.sites[0];
+      selected = first && first.id;
+    }
+    render();
+  }
+
+  function showGate(msg) {
+    gate.classList.remove('hidden');
+    app.classList.add('hidden');
+    gateMsg.textContent = msg || '';
+    document.getElementById('pw').focus();
+  }
+
+  /* ── 그리기 ─────────────────────────────────────── */
+  function sparkline(daily) {
+    if (!daily || daily.length < 2) return '';
+    const vals = daily.map((d) => d.users);
+    const max = Math.max(...vals, 1);
+    const step = 100 / (vals.length - 1);
+    const pts = vals.map((v, i) => `${(i * step).toFixed(2)},${(30 - (v / max) * 28).toFixed(2)}`);
+    return `<svg class="spark" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="${pts.join(' ')}" fill="none" stroke="var(--accent)" stroke-width="1.6"
+        vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  function deltaHtml(now, prev) {
+    if (!prev) return now ? '<span class="delta flat">새로 시작</span>' : '';
+    const pct = Math.round(((now - prev) / prev) * 100);
+    const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+    const sign = pct > 0 ? '▲' : pct < 0 ? '▼' : '–';
+    return `<span class="delta ${cls}">${sign} ${Math.abs(pct)}%</span>`;
+  }
+
+  function render() {
+    const sites = data.sites;
+    const ok = sites.filter((s) => !s.error);
+
+    const sum = (f) => ok.reduce((a, s) => a + f(s), 0);
+    document.getElementById('totals').innerHTML = `
+      <div><dt>지금 접속 중</dt><dd>${num(sum((s) => s.live))}</dd></div>
+      <div><dt>사용자 (${days}일)</dt><dd>${num(sum((s) => s.totals.users))}</dd></div>
+      <div><dt>세션</dt><dd>${num(sum((s) => s.totals.sessions))}</dd></div>
+      <div><dt>페이지 조회</dt><dd>${num(sum((s) => s.totals.views))}</dd></div>
+      <div><dt>사이트</dt><dd>${ok.length}<span class="sub" style="font-size:13px;font-weight:400;color:var(--dim)"> / ${sites.length}</span></dd></div>`;
+
+    document.getElementById('cards').innerHTML = sites.map((s) => {
+      if (s.error) {
+        return `<button class="card" data-id="${s.id}" aria-selected="false">
+          <span class="name">${esc(s.label)}</span>
+          <span class="err">${esc(s.error)}</span>
+          <span class="sub">속성 ${esc(s.propertyId)}</span>
+        </button>`;
+      }
+      return `<button class="card" data-id="${s.id}" aria-selected="${s.id === selected}">
+        <span class="name">${s.live ? '<i class="dot"></i>' : ''}${esc(s.label)}</span>
+        <span class="num">${num(s.totals.users)}</span>
+        <span class="sub">${days}일 사용자 ${deltaHtml(s.totals.users, s.prevTotals.users)}
+          ${s.live ? `· <b>지금 ${num(s.live)}명</b>` : ''}</span>
+        ${sparkline(s.daily)}
+      </button>`;
+    }).join('');
+
+    document.querySelectorAll('.card').forEach((el) => {
+      el.addEventListener('click', () => { selected = el.dataset.id; render(); });
+    });
+
+    renderDetail(sites.find((s) => s.id === selected));
+    document.getElementById('stamp').textContent =
+      '갱신 ' + new Date(data.updatedAt).toLocaleTimeString('ko-KR');
+  }
+
+  function table(rows, render) {
+    if (!rows || !rows.length) return '<p class="empty">아직 데이터가 없습니다.</p>';
+    const max = Math.max(...rows.map((r) => r.value), 1);
+    return '<table>' + rows.map((r) => `<tr>
+      <td class="k">${r.label}<div class="bar" style="width:${(r.value / max) * 100}%"></div></td>
+      <td class="n">${num(r.value)}</td></tr>`).join('') + '</table>';
+  }
+
+  const EVENT_LABEL = {
+    booking_click: '예매 신청 클릭',
+    phone_click: '전화 문의 클릭',
+    email_click: '이메일 클릭',
+    blog_click: '블로그 클릭',
+    subscribe: '소식 구독 완료',
+  };
+
+  function renderDetail(s) {
+    const el = document.getElementById('detail');
+    if (!s) { el.innerHTML = ''; return; }
+    if (s.error) {
+      el.innerHTML = `<div class="panel wide"><h2>${esc(s.label)}</h2>
+        <p class="empty">${esc(s.error)}<br>서비스 계정을 이 속성의 뷰어로 추가했는지 확인해 주세요.</p></div>`;
+      return;
+    }
+
+    const conv = s.events.filter((e) => EVENT_LABEL[e.name]);
+
+    el.innerHTML = `
+      <div class="panel wide">
+        <h2>${esc(s.label)}${s.url ? ` · <a href="${esc(s.url)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(s.url.replace(/^https?:\/\//, ''))}</a>` : ''}</h2>
+        <div class="totals" style="margin:0">
+          <div><dt>사용자</dt><dd>${num(s.totals.users)} ${deltaHtml(s.totals.users, s.prevTotals.users)}</dd></div>
+          <div><dt>세션</dt><dd>${num(s.totals.sessions)} ${deltaHtml(s.totals.sessions, s.prevTotals.sessions)}</dd></div>
+          <div><dt>페이지 조회</dt><dd>${num(s.totals.views)} ${deltaHtml(s.totals.views, s.prevTotals.views)}</dd></div>
+          <div><dt>지금 접속 중</dt><dd>${num(s.live)}</dd></div>
+        </div>
+      </div>
+
+      <div class="panel"><h2>유입 경로</h2>${table(s.channels.map((c) => ({
+        label: `${esc(c.channel)}<small>${esc(c.source)}</small>`, value: c.sessions,
+      })))}</div>
+
+      <div class="panel"><h2>인기 페이지</h2>${table(s.pages.map((p) => ({
+        label: `${esc(p.path)}<small>${esc(p.title)}</small>`, value: p.views,
+      })))}</div>
+
+      <div class="panel"><h2>전환</h2>${
+        conv.length
+          ? table(conv.map((e) => ({ label: `${esc(EVENT_LABEL[e.name])}<small>${esc(e.name)}</small>`, value: e.count })))
+          : '<p class="empty">전환 이벤트가 아직 없습니다.</p>'
+      }</div>
+
+      <div class="panel"><h2>기기</h2>${table(s.devices.map((d) => ({
+        label: esc({ mobile: '모바일', desktop: '데스크톱', tablet: '태블릿' }[d.name] || d.name), value: d.users,
+      })))}</div>
+
+      <div class="panel wide"><h2>전체 이벤트</h2>${table(s.events.map((e) => ({
+        label: `${esc(e.name)}${EVENT_LABEL[e.name] ? ' <span class="chip">전환</span>' : ''}`, value: e.count,
+      })))}</div>`;
+  }
+
+  function esc(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ── 조작 ───────────────────────────────────────── */
+  document.getElementById('gateForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = document.getElementById('pw').value;
+    if (!v) return;
+    sessionStorage.setItem(KEY, v);
+    document.getElementById('pw').value = '';
+    load(true);
+  });
+
+  document.getElementById('range').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-days]');
+    if (!b) return;
+    days = Number(b.dataset.days);
+    document.querySelectorAll('#range button').forEach((x) => {
+      x.setAttribute('aria-pressed', String(x === b));
+    });
+    load();
+  });
+
+  document.getElementById('refresh').addEventListener('click', () => load());
+
+  load();
+})();
+</script>
+</body>
+</html>
