@@ -150,6 +150,12 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
   let selected = null;
 
   const num = (n) => (n || 0).toLocaleString('ko-KR');
+  const pct = (part, whole) => (whole ? `${((part / whole) * 100).toFixed(1)}%` : '–');
+  const dur = (sec) => {
+    if (!sec) return '–';
+    const m = Math.floor(sec / 60), r = Math.round(sec % 60);
+    return m ? `${m}분 ${r}초` : `${r}초`;
+  };
 
   /* ── 데이터 ─────────────────────────────────────── */
   async function load() {
@@ -228,6 +234,7 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
       <div><dt>사용자 (${days}일)</dt><dd>${num(sum((s) => s.totals.users))}</dd></div>
       <div><dt>세션</dt><dd>${num(sum((s) => s.totals.sessions))}</dd></div>
       <div><dt>페이지 조회</dt><dd>${num(sum((s) => s.totals.views))}</dd></div>
+      <div><dt>참여율</dt><dd>${pct(sum((s) => s.totals.engagedSessions), sum((s) => s.totals.sessions))}</dd></div>
       <div><dt>항목</dt><dd>${ok.length}<span class="sub" style="font-size:13px;font-weight:400;color:var(--dim)"> / ${sites.length}</span></dd></div>`;
 
     document.getElementById('cards').innerHTML = sites.map((s) => {
@@ -290,6 +297,9 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
           <div><dt>사용자</dt><dd>${num(s.totals.users)} ${deltaHtml(s.totals.users, s.prevTotals.users)}</dd></div>
           <div><dt>세션</dt><dd>${num(s.totals.sessions)} ${deltaHtml(s.totals.sessions, s.prevTotals.sessions)}</dd></div>
           <div><dt>페이지 조회</dt><dd>${num(s.totals.views)} ${deltaHtml(s.totals.views, s.prevTotals.views)}</dd></div>
+          <div><dt>참여율</dt><dd>${pct(s.totals.engagedSessions, s.totals.sessions)}
+            <span class="delta flat" style="font-weight:400">이탈 ${pct(s.totals.sessions - s.totals.engagedSessions, s.totals.sessions)}</span></dd></div>
+          <div><dt>평균 참여시간</dt><dd>${dur(s.totals.engagementSeconds / (s.totals.sessions || 1))}</dd></div>
           ${s.live === null ? '' : `<div><dt>지금 접속 중</dt><dd>${num(s.live)}</dd></div>`}
         </div>
       </div>
@@ -302,9 +312,16 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
         label: `${esc(p.path)}<small>${esc(p.title)}</small>`, value: p.views,
       })))}</div>
 
+      <div class="panel"><h2>유입 첫 페이지</h2>${table((s.landings || []).map((l) => ({
+        label: esc(l.path), value: l.sessions,
+      })))}</div>
+
       <div class="panel"><h2>전환</h2>${
         conv.length
-          ? table(conv.map((e) => ({ label: `${esc(EVENT_LABEL[e.name])}<small>${esc(e.name)}</small>`, value: e.count })))
+          ? table(conv.map((e) => ({
+              label: `${esc(EVENT_LABEL[e.name])}<small>${esc(e.name)} · 사용자 ${num(s.totals.users)}명 중 ${pct(e.count, s.totals.users)}</small>`,
+              value: e.count,
+            })))
           : '<p class="empty">전환 이벤트가 아직 없습니다.</p>'
       }</div>
 

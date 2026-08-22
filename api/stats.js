@@ -35,7 +35,9 @@ function reportsFor(days, path) {
     scoped({
       dateRanges: [current, previous],
       dimensions: [{ name: 'date' }],
-      metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
+      // 비율은 날짜별로 더할 수 없다. 더할 수 있는 원자료를 받아 나중에 나눈다.
+      metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' },
+                { name: 'engagedSessions' }, { name: 'userEngagementDuration' }],
       orderBys: [{ dimension: { dimensionName: 'date' } }],
       limit: 400,
     }),
@@ -100,14 +102,22 @@ function extraReportsFor(days, path) {
       orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }],
       limit: 8,
     }),
+    // 2. 유입 첫 페이지 — '인기 페이지'는 조회수라 어디로 들어왔는지는 안 보인다
+    scoped({
+      dateRanges: [current],
+      dimensions: [{ name: 'landingPage' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+      limit: 8,
+    }),
   ];
 }
 
 function parseSite(site, batch, extraBatch, realtime) {
   const reports = batch.reports || [];
   const daily = [];
-  const totals = { users: 0, sessions: 0, views: 0 };
-  const prevTotals = { users: 0, sessions: 0, views: 0 };
+  const totals = { users: 0, sessions: 0, views: 0, engagedSessions: 0, engagementSeconds: 0 };
+  const prevTotals = { users: 0, sessions: 0, views: 0, engagedSessions: 0, engagementSeconds: 0 };
 
   // 리포트 0: dateRange 차원이 마지막에 붙는다.
   const r0 = reports[0] || {};
@@ -121,6 +131,8 @@ function parseSite(site, batch, extraBatch, realtime) {
     bucket.users += users;
     bucket.sessions += sessions;
     bucket.views += views;
+    bucket.engagedSessions += metric(row, 3);
+    bucket.engagementSeconds += metric(row, 4);
     if (!isPrev) {
       const d = dim(row, 0); // YYYYMMDD
       daily.push({
@@ -167,6 +179,11 @@ function parseSite(site, batch, extraBatch, realtime) {
     users: metric(row, 0),
   }));
 
+  const landings = ((extra[2] || {}).rows || []).map((row) => ({
+    path: dim(row, 0) || '(알 수 없음)',
+    sessions: metric(row, 0),
+  }));
+
   // 경로 단위 항목은 실시간을 재지 않는다 (아래 fetchSite 주석 참고)
   let live = null;
   if (realtime) {
@@ -190,6 +207,7 @@ function parseSite(site, batch, extraBatch, realtime) {
     devices,
     regions,
     os,
+    landings,
   };
 }
 
