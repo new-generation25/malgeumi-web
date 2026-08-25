@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>배우고 참여하기 — 회현동 소극장</title>
+<meta name="description" content="회현동 소극장에서 열리는 워크숍·강좌 안내. 무대 위가 아니라 무대 안에서 만나는 방법입니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="회현동 소극장">
+<meta property="og:title" content="배우고 참여하기 — 회현동 소극장">
+<meta property="og:description" content="회현동 소극장에서 열리는 워크숍·강좌 안내.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://malgeumi-play.vercel.app/academy.html">
+<meta property="og:image" content="https://malgeumi-play.vercel.app/images/theater-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0F0D0B">
+<link rel="canonical" href="https://malgeumi-play.vercel.app/academy.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230F0D0B%22/><circle cx=%2216%22 cy=%2212%22 r=%226%22 fill=%22%23E0AB60%22/><path d=%22M4 27 Q16 18 28 27 L28 29 L4 29 Z%22 fill=%22%23E0AB60%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#0F0D0B; --bg2:#151210; --surface:#1D1916; --line:#302A24;
+  --amber:#E0AB60; --amber-d:#7E6236; --ink:#F2EDE4; --ink2:#B6AA9A; --ink3:#7E7367;
+  --sans:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;line-break:strict;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.navbar{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:16px 32px;background:rgba(15,13,11,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-container{max-width:1200px;margin:0 auto;position:relative;
+  display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:24px;
+  line-height:1.4;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.nav-logo span{color:var(--amber)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:15.2px;font-weight:500;line-height:1.7;color:var(--ink2);
+  text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-links .nav-cta{background:var(--amber);color:#1A1409;font-weight:600;
+  padding:11.2px 28.8px;border-radius:9999px}
+.nav-links .nav-cta:hover{background:#EDBE77;color:#1A1409}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;
+  padding:8px;font-size:22.4px;color:var(--ink);line-height:1}
+@media(max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:calc(100% + 16px);left:-32px;right:-32px;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:8px 32px 20px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13.6px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .nav-links a:last-child{border-bottom:none}
+  .nav-links .nav-cta{margin-top:13.6px;text-align:center;padding:13.6px 28.8px}
+}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+
+.hero{padding:150px 0 48px}
+.eyeb{font-size:12.5px;letter-spacing:.26em;color:var(--amber);font-weight:600;margin:0 0 20px}
+.hero h1{font-family:var(--serif);font-weight:700;margin:0 0 16px;
+  font-size:clamp(34px,6vw,54px);line-height:1.2;letter-spacing:-.02em}
+.hero p{margin:0;font-size:clamp(15px,2vw,17px);color:var(--ink2);max-width:560px;line-height:1.85}
+
+section{padding:16px 0 72px}
+
+/* 게시판형 카드 그리드 — 강좌가 늘어나면 카드만 더 붙이면 됩니다 */
+.board{display:grid;gap:20px}
+@media(min-width:760px){.board{grid-template-columns:repeat(2,1fr)}}
+.course{border:1px solid var(--line);border-radius:10px;background:var(--surface);
+  padding:28px 26px;display:flex;flex-direction:column}
+.course .tag{display:inline-flex;align-self:flex-start;font-size:11px;letter-spacing:.14em;
+  color:var(--amber);border:1px solid var(--amber-d);border-radius:999px;padding:4px 12px;margin:0 0 16px}
+.course h2{font-family:var(--serif);font-size:22px;font-weight:700;margin:0 0 4px;line-height:1.35}
+.course .sub{font-size:13px;color:var(--ink3);margin:0 0 18px}
+.course dl{display:grid;grid-template-columns:56px 1fr;gap:8px 12px;margin:0 0 18px;font-size:13.5px}
+.course dt{color:var(--ink3)}
+.course dd{margin:0;color:var(--ink2)}
+.course .desc{font-size:14px;color:var(--ink2);line-height:1.85;margin:0 0 18px}
+.course details{margin:0 0 20px;border-top:1px solid var(--line);padding-top:14px}
+.course summary{font-size:13px;color:var(--amber);cursor:pointer}
+.course .curri{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.course .curri li{font-size:13px;color:var(--ink2);line-height:1.7;padding-left:16px;position:relative}
+.course .curri li b{color:var(--ink);font-weight:600}
+.course .curri li::before{content:'·';position:absolute;left:0;color:var(--amber-d)}
+.course .btn{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 20px;border:1px solid var(--amber-d);border-radius:4px;color:var(--amber);
+  text-decoration:none;font-size:14px;font-weight:600;align-self:flex-start}
+.course .btn:hover{background:var(--amber);color:#17130E;border-color:var(--amber)}
+
+.soon{border:1px dashed var(--line);border-radius:10px;padding:28px 26px;
+  display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:14px;text-align:center}
+
+footer{background:#090807;padding:44px 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+footer b{color:var(--ink2);font-weight:600}
+footer .home{color:var(--amber);font-weight:600;text-decoration:none}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LGQHMEV50C');
+</script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">회현동<span>소극장</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks"
+            aria-label="메뉴 열기">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">회현동소극장</a>
+      <a href="malgeumi.html">말그미극단</a>
+      <a href="haeyeon.html">극단 해연</a>
+      <a href="king.html">King받은 이도</a>
+      <a href="malgeumi.html#contact" class="nav-cta">소식 구독</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyeb">함께하기</p>
+    <h1>배우고 참여하기</h1>
+    <p>관객이 아니라 무대 위에서 만나는 방법입니다. 지금 열려 있거나 곧 열릴 프로그램입니다.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="board">
+
+      <article class="course">
+        <span class="tag">무용 창작 워크숍</span>
+        <h2>나를 다시 짓다</h2>
+        <p class="sub">Re-Create Myself — 몸으로 쓰는 나의 이야기</p>
+
+        <dl>
+          <dt>대상</dt><dd>40~50대 전업주부·경력단절 여성 (정원 10~15명)</dd>
+          <dt>기간</dt><dd>4주 · 주 2회 · 회당 60분 (총 8회)</dd>
+        </dl>
+
+        <p class="desc">
+          기술을 배우는 강좌가 아니라, 내 움직임을 직접 만들어보는 창작 워크숍입니다.
+          몸을 깨우는 것으로 시작해 감정을 움직임으로 옮기고, 마지막 주에는
+          참여자들이 함께 만든 짧은 안무로 작은 발표회를 엽니다.
+        </p>
+
+        <details>
+          <summary>회차별 진행 보기</summary>
+          <ul class="curri">
+            <li><b>1주</b> 신체 깨우기 · 움직임 발견 — 내 몸을 인지하고, "정답은 없다"는 데서 시작</li>
+            <li><b>2주</b> 감정의 형상화 · 이미지 텔링 — 감정과 기억을 움직임으로 옮기기</li>
+            <li><b>3주</b> 나만의 안무 만들기 · 공동창작 — 개인 창작에서 그룹 안무로</li>
+            <li><b>4주</b> 리허설 · 미니 공연 — "나의 춤, 나의 이야기" 발표와 소감 나눔</li>
+          </ul>
+        </details>
+
+        <a class="btn" href="tel:0553399110">055-339-9110로 문의하기</a>
+      </article>
+
+      <div class="soon">다음 프로그램은 준비 중입니다</div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><a class="home" href="index.html">← 회현동 소극장 홈으로</a></div>
+    <div><b>회현동 소극장</b> &nbsp;·&nbsp; 주식회사 회현동극장 &nbsp;·&nbsp; 경남 김해시 분성로 259, 4층</div>
+    <div>ⓒ 회현동극장</div>
+  </div>
+</footer>
+
+<script>
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('navLinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  navLinks.addEventListener('click', e => {
+    if (e.target.closest('a')) {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', '메뉴 열기');
+    }
+  });
+}
+</script>
+
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
+<script>
+document.addEventListener('click', function (e) {
+  if (!window.gtag) return;
+  var a = e.target && e.target.closest && e.target.closest('a');
+  if (!a) return;
+  var href = a.getAttribute('href') || '';
+  var where = { page_path: location.pathname };
+  if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', where);
+});
+</script>
+
+</body>
+</html>
