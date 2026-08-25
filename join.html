@@ -193,7 +193,7 @@ footer .home{color:var(--amber);font-weight:600;text-decoration:none}
     <p class="rentnote">위 요금은 확인된 견적서 한 건을 기준으로 안내한 것입니다. 대관 목적·기간에 따라
       실제 금액은 달라질 수 있으니, 정확한 견적은 문의 주시면 안내해 드립니다.</p>
 
-    <a class="btn" href="tel:0553399110" style="margin-top:24px">055-339-9110로 문의하기</a>
+    <a class="btn" href="tel:0553399110" style="margin-top:24px" data-track="rental_contact">055-339-9110로 문의하기</a>
   </div>
 </section>
 
@@ -249,7 +249,7 @@ footer .home{color:var(--amber);font-weight:600;text-decoration:none}
         <h3>정기 후원 신청</h3>
         <p>아직 온라인으로 바로 신청되지는 않습니다. 전화나 이메일로 등급을 말씀해 주시면
           안내해 드립니다.</p>
-        <a class="btn" href="tel:0553399110">055-339-9110</a>
+        <a class="btn" href="tel:0553399110" data-track="sponsor_contact">055-339-9110</a>
       </div>
       <div class="givebox">
         <h3>일시 후원</h3>
@@ -311,15 +311,43 @@ if (tabRental && tabSupport && 'IntersectionObserver' in window) {
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
+<!-- ─── 전환 추적 ───────────────────────────────────────────
+     data-track이 있으면 그 이름을 쓴다. 링크 주소가 서로 같아
+     구분할 수 없는 자리(대관·후원·참여)에만 붙여 두었다.
+     나머지는 주소로 알아본다.
+     ──────────────────────────────────────────────────────── -->
 <script>
-document.addEventListener('click', function (e) {
-  if (!window.gtag) return;
-  var a = e.target && e.target.closest && e.target.closest('a');
-  if (!a) return;
-  var href = a.getAttribute('href') || '';
-  var where = { page_path: location.pathname };
-  if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', where);
-});
+(function () {
+  var BY_HREF = [
+    [/^tel:/,            'phone_click'],
+    [/^mailto:/,         'email_click'],
+    [/pf\.kakao\.com/,   'kakao_channel'],   // 공연 알림 = 카카오 채널 추가
+    [/forms\.gle/,       'booking_click'],   // 예매하기
+    [/map\.naver\.com/,  'map_click'],
+    [/blog\.naver\.com/, 'blog_click'],
+    [/instagram\.com/,   'instagram_click'],
+    [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
+    [/haeyeon\.html/,    'haeyeon_click'],
+    [/malgeumi\.html/,   'malgeumi_click'],
+    [/king\.html/,       'king_click'],
+  ];
+
+  document.addEventListener('click', function (e) {
+    if (!window.gtag) return;
+    var el = e.target && e.target.closest && e.target.closest('[data-track], a, button');
+    if (!el) return;
+
+    var name = el.getAttribute('data-track');
+    if (!name) {
+      var href = el.getAttribute('href') || '';
+      if (!href) return;
+      for (var i = 0; i < BY_HREF.length; i++) {
+        if (BY_HREF[i][0].test(href)) { name = BY_HREF[i][1]; break; }
+      }
+    }
+    if (name) gtag('event', name, { page_path: location.pathname });
+  });
+})();
 </script>
 
 </body>
