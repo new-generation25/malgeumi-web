@@ -274,16 +274,43 @@ if (navToggle && navLinks) {
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
+<!-- ─── 전환 추적 ───────────────────────────────────────────
+     data-track이 있으면 그 이름을 쓴다. 링크 주소가 서로 같아
+     구분할 수 없는 자리(대관·후원·참여)에만 붙여 두었다.
+     나머지는 주소로 알아본다.
+     ──────────────────────────────────────────────────────── -->
 <script>
-document.addEventListener('click', function (e) {
-  if (!window.gtag) return;
-  var a = e.target && e.target.closest && e.target.closest('a');
-  if (!a) return;
-  var href = a.getAttribute('href') || '';
-  var where = { page_path: location.pathname };
-  if (href.indexOf('tel:') === 0)            gtag('event', 'phone_click', where);
-  else if (href.indexOf('mailto:') === 0)    gtag('event', 'email_click', where);
-});
+(function () {
+  var BY_HREF = [
+    [/^tel:/,            'phone_click'],
+    [/^mailto:/,         'email_click'],
+    [/pf\.kakao\.com/,   'kakao_channel'],   // 공연 알림 = 카카오 채널 추가
+    [/forms\.gle/,       'booking_click'],   // 예매하기
+    [/map\.naver\.com/,  'map_click'],
+    [/blog\.naver\.com/, 'blog_click'],
+    [/instagram\.com/,   'instagram_click'],
+    [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
+    [/haeyeon\.html/,    'haeyeon_click'],
+    [/malgeumi\.html/,   'malgeumi_click'],
+    [/king\.html/,       'king_click'],
+  ];
+
+  document.addEventListener('click', function (e) {
+    if (!window.gtag) return;
+    var el = e.target && e.target.closest && e.target.closest('[data-track], a, button');
+    if (!el) return;
+
+    var name = el.getAttribute('data-track');
+    if (!name) {
+      var href = el.getAttribute('href') || '';
+      if (!href) return;
+      for (var i = 0; i < BY_HREF.length; i++) {
+        if (BY_HREF[i][0].test(href)) { name = BY_HREF[i][1]; break; }
+      }
+    }
+    if (name) gtag('event', name, { page_path: location.pathname });
+  });
+})();
 </script>
 
 </body>

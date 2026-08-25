@@ -271,13 +271,28 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
       <td class="n">${num(r.value)}</td></tr>`).join('') + '</table>';
   }
 
+  // 직접 붙인 전환 이벤트만 '전환' 패널에 모은다. 순서가 곧 표시 순서다.
   const EVENT_LABEL = {
-    booking_click: '예매 신청 클릭',
-    phone_click: '전화 문의 클릭',
-    email_click: '이메일 클릭',
-    blog_click: '블로그 클릭',
-    subscribe: '소식 구독 완료',
+    booking_click:    '예매하기',
+    kakao_channel:    '공연 알림 (카카오 채널)',
+    subscribe:        '공연 알림 (문자 구독 완료)',
+    rental_contact:   '대관 문의 전화',
+    sponsor_contact:  '후원 문의 전화',
+    program_contact:  '참여 문의 전화',
+    rental_click:     '대관 관심',
+    sponsor_click:    '후원 관심',
+    program_click:    '참여 관심',
+    theater_click:    '회현동소극장 알아보기',
+    haeyeon_click:    '극단 해연',
+    malgeumi_click:   '말그미극단',
+    king_click:       'King받은 이도',
+    phone_click:      '전화 문의',
+    map_click:        '길찾기',
+    email_click:      '이메일',
+    blog_click:       '네이버 블로그',
+    instagram_click:  '인스타그램',
   };
+  const EVENT_ORDER = Object.keys(EVENT_LABEL);
 
   function renderDetail(s) {
     const el = document.getElementById('detail');
@@ -288,7 +303,8 @@ td.k small{display:block; color:var(--dim); font-size:11px; font-weight:400}
       return;
     }
 
-    const conv = s.events.filter((e) => EVENT_LABEL[e.name]);
+    const conv = s.events.filter((e) => EVENT_LABEL[e.name])
+      .sort((a, b) => EVENT_ORDER.indexOf(a.name) - EVENT_ORDER.indexOf(b.name));
 
     el.innerHTML = `
       <div class="panel wide">

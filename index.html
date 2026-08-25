@@ -579,19 +579,19 @@ footer .home:hover{border-bottom-color:var(--amber)}
     <p class="label">함께하기</p>
     <div class="join">
 
-      <a class="tile" href="#join">
+      <a class="tile" href="#join" data-track="rental_click">
         <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/></svg>
         <div class="body"><h3>대관 문의</h3><p>공연 · 연습 · 촬영 · 워크숍</p></div>
         <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <a class="tile" href="#join">
+      <a class="tile" href="#join" data-track="sponsor_click">
         <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-7-9.4A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.6C19 15.4 12 20 12 20z"/></svg>
         <div class="body"><h3>후원으로 함께하기</h3><p>정기 후원 · 일시 후원</p></div>
         <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <a class="tile" href="#join">
+      <a class="tile" href="#join" data-track="program_click">
         <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg>
         <div class="body"><h3>배우고 참여하기</h3><p>낭독극 · 연극교실 · 어린이 프로그램</p></div>
         <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
@@ -884,20 +884,20 @@ footer .home:hover{border-bottom-color:var(--amber)}
         <h3>대관</h3>
         <p class="en">RENTAL</p>
         <p>공연과 연습은 물론 촬영·워크숍·전시까지. 목적과 기간에 따라 요금을 함께 정합니다. 지역 예술인과 장기 대관을 먼저 배정합니다.</p>
-        <a class="btn" href="tel:0553399110">대관 문의하기</a>
+        <a class="btn" href="tel:0553399110" data-track="rental_contact">대관 문의하기</a>
       </div>
       <div class="jc">
         <h3>후원</h3>
         <p class="en">SUPPORT</p>
         <p>매달 조금씩, 또는 한 번에. 후원금은 임대료와 공과금 같은 극장의 기본 살림과 다음 작품을 만드는 데 쓰입니다. 쓰임은 해마다 공개합니다.</p>
         <!-- 후원 멤버십 명칭 확정 시 아래 문구·링크 교체 -->
-        <a class="btn" href="tel:0553399110">후원 안내 받기</a>
+        <a class="btn" href="tel:0553399110" data-track="sponsor_contact">후원 안내 받기</a>
       </div>
       <div class="jc">
         <h3>참여</h3>
         <p class="en">ACADEMY</p>
         <p>낭독극과 연극교실, 어린이 프로그램, 단체 관람과 찾아가는 수업까지. 관객이 아니라 무대 위에서 만나는 방법입니다.</p>
-        <a class="btn" href="tel:0553399110">참여 문의하기</a>
+        <a class="btn" href="tel:0553399110" data-track="program_contact">참여 문의하기</a>
       </div>
     </div>
   </div>
@@ -1070,19 +1070,43 @@ if (navToggle && navLinks) {
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
-<!-- ─── 전환 추적: 예매·전화·이메일·블로그 클릭 ─── -->
+<!-- ─── 전환 추적 ───────────────────────────────────────────
+     data-track이 있으면 그 이름을 쓴다. 링크 주소가 서로 같아
+     구분할 수 없는 자리(대관·후원·참여)에만 붙여 두었다.
+     나머지는 주소로 알아본다.
+     ──────────────────────────────────────────────────────── -->
 <script>
-document.addEventListener('click', function (e) {
-  if (!window.gtag) return;
-  var a = e.target && e.target.closest && e.target.closest('a');
-  if (!a) return;
-  var href = a.getAttribute('href') || '';
-  var where = { page_path: location.pathname };
-  if (a.hasAttribute('data-book'))                gtag('event', 'booking_click', where);
-  else if (href.indexOf('tel:') === 0)            gtag('event', 'phone_click',   where);
-  else if (href.indexOf('mailto:') === 0)         gtag('event', 'email_click',   where);
-  else if (href.indexOf('blog.naver.com') !== -1) gtag('event', 'blog_click',    where);
-});
+(function () {
+  var BY_HREF = [
+    [/^tel:/,            'phone_click'],
+    [/^mailto:/,         'email_click'],
+    [/pf\.kakao\.com/,   'kakao_channel'],   // 공연 알림 = 카카오 채널 추가
+    [/forms\.gle/,       'booking_click'],   // 예매하기
+    [/map\.naver\.com/,  'map_click'],
+    [/blog\.naver\.com/, 'blog_click'],
+    [/instagram\.com/,   'instagram_click'],
+    [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
+    [/haeyeon\.html/,    'haeyeon_click'],
+    [/malgeumi\.html/,   'malgeumi_click'],
+    [/king\.html/,       'king_click'],
+  ];
+
+  document.addEventListener('click', function (e) {
+    if (!window.gtag) return;
+    var el = e.target && e.target.closest && e.target.closest('[data-track], a, button');
+    if (!el) return;
+
+    var name = el.getAttribute('data-track');
+    if (!name) {
+      var href = el.getAttribute('href') || '';
+      if (!href) return;
+      for (var i = 0; i < BY_HREF.length; i++) {
+        if (BY_HREF[i][0].test(href)) { name = BY_HREF[i][1]; break; }
+      }
+    }
+    if (name) gtag('event', name, { page_path: location.pathname });
+  });
+})();
 </script>
 
 </body>
