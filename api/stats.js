@@ -277,8 +277,9 @@ module.exports = async (req, res) => {
   let days = parseInt((req.query && req.query.days) || '28', 10);
   if (!ALLOWED_DAYS.includes(days)) days = 28;
 
-  // 사이트 하나가 최대 3개를 동시에 부르므로 2개씩 돌린다 (동시 6개, 한도 10 아래).
-  const results = await mapWithLimit(SITES, 2, async (site) => {
+  // 사이트를 하나씩 돌린다. 한 사이트가 최대 3개를 동시에 부르므로 동시 3개.
+  // 화면을 연달아 새로고침해도 겹치지 않게 여유를 크게 뒀다.
+  const results = await mapWithLimit(SITES, 1, async (site) => {
     try {
       return await fetchSite(site, days);
     } catch (e) {
