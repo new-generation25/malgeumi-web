@@ -406,6 +406,46 @@ footer .home:hover{border-bottom-color:var(--amber)}
   display:flex;align-items:center;justify-content:center;color:#17130E;font-size:22px;font-weight:700}
 .sub-done .btn{margin-top:10px;display:inline-flex;padding:0 28px;width:auto}
 </style>
+<!-- ═══════════════════════════════════════════════════════════
+     관리자 자기 방문 제외
+     주소 끝에 ?noanalytics=1 을 붙여 한 번 열면, 그 브라우저는 이후
+     GA와 Vercel 어느 쪽에도 기록되지 않습니다. 되돌리려면 ?noanalytics=0.
+     표시는 브라우저에 남으므로 기기·브라우저마다 한 번씩 해야 합니다.
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var KEY = 'analytics-off';
+  var toggled = null;
+  try {
+    if (/[?&]noanalytics=1/.test(location.search)) { localStorage.setItem(KEY, '1'); toggled = true; }
+    if (/[?&]noanalytics=0/.test(location.search)) { localStorage.removeItem(KEY); toggled = false; }
+  } catch (e) {}
+
+  var off = false;
+  try { off = localStorage.getItem(KEY) === '1'; } catch (e) {}
+
+  if (off) {
+    // GA4 공식 차단 스위치. gtag가 실리기 전에 켜 두면 아무것도 보내지 않는다.
+    window['ga-disable-G-LGQHMEV50C'] = true;
+    // Vercel Web Analytics 는 beforeSend 가 null 을 돌려주면 보내지 않는다.
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    window.va('beforeSend', function () { return null; });
+  }
+
+  if (toggled !== null) {
+    document.addEventListener('DOMContentLoaded', function () {
+      var d = document.createElement('div');
+      d.textContent = toggled ? '이 브라우저는 통계에서 제외됩니다' : '이 브라우저를 다시 통계에 넣습니다';
+      d.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;'
+        + 'background:#141A21;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;'
+        + 'box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      document.body.appendChild(d);
+      setTimeout(function () { d.remove(); }, 4000);
+    });
+  }
+})();
+</script>
+
 <!-- Google tag (gtag.js) — 말그미극단 홈페이지 속성 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
 <script>
@@ -591,7 +631,7 @@ footer .home:hover{border-bottom-color:var(--amber)}
         <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <a class="tile" href="#join" data-track="program_click">
+      <a class="tile" href="academy.html" data-track="program_click">
         <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg>
         <div class="body"><h3>배우고 참여하기</h3><p>낭독극 · 연극교실 · 어린이 프로그램</p></div>
         <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
@@ -884,20 +924,19 @@ footer .home:hover{border-bottom-color:var(--amber)}
         <h3>대관</h3>
         <p class="en">RENTAL</p>
         <p>공연과 연습은 물론 촬영·워크숍·전시까지. 목적과 기간에 따라 요금을 함께 정합니다. 지역 예술인과 장기 대관을 먼저 배정합니다.</p>
-        <a class="btn" href="tel:0553399110" data-track="rental_contact">대관 문의하기</a>
+        <a class="btn" href="join.html#rental" data-track="rental_contact">대관 문의하기</a>
       </div>
       <div class="jc">
         <h3>후원</h3>
         <p class="en">SUPPORT</p>
         <p>매달 조금씩, 또는 한 번에. 후원금은 임대료와 공과금 같은 극장의 기본 살림과 다음 작품을 만드는 데 쓰입니다. 쓰임은 해마다 공개합니다.</p>
-        <!-- 후원 멤버십 명칭 확정 시 아래 문구·링크 교체 -->
-        <a class="btn" href="tel:0553399110" data-track="sponsor_contact">후원 안내 받기</a>
+        <a class="btn" href="join.html#support" data-track="sponsor_contact">후원 안내 받기</a>
       </div>
       <div class="jc">
         <h3>참여</h3>
         <p class="en">ACADEMY</p>
         <p>낭독극과 연극교실, 어린이 프로그램, 단체 관람과 찾아가는 수업까지. 관객이 아니라 무대 위에서 만나는 방법입니다.</p>
-        <a class="btn" href="tel:0553399110" data-track="program_contact">참여 문의하기</a>
+        <a class="btn" href="academy.html" data-track="program_contact">참여 문의하기</a>
       </div>
     </div>
   </div>
@@ -941,6 +980,7 @@ footer .home:hover{border-bottom-color:var(--amber)}
   <div class="wrap">
     <div><a class="home" href="malgeumi.html">말그미극단 →</a> &nbsp;·&nbsp; <a class="home" href="haeyeon.html">극단 해연 →</a></div>
     <div><b>회현동 소극장</b> &nbsp;·&nbsp; 주식회사 회현동극장 &nbsp;·&nbsp; 경남 김해시 분성로 259, 4층</div>
+    <div><a class="home" href="https://www.instagram.com/hoehyeon.theater/" target="_blank" rel="noopener">인스타그램</a> &nbsp;·&nbsp; <a class="home" href="https://blog.naver.com/jhoehyeon707" target="_blank" rel="noopener">네이버 블로그</a></div>
     <div>ⓒ 회현동극장</div>
   </div>
 </footer>

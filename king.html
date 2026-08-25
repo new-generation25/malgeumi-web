@@ -432,6 +432,46 @@ figcaption{
   .jamo .drop{opacity:.25}
 }
 </style>
+<!-- ═══════════════════════════════════════════════════════════
+     관리자 자기 방문 제외
+     주소 끝에 ?noanalytics=1 을 붙여 한 번 열면, 그 브라우저는 이후
+     GA와 Vercel 어느 쪽에도 기록되지 않습니다. 되돌리려면 ?noanalytics=0.
+     표시는 브라우저에 남으므로 기기·브라우저마다 한 번씩 해야 합니다.
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var KEY = 'analytics-off';
+  var toggled = null;
+  try {
+    if (/[?&]noanalytics=1/.test(location.search)) { localStorage.setItem(KEY, '1'); toggled = true; }
+    if (/[?&]noanalytics=0/.test(location.search)) { localStorage.removeItem(KEY); toggled = false; }
+  } catch (e) {}
+
+  var off = false;
+  try { off = localStorage.getItem(KEY) === '1'; } catch (e) {}
+
+  if (off) {
+    // GA4 공식 차단 스위치. gtag가 실리기 전에 켜 두면 아무것도 보내지 않는다.
+    window['ga-disable-G-LGQHMEV50C'] = true;
+    // Vercel Web Analytics 는 beforeSend 가 null 을 돌려주면 보내지 않는다.
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    window.va('beforeSend', function () { return null; });
+  }
+
+  if (toggled !== null) {
+    document.addEventListener('DOMContentLoaded', function () {
+      var d = document.createElement('div');
+      d.textContent = toggled ? '이 브라우저는 통계에서 제외됩니다' : '이 브라우저를 다시 통계에 넣습니다';
+      d.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;'
+        + 'background:#141A21;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;'
+        + 'box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      document.body.appendChild(d);
+      setTimeout(function () { d.remove(); }, 4000);
+    });
+  }
+})();
+</script>
+
 <!-- Google tag (gtag.js) — 말그미극단 홈페이지 속성 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
 <script>
@@ -451,11 +491,10 @@ figcaption{
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks"
             aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
     <div class="nav-links" id="navLinks">
-      <a href="malgeumi.html">홈으로</a>
+      <a href="index.html">홈으로</a>
       <a href="malgeumi.html#philosophy">활동 철학</a>
-      <a href="malgeumi.html#project" aria-current="page">공연 안내</a>
+      <a href="malgeumi.html#project">공연 안내</a>
       <a href="malgeumi.html#archive">지난 활동</a>
-      <a href="index.html">회현동소극장</a>
       <a href="malgeumi.html#contact" class="nav-cta">소식 구독</a>
     </div>
   </div>
