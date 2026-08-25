@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>극단 해연 — 회현동 소극장 상주단체</title>
+<meta name="description" content="2022년 창단, 회현동 소극장 상주단체. 김해의 일상을 모티브로 한 창작극 〈동상동 아리랑〉 〈분장실〉을 이 무대에 올립니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="회현동 소극장">
+<meta property="og:title" content="극단 해연">
+<meta property="og:description" content="2022년 창단, 회현동 소극장 상주단체. 김해의 일상을 모티브로 한 창작극을 올립니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://malgeumi-play.vercel.app/haeyeon.html">
+<!-- ★ 극단 해연 전용 공유 썸네일이 없어 소극장 대표 이미지를 그대로 씁니다. 준비되면 교체하세요 -->
+<meta property="og:image" content="https://malgeumi-play.vercel.app/images/theater-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0F0D0B">
+<link rel="canonical" href="https://malgeumi-play.vercel.app/haeyeon.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#0F0D0B; --bg2:#151210; --surface:#1D1916; --line:#302A24;
+  --amber:#E0AB60; --amber-d:#7E6236; --ink:#F2EDE4; --ink2:#B6AA9A; --ink3:#7E7367;
+  --sans:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.8;word-break:keep-all;overflow-wrap:break-word;line-break:strict;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+/* ── 공통 네비 (index.html · malgeumi.html · king.html과 수치 동일) ── */
+.navbar{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:16px 32px;background:rgba(15,13,11,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-container{max-width:1200px;margin:0 auto;position:relative;
+  display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:24px;
+  line-height:1.4;letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.nav-logo span{color:var(--amber)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:15.2px;font-weight:500;line-height:1.7;color:var(--ink2);
+  text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-links .nav-cta{background:var(--amber);color:#1A1409;font-weight:600;
+  padding:11.2px 28.8px;border-radius:9999px}
+.nav-links .nav-cta:hover{background:#EDBE77;color:#1A1409}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;
+  padding:8px;font-size:22.4px;color:var(--ink);line-height:1}
+@media(max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:calc(100% + 16px);left:-32px;right:-32px;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:8px 32px 20px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13.6px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .nav-links a:last-child{border-bottom:none}
+  .nav-links .nav-cta{margin-top:13.6px;text-align:center;padding:13.6px 28.8px}
+}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.narrow{max-width:820px;margin:0 auto;padding:0 28px}
+
+.hero{position:relative;min-height:clamp(360px,54vh,520px);display:flex;align-items:flex-end;overflow:hidden;
+  padding-top:120px}
+.eyeb{font-size:12.5px;letter-spacing:.26em;color:var(--amber);font-weight:600;margin:0 0 22px}
+.hero h1{font-family:var(--serif);font-weight:700;margin:0 0 26px;
+  font-size:clamp(40px,8vw,72px);line-height:1.15;letter-spacing:-.02em}
+.hero p{margin:0;font-size:clamp(16px,2.3vw,19px);color:var(--ink2);max-width:560px;line-height:1.85}
+
+section{position:relative;padding:88px 0}
+.alt{background:var(--bg2)}
+@media(max-width:640px){section{padding:64px 0}}
+.kicker{display:flex;align-items:center;gap:14px;margin:0 0 26px;
+  font-size:12px;letter-spacing:.24em;color:var(--amber-d);font-weight:600}
+.kicker::after{content:'';flex:1;height:1px;background:var(--line);max-width:120px}
+h2{font-family:var(--serif);font-weight:700;margin:0 0 20px;
+  font-size:clamp(26px,4.6vw,38px);line-height:1.3;letter-spacing:-.02em}
+.lede{font-size:clamp(16px,2.2vw,18px);color:var(--ink2);max-width:640px;margin:0;line-height:1.95}
+
+.work{display:grid;gap:36px;align-items:center;margin-top:56px}
+@media(min-width:880px){.work{grid-template-columns:300px 1fr;gap:60px}}
+.work .pos{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#0A0908}
+.tagline{display:inline-block;font-size:11.5px;letter-spacing:.16em;color:var(--amber);
+  border:1px solid var(--amber-d);border-radius:999px;padding:4px 13px;margin:0 0 18px}
+.work h3{font-family:var(--serif);font-size:clamp(26px,4vw,36px);margin:0 0 8px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.work .sub{font-size:14px;color:var(--amber-d);letter-spacing:.06em;margin:0 0 22px}
+.work p.desc{margin:0 0 26px;font-size:16px;color:var(--ink2);line-height:1.95;max-width:520px}
+.credit{display:flex;flex-wrap:wrap;gap:10px 26px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--ink3);max-width:520px}
+.credit span b{color:var(--ink2);font-weight:500}
+
+.tl{display:grid;gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.tl > div{padding:22px 0;border-bottom:1px solid var(--line);display:grid;gap:6px}
+@media(min-width:700px){.tl > div{grid-template-columns:110px 1fr;gap:28px;align-items:baseline;padding:24px 0}}
+.tl .y{font-family:var(--serif);font-size:22px;color:var(--amber);font-weight:700;margin:0}
+.tl p{margin:0;font-size:15px;color:var(--ink2);line-height:1.85}
+
+.note{margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-left:2px solid var(--amber-d);
+  border-radius:6px;background:var(--surface);font-size:13.5px;color:var(--ink3);line-height:1.8}
+
+.jc-row{margin-top:20px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 22px;border:1px solid var(--amber-d);border-radius:3px;color:var(--amber);
+  text-decoration:none;font-size:14.5px;font-weight:600;letter-spacing:.02em;transition:.2s}
+.btn:hover{background:var(--amber);color:#17130E;border-color:var(--amber)}
+
+footer{background:#090807;padding:44px 0;color:var(--ink3);font-size:13px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+footer b{color:var(--ink2);font-weight:600}
+footer .home{color:var(--amber);font-weight:600;text-decoration:none;
+  border-bottom:1px solid transparent;transition:border-color .2s}
+footer .home:hover{border-bottom-color:var(--amber)}
+</style>
+<!-- Google tag (gtag.js) — 회현동소극장 홈페이지 속성 (전체 사이트 공용) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LGQHMEV50C');
+</script>
+</head>
+<body>
+
+<!-- ============ 공통 네비 ============ -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="haeyeon.html" class="nav-logo">극단<span>해연</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks"
+            aria-label="메뉴 열기">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="haeyeon.html" aria-current="page">홈으로</a>
+      <a href="haeyeon.html#works">대표작</a>
+      <a href="index.html">회현동소극장</a>
+      <a href="malgeumi.html">말그미극단</a>
+      <a href="tel:0553399110" class="nav-cta">문의하기</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyeb">회현동 소극장 상주단체</p>
+    <h1>극단 해연</h1>
+    <p>2022년 창단. 김해의 일상을 모티브로 한 창작극과 정기공연을 회현동 소극장 무대에 올립니다.</p>
+  </div>
+</header>
+
+<!-- ============ 대표작 ============ -->
+<section id="works">
+  <div class="wrap">
+    <p class="kicker">대표작</p>
+    <h2>동상동 아리랑</h2>
+    <p class="lede">한국인 아버지와 우즈베키스탄 어머니 사이에서 태어난 '한결'. 타슈켄트에서 지내다 돌아온 그가
+      김해 동상동의 다문화 골목에서 "나는 누구에게 어떤 존재인가"를 묻습니다. 2019년 초연 이후 해마다 다시 올리며,
+      이 동네가 품은 이야기를 기록해 왔습니다.</p>
+    <div class="credit" style="margin-top:26px;max-width:640px">
+      <span>작·연출 <b>이정화</b></span>
+      <span>제작 <b>극단 해연</b></span>
+      <span>2019 초연 · 매년 재연</span>
+    </div>
+
+    <div class="work">
+      <div class="pos"><img src="images/theater-bunjangsil.jpg" alt="극단 해연 제5회 정기공연 연극 〈분장실〉 포스터" loading="lazy" width="640" height="910"></div>
+      <div>
+        <span class="tagline">2026 정기공연</span>
+        <h3>분장실</h3>
+        <p class="sub">DRESSING ROOM &nbsp;·&nbsp; 2026.6.12 — 6.14</p>
+        <p class="desc">
+          무대에 오르지 못한 배우들이 모인 분장실. 욕망과 기억, 질투와 동경이 뒤엉키며
+          현실과 환상이 교차합니다. 배우라는 존재가 가진 슬픔과 열망을 조용히, 그러나 깊게 들여다본 작품입니다.
+        </p>
+        <div class="credit">
+          <span>원작 <b>시미즈 쿠니오</b></span>
+          <span>연출 <b>안민정</b></span>
+          <span>출연 <b>김미경 · 배소완 · 안민정 · 송혜경</b></span>
+          <span>경남문화예술진흥원 지역문화예술육성지원사업 선정 · 전석 무료</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 걸어온 길 ============ -->
+<section class="alt">
+  <div class="wrap">
+    <p class="kicker">걸어온 길</p>
+    <h2>2022년부터<br>회현동 소극장과 함께</h2>
+    <div class="tl">
+      <div>
+        <p class="y">2022</p>
+        <p>〈부원동블루스〉 창단공연</p>
+      </div>
+      <div>
+        <p class="y">2023</p>
+        <p>〈이웃집 쌀통〉 정기·장기공연</p>
+      </div>
+      <div>
+        <p class="y">2024</p>
+        <p>〈동상동 아리랑〉</p>
+      </div>
+      <div>
+        <p class="y">2025</p>
+        <p>〈동상동 아리랑 2025〉 4.18~20 · 〈해반천 위에 뜬 경전船〉 11.1~2 — 회현동극장 × 극단 해연,
+          한국문화예술위원회 공연예술창작주체–창작공간 사업 선정</p>
+      </div>
+      <div>
+        <p class="y">2026</p>
+        <p>〈분장실〉 6.12~14</p>
+      </div>
+    </div>
+    <p class="note">이 연혁은 <a href="index.html#history" style="color:var(--amber)">회현동 소극장 연혁</a>에서
+      극단 해연이 제작·참여한 항목만 추린 것입니다. 대표자·단원 소개는 아직 정리되지 않아 비워 두었습니다.</p>
+  </div>
+</section>
+
+<!-- ============ 함께하기 ============ -->
+<section>
+  <div class="wrap">
+    <p class="kicker">함께하기</p>
+    <h2>공연 문의</h2>
+    <p class="lede">공연 섭외·단체 관람·정기공연 소식은 회현동 소극장으로 연락 주세요.</p>
+    <div class="jc-row">
+      <a class="btn" href="tel:0553399110">055-339-9110</a>
+      <a class="btn" href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>
+      <a class="btn" href="index.html#visit">오시는 길 보기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><a class="home" href="index.html">← 회현동 소극장 홈으로</a></div>
+    <div><b>극단 해연</b> &nbsp;·&nbsp; 회현동 소극장 상주단체 &nbsp;·&nbsp; 경남 김해시 분성로 259, 4층</div>
+    <div>ⓒ 회현동극장</div>
+  </div>
+</footer>
+
+<script>
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('navLinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  navLinks.addEventListener('click', e => {
+    if (e.target.closest('a')) {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', '메뉴 열기');
+    }
+  });
+}
+</script>
+
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
+<script>
+document.addEventListener('click', function (e) {
+  if (!window.gtag) return;
+  var a = e.target && e.target.closest && e.target.closest('a');
+  if (!a) return;
+  var href = a.getAttribute('href') || '';
+  var where = { page_path: location.pathname };
+  if (href.indexOf('tel:') === 0)            gtag('event', 'phone_click', where);
+  else if (href.indexOf('mailto:') === 0)    gtag('event', 'email_click', where);
+});
+</script>
+
+</body>
+</html>
