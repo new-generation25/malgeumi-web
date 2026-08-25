@@ -250,14 +250,19 @@ async function fetchSite(site, days) {
   // 속성 전체 숫자가 그 페이지 것인 양 보이는 편이 더 나쁘므로 아예 비워 둔다.
   const wantsRealtime = !site.path;
 
-  const [batch, extraBatch, realtime] = await Promise.all([
-    callGa(site.propertyId, 'batchRunReports', { requests: reportsFor(days, site.path) }),
-    callGa(site.propertyId, 'batchRunReports', { requests: extraReportsFor(days, site.path) }),
-    wantsRealtime
-      ? callGa(site.propertyId, 'runRealtimeReport', { metrics: [{ name: 'activeUsers' }] })
-          .catch(() => ({ rows: [] })) // 실시간은 실패해도 나머지를 살린다
-      : Promise.resolve(null),
-  ]);
+  // 한 줄로 세워 부른다. 동시에 던지면 화면을 연달아 새로고침할 때 여러 함수
+  // 인스턴스의 요청이 겹쳐 GA의 동시 한도(속성당 10건)를 넘는다. 앞서 3건까지
+  // 줄여 봤지만 그것으로도 부족했다. 느려지는 대신 확실히 통과시킨다.
+  const batch = await callGa(site.propertyId, 'batchRunReports', {
+    requests: reportsFor(days, site.path),
+  });
+  const extraBatch = await callGa(site.propertyId, 'batchRunReports', {
+    requests: extraReportsFor(days, site.path),
+  });
+  const realtime = wantsRealtime
+    ? await callGa(site.propertyId, 'runRealtimeReport', { metrics: [{ name: 'activeUsers' }] })
+        .catch(() => ({ rows: [] })) // 실시간은 실패해도 나머지를 살린다
+    : null;
   return parseSite(site, batch, extraBatch, realtime);
 }
 
