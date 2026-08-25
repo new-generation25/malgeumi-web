@@ -19,6 +19,20 @@ function safeEqual(a, b) {
   return require('crypto').timingSafeEqual(bufA, bufB);
 }
 
+// GA가 돌려주는 영문 오류를 알아볼 수 있게 바꾼다. 모르는 것은 그대로 둔다.
+function friendlyError(msg) {
+  if (/concurrent requests/i.test(msg)) {
+    return 'GA 동시 요청 한도에 걸렸습니다. 잠시 뒤 새로고침해 주세요.';
+  }
+  if (/sufficient permissions|does not have/i.test(msg)) {
+    return '이 속성을 볼 권한이 없습니다. 서비스 계정을 뷰어로 추가했는지 확인해 주세요.';
+  }
+  if (/quota/i.test(msg)) {
+    return 'GA 조회 한도를 넘었습니다. 잠시 뒤 다시 시도해 주세요.';
+  }
+  return msg;
+}
+
 function reportsFor(days, path) {
   const current = { startDate: `${days}daysAgo`, endDate: 'today' };
   const previous = { startDate: `${days * 2}daysAgo`, endDate: `${days + 1}daysAgo` };
@@ -211,6 +225,26 @@ function parseSite(site, batch, extraBatch, realtime) {
   };
 }
 
+/**
+ * 한 번에 limit개씩만 실행한다.
+ *
+ * GA4 Data API는 한 속성당 동시 요청을 10개까지만 받는다. 사이트를 전부
+ * 한꺼번에 던지면 (사이트당 요청 2~3개 × 항목 수) 가 그 선을 넘어
+ * 'Exhausted concurrent requests quota'로 일부가 튕긴다.
+ */
+async function mapWithLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
+
 async function fetchSite(site, days) {
   // GA 실시간 보고서는 pagePath 필터를 지원하지 않는다. 페이지 단위 항목에서는
   // 속성 전체 숫자가 그 페이지 것인 양 보이는 편이 더 나쁘므로 아예 비워 둔다.
@@ -243,22 +277,21 @@ module.exports = async (req, res) => {
   let days = parseInt((req.query && req.query.days) || '28', 10);
   if (!ALLOWED_DAYS.includes(days)) days = 28;
 
-  const results = await Promise.all(
-    SITES.map(async (site) => {
-      try {
-        return await fetchSite(site, days);
-      } catch (e) {
-        return {
-          id: site.id,
-          label: site.label,
-          url: site.url || '',
-          propertyId: site.propertyId,
-          path: site.path || null,
-          error: e.message || '알 수 없는 오류',
-        };
-      }
-    })
-  );
+  // 사이트 하나가 최대 3개를 동시에 부르므로 2개씩 돌린다 (동시 6개, 한도 10 아래).
+  const results = await mapWithLimit(SITES, 2, async (site) => {
+    try {
+      return await fetchSite(site, days);
+    } catch (e) {
+      return {
+        id: site.id,
+        label: site.label,
+        url: site.url || '',
+        propertyId: site.propertyId,
+        path: site.path || null,
+        error: friendlyError(e.message || '알 수 없는 오류'),
+      };
+    }
+  });
 
   const payload = {
     updatedAt: new Date().toISOString(),
