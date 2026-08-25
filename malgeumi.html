@@ -1137,13 +1137,27 @@
         }
 
         .consent-detail {
-            margin: 0;
+            margin: 8px 0 0;
             padding-left: 30px;
             font-size: 12.5px;
             font-weight: 300;
             line-height: 1.8;
             color: var(--fog);
         }
+
+        .consent-more {
+            margin-top: 4px;
+            padding-left: 30px;
+        }
+        .consent-more summary {
+            font-size: 12.5px;
+            color: var(--accent);
+            cursor: pointer;
+            list-style: none;
+        }
+        .consent-more summary::-webkit-details-marker { display: none; }
+        .consent-more summary::after { content: ' 보기 ▾'; }
+        .consent-more[open] summary::after { content: ' 접기 ▴'; }
 
         /* 전역 a { text-decoration: none } 때문에 폼 안 링크가 일반 텍스트와 구분되지 않는다 */
         .form-note a,
@@ -1980,6 +1994,8 @@
                             <span>개인정보 수집·이용 및 공연 안내 문자 수신에 동의합니다 <span
                                     class="consent-required">(필수)</span></span>
                         </label>
+                        <details class="consent-more">
+                            <summary>동의 내용</summary>
                         <p class="consent-detail" id="cf-consent-detail">
                             · 수집 항목 — 이름, 휴대전화 번호(필수) / 이메일, 남기실 말씀(선택)<br>
                             · 이용 목적 — 공연 안내 문자 발송 (이메일을 남기신 경우 메일 안내 포함)<br>
@@ -1989,15 +2005,10 @@
                             <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>으로
                             요청하실 수 있습니다.
                         </p>
+                        </details>
                     </div>
                     <button type="submit">소식 받아보기</button>
                     <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
-                    <p class="form-note">
-                        새 공연이 확정되면 문자로 안내해 드립니다.<br>
-                        잘 안 되면 <a href="tel:055-339-9110">055-339-9110</a>으로 전화 주시거나
-                        <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>으로
-                        메일 보내주세요.
-                    </p>
                 </form>
                 <div class="contact-info fade-in">
                     <a class="contact-info-item" href="tel:055-339-9110">
