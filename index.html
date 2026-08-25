@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0F0D0B">
 <link rel="canonical" href="https://malgeumi-play.vercel.app/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230F0D0B%22/><circle cx=%2216%22 cy=%2212%22 r=%226%22 fill=%22%23E0AB60%22/><path d=%22M4 27 Q16 18 28 27 L28 29 L4 29 Z%22 fill=%22%23E0AB60%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
@@ -29,9 +29,18 @@
   --bg:#0F0D0B; --bg2:#151210; --surface:#1D1916; --line:#302A24;
   --amber:#E0AB60; --amber-d:#7E6236; --ink:#F2EDE4; --ink2:#B6AA9A; --ink3:#7E7367;
   --kakao:#F5DC4E; --alert:#C4614A; --sage:#5B8A72;
+  /* 상단(.top) 섹션 강조색 — 이 세 값만 바꾸면 테마 하나가 됩니다.
+     기본값은 ③ 극장 커튼(골드·벨벳레드·딥그린). data-theme-color로 전환 */
+  --acc-perf:#C9A227; --acc-troupe:#7A2E2E; --acc-join:#2F4F3E;
   --sans:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --serif:'Noto Serif KR','Nanum Myeongjo',serif;
 }
+/* -- 테마 팔레트 — 새 테마를 추가하려면 이 세 줄짜리 블록 하나만 더 씁니다 -- */
+[data-theme-color="1"]{ --acc-perf:#E0AB60; --acc-troupe:#C4614A; --acc-join:#5B8A72; } /* 지금 방향 그대로 */
+[data-theme-color="2"]{ --acc-perf:#D9A441; --acc-troupe:#8B4B42; --acc-join:#4C6B63; } /* 가을 극장 */
+[data-theme-color="3"]{ --acc-perf:#C9A227; --acc-troupe:#7A2E2E; --acc-join:#2F4F3E; } /* 극장 커튼 (기본값) */
+[data-theme-color="4"]{ --acc-perf:#E0AB60; --acc-troupe:#F0CE97; --acc-join:#B9803D; } /* 모노 앰버 */
+[data-theme-color="5"]{ --acc-perf:#F0AB3D; --acc-troupe:#D14D6E; --acc-join:#3FA8A3; } /* 대비 강한 버전 */
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
@@ -294,43 +303,47 @@ footer .home:hover{border-bottom-color:var(--amber)}
 .top .quiet p{font-size:13.5px;color:var(--ink2);line-height:1.8;margin:0}
 @media(min-width:900px){.top .quiet{padding:56px 40px 46px}.top .quiet h1{font-size:34px}.top .quiet p{font-size:15px}}
 
-/* -- 이곳의 사람들 (테라코타 · 가로 스크롤 카드) -- */
-.top .troupes{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding-bottom:6px;margin:0 -24px;padding-left:24px;padding-right:24px;
-  scrollbar-width:none}
-.top .troupes::-webkit-scrollbar{display:none}
-.top .troupe{flex:0 0 78%;scroll-snap-align:start;display:flex;flex-direction:column;align-items:stretch;
-  padding:26px 24px 24px;border:1px solid var(--line);border-left:3px solid var(--alert);border-radius:10px;
+/* -- 이곳의 사람들 (세로 스택, 넓은 화면에서 3열 그리드) -- */
+.top .troupes{display:flex;flex-direction:column;gap:12px}
+.top .troupe{display:flex;flex-direction:column;align-items:stretch;
+  padding:22px 20px;border:1px solid var(--line);border-left:3px solid var(--acc-troupe);border-radius:10px;
   background:var(--surface);text-decoration:none}
-.top .troupe h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:0 0 10px;color:var(--ink)}
-.top .troupe p{font-size:14px;color:var(--ink2);line-height:1.75;margin:0}
+.top .troupe h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:0 0 8px;color:var(--ink)}
+.top .troupe p{font-size:13.5px;color:var(--ink2);line-height:1.7;margin:0}
 .top .troupe .body{flex-grow:1}
-.top .troupe .more{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--alert);font-weight:600;padding-top:16px}
+.top .troupe .more{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--acc-troupe);font-weight:600;padding-top:14px}
 @media(min-width:900px){
-  .top .troupes{overflow-x:visible;flex-wrap:nowrap;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-  .top .troupe{flex:auto;padding:30px 28px 26px}
+  .top .troupes{flex-direction:row;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+  .top .troupe{padding:30px 28px 26px}
   .top .troupe h3{font-size:24px}
   .top .troupe p{font-size:14.5px}
 }
 .top .more{display:none}
 
-/* -- 함께하기 (세이지그린 · 아이콘 리스트, 다른 배경) -- */
-.top .join-section{background:var(--bg2)}
+/* -- 섹션 배경 틴트 — 전부 --acc-* 토큰에서 나옵니다. 테마를 바꾸면 여기는 안 건드려도 됩니다 -- */
+.top .sec-hero{background:color-mix(in srgb, var(--acc-perf) 14%, var(--bg));padding-bottom:38px}
+.top .sec-troupes{background:color-mix(in srgb, var(--acc-troupe) 16%, var(--bg));padding-bottom:38px}
+.top .sec-troupes .label{color:var(--acc-troupe)}
+.top .join-section{background:color-mix(in srgb, var(--acc-join) 18%, var(--bg));padding-bottom:38px}
+.top .join-section .label{color:var(--acc-join)}
+.top .sec-visit{background:color-mix(in srgb, var(--acc-perf) 14%, var(--bg));padding-bottom:38px}
+@media(min-width:900px){
+  .top .sec-hero,.top .sec-troupes,.top .join-section,.top .sec-visit{padding-bottom:68px}
+}
 .top .join{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
 .top .tile{display:flex;align-items:center;gap:14px;padding:20px 4px;border-bottom:1px solid var(--line);
   text-decoration:none}
 .top .tile .body{flex-grow:1}
 .top .tile h3{font-size:15.5px;font-weight:600;margin:0 0 3px;color:var(--ink)}
 .top .tile p{font-size:12.5px;color:var(--ink3);margin:0}
-.top .tile svg.ico{stroke:var(--sage)}
-.top .tile svg.chev{stroke:var(--sage)}
+.top .tile svg.ico,.top .tile svg.chev{stroke:currentColor;color:var(--acc-join)}
 @media(min-width:900px){
   .top .tile{padding:24px 8px}
   .top .tile h3{font-size:17px}
   .top .tile p{font-size:13px}
 }
 
-/* -- 오시는 길 (앰버 · 텍스트+지도버튼) -- */
+/* -- 오시는 길 (텍스트+지도버튼) -- */
 .top .addr{font-family:var(--serif);font-size:20px;line-height:1.55;font-weight:500;margin:0;color:var(--ink)}
 .top .addr-sub{margin:10px 0 0;font-size:13px;color:var(--ink3);line-height:1.7}
 .top .notice{margin-top:16px;display:flex;align-items:flex-start;gap:9px;padding:13px 14px;
@@ -345,6 +358,53 @@ footer .home:hover{border-bottom-color:var(--amber)}
 }
 .top .scrolldown{display:block;text-align:center;font-size:12.5px;color:var(--ink3);text-decoration:none;padding:6px 0 0}
 .top .scrolldown:hover{color:var(--amber)}
+.top .hint button.sub-trigger{background:none;border:0;color:inherit;text-decoration:underline;
+  cursor:pointer;font:inherit;padding:0}
+
+/* -- 테마 전환 위젯 (검토용) -- */
+.theme-switch{position:fixed;right:14px;bottom:14px;z-index:900;display:flex;gap:6px;
+  padding:7px;border-radius:999px;background:rgba(15,13,11,.85);border:1px solid var(--line);
+  backdrop-filter:blur(6px)}
+.theme-switch button{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.15);
+  cursor:pointer;padding:0}
+.theme-switch button[data-theme="1"]{background:linear-gradient(135deg,#E0AB60 50%,#C4614A 50%)}
+.theme-switch button[data-theme="2"]{background:linear-gradient(135deg,#D9A441 50%,#8B4B42 50%)}
+.theme-switch button[data-theme="3"]{background:linear-gradient(135deg,#C9A227 50%,#7A2E2E 50%)}
+.theme-switch button[data-theme="4"]{background:linear-gradient(135deg,#F0CE97 50%,#B9803D 50%)}
+.theme-switch button[data-theme="5"]{background:linear-gradient(135deg,#F0AB3D 50%,#D14D6E 50%)}
+.theme-switch button.is-active{border-color:#fff}
+
+/* -- 소식 구독 팝업 -- */
+.sub-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.sub-modal{position:relative;border:1px solid var(--line);border-radius:14px;padding:0;
+  max-width:420px;width:92vw;background:var(--surface);color:var(--ink);font-family:var(--sans)}
+.sub-modal::backdrop{background:rgba(0,0,0,.6)}
+.sub-close{position:absolute;top:12px;right:12px;background:none;border:0;color:var(--ink3);
+  font-size:19px;cursor:pointer;line-height:1;padding:6px}
+.sub-in{padding:30px 24px 24px}
+.sub-modal h3{font-family:var(--serif);font-size:19px;margin:0 0 6px;color:var(--ink)}
+.sub-modal .sub-lede{font-size:13px;color:var(--ink2);margin:0 0 20px;line-height:1.7}
+.sub-form{display:flex;flex-direction:column;gap:10px}
+.sub-form input{background:var(--bg2);border:1px solid var(--line);border-radius:8px;color:var(--ink);
+  padding:12px 14px;font-size:14.5px;font-family:inherit}
+.sub-form input::placeholder{color:var(--ink3)}
+.sub-consent{margin-top:4px}
+.sub-consent-label{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.sub-consent-label input{margin-top:3px;accent-color:var(--amber)}
+.sub-consent-required{color:var(--alert)}
+.sub-consent-detail{margin-top:8px}
+.sub-consent-detail summary{font-size:12px;color:var(--amber);cursor:pointer}
+.sub-consent-detail p{font-size:11.5px;color:var(--ink3);line-height:1.7;margin:8px 0 0}
+.sub-consent-detail p a{color:var(--amber)}
+.sub-form button[type="submit"]{margin-top:6px}
+.sub-status{margin:0;font-size:12.5px;min-height:16px}
+.sub-status.is-error{color:var(--alert)}
+.sub-status.is-ok{color:var(--sage)}
+.sub-done{display:none;text-align:center;padding:36px 24px}
+.sub-done.show{display:block}
+.sub-done-mark{width:44px;height:44px;border-radius:50%;background:var(--amber);margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;color:#17130E;font-size:22px;font-weight:700}
+.sub-done .btn{margin-top:10px;display:inline-flex;padding:0 28px;width:auto}
 </style>
 <!-- Google tag (gtag.js) — 말그미극단 홈페이지 속성 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
@@ -390,23 +450,23 @@ footer .home:hover{border-bottom-color:var(--amber)}
   </div>
 </header>
 
-<!-- ▼ [A] 공연이 있을 때 — 이 블록의 주석을 벗기고 [B] 블록을 주석 처리하세요
-<section>
+<!-- ▼ [A] 공연이 있을 때 -->
+<section class="sec-hero">
   <div class="wrap">
     <div class="hero-grid">
       <div class="poster">
-        <img src="images/포스터파일명.jpg" alt="공연명 포스터">
+        <img src="images/king-poster.jpg" alt="King받은 이도 : 말모이 작전 공연 포스터">
       </div>
       <div>
         <p class="eyebrow"><i class="dot"></i>지금 올라가는 공연</p>
-        <h1 class="hero-title">공연 제목<br>부제</h1>
+        <h1 class="hero-title">King받은 이도<br>: 한글 폼 미쳤다!</h1>
         <p class="hero-meta">
-          2026. 0. 0 (요일) — 0. 0 (요일) · 회현동 소극장 · 제작 주체<br>
-          장르 · 러닝타임 · 관람연령
+          2026. 8. 16 (일) — 8. 23 (일) · 회현동 소극장 · 말그미극단<br>
+          기술융복합 3D 디지털 판타지 아동극 · 60분 · 7세 이상
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="[예매 링크]">예매하기</a>
-          <a class="btn btn-kakao" href="[카카오채널 추가 URL]">공연 알림 받기</a>
+          <a class="btn btn-primary" href="https://forms.gle/BvXD3RBAWeCckMeQ7" target="_blank" rel="noopener">예매하기</a>
+          <a class="btn btn-kakao" href="http://pf.kakao.com/_PxknSX">공연 알림 받기</a>
         </div>
         <p class="hint">전석 지정석</p>
       </div>
@@ -416,28 +476,71 @@ footer .home:hover{border-bottom-color:var(--amber)}
         <h2>다음 공연도 놓치지 않으려면</h2>
         <p>채널을 추가해 두시면 새 공연이 열릴 때 알려 드립니다.</p>
       </div>
-      <a class="btn btn-kakao" href="[카카오채널 추가 URL]">카카오톡 채널 추가</a>
+      <a class="btn btn-kakao" href="http://pf.kakao.com/_PxknSX">카카오톡 채널 추가</a>
     </div>
   </div>
 </section>
-▲ [A] 끝 -->
+<!-- ▲ [A] 끝 -->
 
-<!-- ▼ [B] 공연이 없을 때 -->
-<section>
+<!-- ▼ [B] 공연이 없을 때 — 다음 공연이 끝나면 이 블록의 주석을 벗기고 [A]를 주석 처리하세요
+<section class="sec-hero">
   <div class="wrap">
     <div class="quiet">
       <div class="bulbs"><i></i><i></i><i></i><i></i><i></i></div>
       <h1>지금은<br>다음 무대를 만드는 중입니다</h1>
       <p>연습실 불은 켜져 있습니다.<br>새 공연이 열리면 가장 먼저 알려 드릴게요.</p>
     </div>
-    <a class="btn btn-primary" style="margin-top:14px" href="[카카오채널 추가 URL]">공연 알림 받기</a>
-    <p class="hint">카카오톡 채널 추가</p>
+    <a class="btn btn-kakao" style="margin-top:14px;width:100%" href="http://pf.kakao.com/_PxknSX">카카오톡 채널 추가</a>
+    <p class="hint"><button type="button" class="sub-trigger" id="openSubscribe">문자로 공연 알림 받기</button></p>
   </div>
 </section>
+▲ [B] 끝 -->
+
+<!-- 소식 구독 팝업 — malgeumi.html의 구독 폼과 같은 구글시트로 보냅니다 -->
+<dialog class="sub-modal" id="subscribeModal" aria-labelledby="subscribeModalTitle">
+  <button type="button" class="sub-close" aria-label="닫기" id="subCloseBtn">✕</button>
+  <div class="sub-in" id="subFormView">
+    <h3 id="subscribeModalTitle">공연 알림 받기</h3>
+    <p class="sub-lede">새 공연이 확정되면 문자로 안내해 드립니다.</p>
+    <form class="sub-form" id="subForm">
+      <label class="sub-sr" for="sub-name">이름</label>
+      <input id="sub-name" type="text" placeholder="이름" autocomplete="name" required>
+      <label class="sub-sr" for="sub-phone">휴대전화 번호</label>
+      <input id="sub-phone" type="tel" placeholder="휴대전화 번호 (예: 010-1234-5678)" autocomplete="tel" inputmode="tel" pattern="[0-9\-\s]{9,}" required>
+      <label class="sub-sr" for="sub-email">이메일 (선택)</label>
+      <input id="sub-email" type="email" placeholder="이메일 (선택)" autocomplete="email">
+      <div class="sub-consent">
+        <label class="sub-consent-label" for="sub-consent">
+          <input id="sub-consent" type="checkbox" required aria-describedby="sub-consent-detail">
+          <span>개인정보 수집·이용 및 공연 안내 문자 수신에 동의합니다 <span class="sub-consent-required">(필수)</span></span>
+        </label>
+        <details class="sub-consent-detail">
+          <summary>동의 내용</summary>
+          <p id="sub-consent-detail">
+            · 수집 항목 — 이름, 휴대전화 번호(필수) / 이메일(선택)<br>
+            · 이용 목적 — 공연 안내 문자 발송 (이메일을 남기신 경우 메일 안내 포함)<br>
+            · 동의를 거부하실 수 있으며, 거부하시면 공연 안내를 보내드릴 수 없습니다.<br>
+            · 만 14세 미만은 법정대리인의 동의가 필요합니다.<br>
+            · 동의 철회·열람·정정·삭제는 <a href="tel:0553399110">055-339-9110</a> 또는
+            <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a>으로 요청하실 수 있습니다.
+          </p>
+        </details>
+      </div>
+      <button type="submit" class="btn btn-primary">소식 받아보기</button>
+      <p class="sub-status" id="sub-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="sub-done" id="subDoneView">
+    <div class="sub-done-mark" aria-hidden="true">✓</div>
+    <h3>구독이 완료되었습니다</h3>
+    <p class="sub-lede">새 공연이 확정되면 문자로 안내해 드릴게요.</p>
+    <button type="button" class="btn btn-primary" id="subDoneCloseBtn">확인</button>
+  </div>
+</dialog>
 <!-- ▲ [B] 끝 -->
 
 <!-- 이곳의 사람들 (테라코타 · 가로 스크롤) -->
-<section>
+<section class="sec-troupes">
   <div class="wrap">
     <p class="label">이곳의 사람들</p>
     <div class="troupes">
@@ -477,21 +580,21 @@ footer .home:hover{border-bottom-color:var(--amber)}
     <div class="join">
 
       <a class="tile" href="#join">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/></svg>
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/></svg>
         <div class="body"><h3>대관 문의</h3><p>공연 · 연습 · 촬영 · 워크숍</p></div>
-        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <a class="tile" href="#join">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-7-9.4A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.6C19 15.4 12 20 12 20z"/></svg>
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.6-7-9.4A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.6C19 15.4 12 20 12 20z"/></svg>
         <div class="body"><h3>후원으로 함께하기</h3><p>정기 후원 · 일시 후원</p></div>
-        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <a class="tile" href="#join">
-        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg>
+        <svg class="ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/></svg>
         <div class="body"><h3>배우고 참여하기</h3><p>낭독극 · 연극교실 · 어린이 프로그램</p></div>
-        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5B8A72" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
       </a>
 
     </div>
@@ -499,7 +602,7 @@ footer .home:hover{border-bottom-color:var(--amber)}
 </section>
 
 <!-- 오시는 길 (앰버) -->
-<section>
+<section class="sec-visit">
   <div class="wrap">
     <p class="label">오시는 길</p>
     <div class="visit-grid">
@@ -825,6 +928,15 @@ footer .home:hover{border-bottom-color:var(--amber)}
   </div>
 </section>
 
+<!-- 테마 전환 위젯 — 검토용. 색을 확정하면 이 <div>와 관련 CSS/JS를 통째로 지우세요 -->
+<div class="theme-switch" id="themeSwitch" role="group" aria-label="테마 색 전환(검토용)">
+  <button type="button" data-theme="1" title="① 지금 방향"></button>
+  <button type="button" data-theme="2" title="② 가을 극장"></button>
+  <button type="button" data-theme="3" title="③ 극장 커튼"></button>
+  <button type="button" data-theme="4" title="④ 모노 앰버"></button>
+  <button type="button" data-theme="5" title="⑤ 대비 강한 버전"></button>
+</div>
+
 <footer>
   <div class="wrap">
     <div><a class="home" href="malgeumi.html">말그미극단 →</a> &nbsp;·&nbsp; <a class="home" href="haeyeon.html">극단 해연 →</a></div>
@@ -851,6 +963,99 @@ if (navToggle && navLinks) {
     }
   });
 }
+</script>
+
+<!-- ─── 테마 전환 위젯 (검토용) — 색을 확정하면 이 스크립트도 함께 지우세요 ─── -->
+<script>
+(function () {
+  const KEY = 'hoehyeon-theme-color';
+  const root = document.documentElement;
+  const wrap = document.getElementById('themeSwitch');
+  if (!wrap) return;
+  const buttons = wrap.querySelectorAll('button[data-theme]');
+  const apply = (v) => {
+    root.setAttribute('data-theme-color', v);
+    buttons.forEach(b => b.classList.toggle('is-active', b.dataset.theme === v));
+  };
+  const saved = localStorage.getItem(KEY) || '3';
+  apply(saved);
+  buttons.forEach(b => b.addEventListener('click', () => {
+    localStorage.setItem(KEY, b.dataset.theme);
+    apply(b.dataset.theme);
+  }));
+})();
+</script>
+
+<!-- ─── 소식 구독 팝업 — malgeumi.html의 구독 폼과 같은 구글시트로 기록 ─── -->
+<script>
+(function () {
+  const modal = document.getElementById('subscribeModal');
+  const openBtn = document.getElementById('openSubscribe');
+  if (!modal || !openBtn) return;
+
+  const closeBtn = document.getElementById('subCloseBtn');
+  const doneCloseBtn = document.getElementById('subDoneCloseBtn');
+  const formView = document.getElementById('subFormView');
+  const doneView = document.getElementById('subDoneView');
+
+  openBtn.addEventListener('click', () => {
+    formView.style.display = '';
+    doneView.classList.remove('show');
+    modal.showModal();
+  });
+  closeBtn.addEventListener('click', () => modal.close());
+  doneCloseBtn.addEventListener('click', () => modal.close());
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+
+  /* 시트: 말그미극단 소식 구독자 명단 (malgeumi.html #contact와 같은 웹앱 주소) */
+  const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbywXwIjpd9i-LnPCAqnb6Owj4b0jQvRZ3OE1FvixJLFydaIDIz3sZFsz3GIQx4zA03W/exec';
+
+  const form = document.getElementById('subForm');
+  const consentEl = document.getElementById('sub-consent');
+  consentEl.addEventListener('invalid', () => consentEl.setCustomValidity('개인정보 수집·이용에 동의해 주세요.'));
+  consentEl.addEventListener('change', () => consentEl.setCustomValidity(''));
+
+  const status = document.getElementById('sub-status');
+  const say = (msg, kind) => {
+    status.textContent = msg;
+    status.className = 'sub-status' + (kind ? ' is-' + kind : '');
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const val = (id) => document.getElementById(id).value.trim();
+    const name = val('sub-name'), phone = val('sub-phone'), email = val('sub-email');
+    if (!consentEl.checked) { consentEl.focus(); return; }
+
+    const data = new FormData();
+    data.append('name', name);
+    data.append('phone', phone);
+    data.append('email', email);
+    data.append('message', '');
+    data.append('consent', 'y');
+
+    const button = form.querySelector('button[type="submit"]');
+    const label = button.textContent;
+    button.disabled = true;
+    button.textContent = '보내는 중…';
+    say('');
+
+    try {
+      const res = await fetch(SHEET_ENDPOINT, { method: 'POST', body: data });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || '기록 실패');
+      form.reset();
+      if (window.gtag) gtag('event', 'subscribe', { page_path: location.pathname });
+      formView.style.display = 'none';
+      doneView.classList.add('show');
+    } catch (err) {
+      say('전송에 실패했습니다. 055-339-9110으로 전화 주시거나 잠시 후 다시 시도해 주세요.', 'error');
+    } finally {
+      button.disabled = false;
+      button.textContent = label;
+    }
+  });
+})();
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════
