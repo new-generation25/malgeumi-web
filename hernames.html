@@ -143,12 +143,8 @@ ol.steps li b{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
   word-break:keep-all;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;gap:5px}
 .sticky-note .nw-note-main{font-size:14.5px;font-weight:700}
-.sticky-note .nw-note-sub{font-size:11.5px;font-weight:500;opacity:.7}
 .sticky-note b{position:absolute;right:9px;bottom:7px;font-size:9.5px;font-weight:700;opacity:.6}
-.nw-board .nw-btns{display:flex;flex-wrap:wrap;gap:9px}
-.nw-board .nw-btns button.btn{border:0;cursor:pointer;font-family:inherit}
-.nw-board .nw-btns .btn.sec{border:1px solid var(--line)}
-.nw-toast{margin-top:12px;font-size:13px;color:var(--gold)}
+.nw-toast{font-size:14px;color:var(--gold)}
 dl.simple{margin:0}
 dl.simple .r{display:flex;gap:15px;padding:11px 0;border-bottom:1px solid var(--line)}
 dl.simple dt{flex:none;width:62px;font-size:11px;letter-spacing:.13em;color:var(--gold);font-weight:500;padding-top:4px;margin:0}
@@ -282,18 +278,24 @@ p{max-width:720px}
       </div>
 
       <div class="nw-board" id="nwBoard" hidden>
-        <p class="nw-count" id="nwCount">이름의 벽을 불러오는 중…</p>
-        <div class="nw-wall" id="nwWall"></div>
-        <div class="nw-btns">
-          <button class="btn pri" type="button" id="nwPost">이름의 벽에 걸기</button>
-          <button class="btn sec" type="button" id="nwCopy">문장 복사</button>
-          <button class="btn sec" type="button" id="nwSave">이미지로 저장</button>
-        </div>
-        <p class="nw-toast" id="nwToast" hidden></p>
+        <p class="nw-toast" id="nwToast">이름의 벽에 거는 중…</p>
       </div>
     </div>
   </div>
 </div>
+
+<section id="wall">
+  <div class="wrap">
+    <p class="eyebrow">WALL</p>
+    <h2>이름의 벽</h2>
+    <p class="lede">이곳에 다녀간 사람들이 걸어 둔 이름입니다. 맨 위에서 세 가지 질문에 답하면 여기에 함께 걸립니다.</p>
+    <p class="nw-count" id="nwWallCount">이름의 벽을 불러오는 중…</p>
+    <div class="nw-wall" id="nwSharedWall"></div>
+    <div class="tags">
+      <span>#오늘나를부르는이름</span><span>#김해양성평등</span><span>#극단해연</span>
+    </div>
+  </div>
+</section>
 
 <div class="hero">
   <div class="wrap">
@@ -312,7 +314,7 @@ p{max-width:720px}
           <div class="r"><dt>종료</dt><dd>9. 5. 18:10 / 9. 6. 18:30 예정
             <span class="s">공연 후 양성평등 토크쇼 30분이 이어집니다</span></dd></div>
           <div class="r"><dt>예약</dt><dd>사전예약 및 현장방문
-            <span class="s">관람 문의 010-2858-9293</span></dd></div>
+            <span class="s">관람 문의 <a href="tel:010-2858-9293">전화하기</a></span></dd></div>
         </dl>
 
         <div class="btns">
@@ -323,19 +325,6 @@ p{max-width:720px}
     </div>
   </div>
 </div>
-
-<section id="wall">
-  <div class="wrap">
-    <p class="eyebrow">WALL</p>
-    <h2>이름의 벽</h2>
-    <p class="lede">이곳에 다녀간 사람들이 걸어 둔 이름입니다. 맨 위에서 세 가지 질문에 답하면 여기에 함께 걸립니다.</p>
-    <p class="nw-count" id="nwWallCount">이름의 벽을 불러오는 중…</p>
-    <div class="nw-wall" id="nwSharedWall"></div>
-    <div class="tags">
-      <span>#오늘나를부르는이름</span><span>#김해양성평등</span><span>#극단해연</span>
-    </div>
-  </div>
-</section>
 
 <section>
   <div class="wrap">
@@ -356,13 +345,13 @@ p{max-width:720px}
       <div class="dh"><span class="d">9. 5. 토</span><span class="t">17:00 · 공연 40분</span></div>
       <div class="work">
         <h3>남편의 생일</h3>
-        <p class="meta">1인극 · 20분 · 「사랑에 관한 5가지 소묘」 중 발췌 · <span class="ph">【원작자명】</span></p>
+        <p class="meta">1인극 · 20분 · 「사랑에 관한 5가지 소묘」 중 발췌</p>
         <div class="roles"><span><b>김미경</b> <i>아내</i></span></div>
         <p class="syn">사춘기 딸을 키우며 목수로 살아가는 40대 여성 수진. 세상 떠난 남편 우석의 마흔아홉 번째 생일을 맞아 그의 사진 앞에 홀로 맥주를 기울입니다. 세상의 편견과 지치는 현실, 딸과의 갈등 속에서도 언제나 자신을 믿어주던 남편을 떠올린 수진은 다시 망치를 들고 딸을 위한 의자를 만들어 나갑니다.</p>
       </div>
       <div class="work">
         <h3>가정교사</h3>
-        <p class="meta">2인극 · 20분 · 닐 사이먼 「굿닥터」 중 · 번역 <span class="ph">【번역자명】</span></p>
+        <p class="meta">2인극 · 20분 · 닐 사이먼 「굿닥터」 중</p>
         <div class="roles"><span><b>황경아</b> <i>집주인</i></span><span><b>배소완</b> <i>권선생</i></span></div>
         <p class="syn">집주인은 여성 가정교사 권선생을 고용한 뒤, 두 달치 월급을 정산하겠다며 그를 책상 앞으로 불러 앉힙니다. 계약한 400만 원이 여자라서 라는 말로 시작해, 일요일과 아이가 아팠던 날과 깨진 찻잔이 하나씩 붙으며 금액은 조금씩 깎여 나갑니다. 권선생은 한마디 항의도 없이 고개만 숙입니다.</p>
       </div>
@@ -467,7 +456,7 @@ p{max-width:720px}
      ──────────────────────────────────────────────────────── -->
 <script>
 (function () {
-  var BOARD_API = 'https://script.google.com/macros/s/AKfycbwyTK5KPkkZpgHVYaFxn7AhilZbE_vnCe4S8X1Fxu2doTmwgZ081KK_QaJ4ACS7BAZa/exec';
+  var BOARD_API = 'https://script.google.com/macros/s/AKfycby_linVzdETJo6oUm3zQxDijwht1WmEpw3qYw2W1TK62RAJhtz7Ctp2Q-ytQa9Mrn4S/exec';
   var COLORS = ['#FDF3B0', '#FFD7A8', '#C8E8D0', '#D6DEF5', '#F3D6E8'];
   var state = { calls: [], name: '', tomorrow: '' };
 
@@ -527,7 +516,7 @@ p{max-width:720px}
   };
 
   // 한 사람의 응답(호칭들 + 내 이름 + 내일의 이름)을 포스트잇 한 장에 모두 담는다
-  function makeCombinedNote(calls, name, tomorrow) {
+  function makeCombinedNote(calls, name) {
     var n = document.createElement('div');
     n.className = 'sticky-note';
     n.style.setProperty('--rot', (Math.random() * 8 - 4).toFixed(1) + 'deg');
@@ -536,12 +525,6 @@ p{max-width:720px}
     main.className = 'nw-note-main';
     main.textContent = (calls || []).join(' · ');
     n.appendChild(main);
-    if (tomorrow) {
-      var sub = document.createElement('div');
-      sub.className = 'nw-note-sub';
-      sub.textContent = '내일 · ' + tomorrow;
-      n.appendChild(sub);
-    }
     if (name) {
       var b = document.createElement('b');
       b.textContent = name;
@@ -550,17 +533,7 @@ p{max-width:720px}
     return n;
   }
 
-  function showBoard() {
-    document.querySelector('#namewall .nw-head').hidden = true;
-    track.hidden = true;
-    var board = document.getElementById('nwBoard');
-    board.hidden = false;
-    var wall = document.getElementById('nwWall');
-    wall.appendChild(makeCombinedNote(state.calls, state.name, state.tomorrow));
-    if (window.gtag) gtag('event', 'namewall_complete', { page_path: location.pathname });
-  }
-
-  // --- 하단 "이름의 벽" 공유 게시판: 완료 여부와 상관없이 방문하면 바로 보인다 ---
+  // --- 하단 "이름의 벽" 공유 게시판: 응답 여부와 상관없이 방문하면 바로 보인다 ---
   var sharedWall = document.getElementById('nwSharedWall');
   var sharedCount = document.getElementById('nwWallCount');
   var sharedTotal = 0;
@@ -573,25 +546,29 @@ p{max-width:720px}
       sharedTotal = list.length;
       sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
       list.slice(-80).reverse().forEach(function (entry) {
-        sharedWall.appendChild(makeCombinedNote(entry.calls, entry.name, entry.tomorrow));
+        sharedWall.appendChild(makeCombinedNote(entry.calls, entry.name));
       });
     }).catch(function () { sharedCount.textContent = '이름의 벽을 불러오지 못했습니다.'; });
   }
   loadSharedWall();
 
-  document.getElementById('nwPost').addEventListener('click', function () {
-    var btn = this;
+  // 3번째 질문에 답하면 별도 버튼 없이 바로 벽에 건다
+  function showBoard() {
+    document.querySelector('#namewall .nw-head').hidden = true;
+    track.hidden = true;
+    document.getElementById('nwBoard').hidden = false;
     var toast = document.getElementById('nwToast');
-    toast.hidden = false;
+
+    if (window.gtag) gtag('event', 'namewall_complete', { page_path: location.pathname });
+
     if (!BOARD_API) {
-      toast.textContent = '아직 온라인 게시가 준비되지 않았습니다. 공연 당일 로비의 이름의 벽에 붙여주세요.';
+      toast.textContent = '고맙습니다. 공연 당일 로비의 이름의 벽에도 붙여주세요.';
       return;
     }
     var posted = false;
     try { posted = localStorage.getItem('namewall-posted') === '1'; } catch (e) {}
     if (posted) { toast.textContent = '이미 이름을 거셨습니다. 고맙습니다.'; return; }
 
-    btn.disabled = true;
     // FormData로 보내면 preflight 없이 단순 요청이 된다 (헤더를 직접 붙이면 CORS에 걸린다)
     var data = new FormData();
     data.append('calls', state.calls.join('|'));
@@ -601,118 +578,16 @@ p{max-width:720px}
       if (!out.ok) throw new Error(out.error || '기록 실패');
       try { localStorage.setItem('namewall-posted', '1'); } catch (e) {}
       toast.textContent = '이름의 벽에 걸었습니다. 고맙습니다.';
-      // 새로고침 없이도 방금 건 이름이 하단 벽에 바로 보이게 앞에 끼워 넣는다
+      // 새로고침 없이도 방금 건 이름이 벽에 바로 보이게 앞에 끼워 넣는다
       if (sharedWall) {
-        sharedWall.insertBefore(makeCombinedNote(state.calls, state.name, state.tomorrow), sharedWall.firstChild);
+        sharedWall.insertBefore(makeCombinedNote(state.calls, state.name), sharedWall.firstChild);
         sharedTotal += 1;
         sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
       }
       if (window.gtag) gtag('event', 'namewall_post', { page_path: location.pathname });
     }).catch(function () {
       toast.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
-      btn.disabled = false;
     });
-  });
-
-  document.getElementById('nwCopy').addEventListener('click', function () {
-    var sentence = '오늘 나는 ' + state.calls.join(', ') + '(으)로 불렸고, 그리고 ' + state.name
-      + '입니다. 내일은 ' + state.tomorrow + '을(를) 불러보려 합니다. #오늘나를부르는이름 #그녀들의이름';
-    var toast = document.getElementById('nwToast');
-    toast.hidden = false;
-    (navigator.clipboard ? navigator.clipboard.writeText(sentence) : Promise.reject())
-      .then(function () { toast.textContent = '문장을 복사했습니다.'; })
-      .catch(function () { toast.textContent = '복사에 실패했습니다. 직접 선택해 복사해 주세요.'; });
-  });
-
-  document.getElementById('nwSave').addEventListener('click', function () {
-    var PAD = 36, TOP = 92, W = 460;
-    var measureCanvas = document.createElement('canvas');
-    var mctx = measureCanvas.getContext('2d');
-
-    // 한 사람(나) 의 응답을 포스트잇 한 장으로 담는다
-    var mainText = state.calls.join(' · ');
-    var subText = state.tomorrow ? '내일 · ' + state.tomorrow : '';
-    mctx.font = '700 20px "Noto Sans KR",sans-serif';
-    var noteW = Math.min(320, Math.max(180, 60 + mctx.measureText(mainText).width));
-    var mainLines = Math.ceil(mctx.measureText(mainText).width / (noteW - 40)) || 1;
-    var noteH = 92 + mainLines * 26 + (subText ? 22 : 0);
-
-    var H = TOP + noteH + 90;
-    var canvas = document.createElement('canvas');
-    canvas.width = W; canvas.height = H;
-    var ctx = canvas.getContext('2d');
-
-    // 배경: 짙은 코르크보드 톤 + 은은한 점 텍스처
-    var bg = ctx.createLinearGradient(0, 0, 0, H);
-    bg.addColorStop(0, '#161C2C'); bg.addColorStop(1, '#0E1420');
-    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = 'rgba(201,162,39,.05)';
-    for (var gy = 14; gy < H; gy += 22) {
-      for (var gx = 14; gx < W; gx += 22) { ctx.fillRect(gx, gy, 1.4, 1.4); }
-    }
-
-    ctx.fillStyle = '#C9A227'; ctx.font = '700 20px "Noto Sans KR",sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('그녀들의 이름', PAD, 44);
-    ctx.fillStyle = '#8B93A3'; ctx.font = '400 13.5px "Noto Sans KR",sans-serif';
-    ctx.fillText('오늘, 나를 부르는 이름', PAD, 66);
-
-    var cx = W / 2, cy = TOP + noteH / 2;
-    var rot = (Math.random() * 6 - 3);
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rot * Math.PI / 180);
-
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 16; ctx.shadowOffsetY = 7;
-    ctx.fillStyle = COLORS[0];
-    ctx.fillRect(-noteW / 2, -noteH / 2, noteW, noteH);
-    ctx.restore();
-
-    // 위쪽 마스킹테이프
-    ctx.fillStyle = 'rgba(255,255,255,.55)';
-    ctx.save();
-    ctx.translate(0, -noteH / 2);
-    ctx.rotate(-6 * Math.PI / 180);
-    ctx.fillRect(-26, -8, 52, 16);
-    ctx.restore();
-
-    ctx.fillStyle = '#2A2620'; ctx.font = '700 20px "Noto Sans KR",sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    var mainY = subText ? -noteH / 2 + 20 + (mainLines * 26) / 2 : 0;
-    wrapText(ctx, mainText, 0, mainY, noteW - 40, 26);
-
-    if (subText) {
-      ctx.fillStyle = 'rgba(42,38,32,.75)'; ctx.font = '500 14px "Noto Sans KR",sans-serif';
-      ctx.fillText(subText, 0, noteH / 2 - 34);
-    }
-
-    ctx.fillStyle = 'rgba(42,38,32,.6)'; ctx.font = '700 11px "Noto Sans KR",sans-serif';
-    ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText(state.name, noteW / 2 - 12, noteH / 2 - 10);
-    ctx.restore();
-
-    ctx.textBaseline = 'alphabetic';
-    ctx.fillStyle = '#6E7889'; ctx.font = '12px "Noto Sans KR",sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('#오늘나를부르는이름 · 회현동 소극장 · 극단 해연', PAD, H - 26);
-
-    var a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = '오늘나를부르는이름.png';
-    a.click();
-    if (window.gtag) gtag('event', 'namewall_save_image', { page_path: location.pathname });
-  });
-
-  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-    var chars = text.split('');
-    var line = '', lines = [];
-    chars.forEach(function (ch) {
-      var test = line + ch;
-      if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = ch; }
-      else line = test;
-    });
-    lines.push(line);
-    var startY = y - (lines.length - 1) * lineHeight / 2;
-    lines.forEach(function (l, i) { ctx.fillText(l, x, startY + i * lineHeight); });
   }
 })();
 </script>
