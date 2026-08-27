@@ -547,7 +547,17 @@ p{max-width:720px}
     n.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
     var main = document.createElement('div');
     main.className = 'nw-note-main';
-    main.textContent = (calls || []).join(' · ');
+    var list = calls || [];
+    if (list.length === 2) {
+      // 두 개면 위아래로 한 줄씩 — 나란히 붙여 놓으면 좁아서 답답해 보인다
+      list.forEach(function (c) {
+        var line = document.createElement('div');
+        line.textContent = c;
+        main.appendChild(line);
+      });
+    } else {
+      main.textContent = list.join(' · ');
+    }
     n.appendChild(main);
     if (name) {
       var b = document.createElement('b');
