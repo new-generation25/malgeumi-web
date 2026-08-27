@@ -138,9 +138,12 @@ ol.steps li b{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
 .nw-count{font-size:12.5px;color:var(--dim);margin:0 0 14px}
 .nw-wall{display:flex;flex-wrap:wrap;gap:10px;min-height:60px;margin:0 0 18px}
 .sticky-note{position:relative;transform:rotate(var(--rot,0deg));color:#3A3320;
-  padding:16px 16px 24px;border-radius:2px;font-size:14.5px;font-weight:600;line-height:1.4;
-  box-shadow:0 4px 10px rgba(0,0,0,.3);min-width:96px;max-width:150px;min-height:88px;
-  word-break:keep-all;display:flex;align-items:center;justify-content:center;text-align:center}
+  padding:16px 16px 28px;border-radius:2px;line-height:1.4;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);min-width:120px;max-width:190px;min-height:96px;
+  word-break:keep-all;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:5px}
+.sticky-note .nw-note-main{font-size:14.5px;font-weight:700}
+.sticky-note .nw-note-sub{font-size:11.5px;font-weight:500;opacity:.7}
 .sticky-note b{position:absolute;right:9px;bottom:7px;font-size:9.5px;font-weight:700;opacity:.6}
 .nw-board .nw-btns{display:flex;flex-wrap:wrap;gap:9px}
 .nw-board .nw-btns button.btn{border:0;cursor:pointer;font-family:inherit}
@@ -523,17 +526,27 @@ p{max-width:720px}
     }
   };
 
-  function makeNote(text, label) {
+  // 한 사람의 응답(호칭들 + 내 이름 + 내일의 이름)을 포스트잇 한 장에 모두 담는다
+  function makeCombinedNote(calls, name, tomorrow) {
     var n = document.createElement('div');
     n.className = 'sticky-note';
     n.style.setProperty('--rot', (Math.random() * 8 - 4).toFixed(1) + 'deg');
     n.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
-    if (label) {
+    var main = document.createElement('div');
+    main.className = 'nw-note-main';
+    main.textContent = (calls || []).join(' · ');
+    n.appendChild(main);
+    if (tomorrow) {
+      var sub = document.createElement('div');
+      sub.className = 'nw-note-sub';
+      sub.textContent = '내일 · ' + tomorrow;
+      n.appendChild(sub);
+    }
+    if (name) {
       var b = document.createElement('b');
-      b.textContent = label;
+      b.textContent = name;
       n.appendChild(b);
     }
-    n.appendChild(document.createTextNode(text));
     return n;
   }
 
@@ -543,9 +556,7 @@ p{max-width:720px}
     var board = document.getElementById('nwBoard');
     board.hidden = false;
     var wall = document.getElementById('nwWall');
-    state.calls.forEach(function (c) { wall.appendChild(makeNote(c)); });
-    wall.appendChild(makeNote(state.name, '나'));
-    wall.appendChild(makeNote(state.tomorrow, '내일'));
+    wall.appendChild(makeCombinedNote(state.calls, state.name, state.tomorrow));
     if (window.gtag) gtag('event', 'namewall_complete', { page_path: location.pathname });
   }
 
@@ -562,9 +573,7 @@ p{max-width:720px}
       sharedTotal = list.length;
       sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
       list.slice(-80).reverse().forEach(function (entry) {
-        (entry.calls || []).forEach(function (c) { sharedWall.appendChild(makeNote(c)); });
-        if (entry.name) sharedWall.appendChild(makeNote(entry.name, '나'));
-        if (entry.tomorrow) sharedWall.appendChild(makeNote(entry.tomorrow, '내일'));
+        sharedWall.appendChild(makeCombinedNote(entry.calls, entry.name, entry.tomorrow));
       });
     }).catch(function () { sharedCount.textContent = '이름의 벽을 불러오지 못했습니다.'; });
   }
@@ -594,9 +603,7 @@ p{max-width:720px}
       toast.textContent = '이름의 벽에 걸었습니다. 고맙습니다.';
       // 새로고침 없이도 방금 건 이름이 하단 벽에 바로 보이게 앞에 끼워 넣는다
       if (sharedWall) {
-        state.calls.forEach(function (c) { sharedWall.insertBefore(makeNote(c), sharedWall.firstChild); });
-        sharedWall.insertBefore(makeNote(state.name, '나'), sharedWall.firstChild);
-        sharedWall.insertBefore(makeNote(state.tomorrow, '내일'), sharedWall.firstChild);
+        sharedWall.insertBefore(makeCombinedNote(state.calls, state.name, state.tomorrow), sharedWall.firstChild);
         sharedTotal += 1;
         sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
       }
@@ -618,27 +625,19 @@ p{max-width:720px}
   });
 
   document.getElementById('nwSave').addEventListener('click', function () {
-    var PAD = 36, GAP = 18, TOP = 92, W = 640;
+    var PAD = 36, TOP = 92, W = 460;
     var measureCanvas = document.createElement('canvas');
     var mctx = measureCanvas.getContext('2d');
-    mctx.font = '700 17px "Noto Sans KR",sans-serif';
 
-    var notes = state.calls.map(function (c) { return { main: c, label: '' }; })
-      .concat([{ main: state.name, label: '나' }, { main: state.tomorrow, label: '내일' }]);
-    // 1차: 실제로 그리기 전에 자리부터 계산한다 (내용에 맞춰 캔버스 크기를 정하기 위해)
-    var x = PAD, y = TOP, rowH = 0, layout = [];
-    notes.forEach(function (note) {
-      var t = note.main;
-      var w = Math.min(240, Math.max(110, 56 + mctx.measureText(t).width));
-      var lines = Math.ceil(mctx.measureText(t).width / (w - 28)) || 1;
-      var h = Math.max(96, 64 + lines * 22);
-      if (x + w > W - PAD) { x = PAD; y += rowH + GAP; rowH = 0; }
-      layout.push({ t: t, label: note.label, x: x, y: y, w: w, h: h });
-      rowH = Math.max(rowH, h);
-      x += w + GAP;
-    });
-    var H = y + rowH + 86;
+    // 한 사람(나) 의 응답을 포스트잇 한 장으로 담는다
+    var mainText = state.calls.join(' · ');
+    var subText = state.tomorrow ? '내일 · ' + state.tomorrow : '';
+    mctx.font = '700 20px "Noto Sans KR",sans-serif';
+    var noteW = Math.min(320, Math.max(180, 60 + mctx.measureText(mainText).width));
+    var mainLines = Math.ceil(mctx.measureText(mainText).width / (noteW - 40)) || 1;
+    var noteH = 92 + mainLines * 26 + (subText ? 22 : 0);
 
+    var H = TOP + noteH + 90;
     var canvas = document.createElement('canvas');
     canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext('2d');
@@ -657,41 +656,40 @@ p{max-width:720px}
     ctx.fillStyle = '#8B93A3'; ctx.font = '400 13.5px "Noto Sans KR",sans-serif';
     ctx.fillText('오늘, 나를 부르는 이름', PAD, 66);
 
-    var colI = 0;
-    layout.forEach(function (note) {
-      var rot = (Math.random() * 10 - 5);
-      var cx = note.x + note.w / 2, cy = note.y + note.h / 2;
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(rot * Math.PI / 180);
+    var cx = W / 2, cy = TOP + noteH / 2;
+    var rot = (Math.random() * 6 - 3);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot * Math.PI / 180);
 
-      // 그림자
-      ctx.save();
-      ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 14; ctx.shadowOffsetY = 6;
-      ctx.fillStyle = COLORS[colI % COLORS.length];
-      ctx.fillRect(-note.w / 2, -note.h / 2, note.w, note.h);
-      ctx.restore();
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 16; ctx.shadowOffsetY = 7;
+    ctx.fillStyle = COLORS[0];
+    ctx.fillRect(-noteW / 2, -noteH / 2, noteW, noteH);
+    ctx.restore();
 
-      // 위쪽 마스킹테이프
-      ctx.fillStyle = 'rgba(255,255,255,.55)';
-      ctx.save();
-      ctx.translate(0, -note.h / 2);
-      ctx.rotate(-6 * Math.PI / 180);
-      ctx.fillRect(-22, -7, 44, 14);
-      ctx.restore();
+    // 위쪽 마스킹테이프
+    ctx.fillStyle = 'rgba(255,255,255,.55)';
+    ctx.save();
+    ctx.translate(0, -noteH / 2);
+    ctx.rotate(-6 * Math.PI / 180);
+    ctx.fillRect(-26, -8, 52, 16);
+    ctx.restore();
 
-      ctx.fillStyle = '#2A2620'; ctx.font = '600 16px "Noto Sans KR",sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      wrapText(ctx, note.t, 0, 2, note.w - 26, 21);
+    ctx.fillStyle = '#2A2620'; ctx.font = '700 20px "Noto Sans KR",sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    var mainY = subText ? -noteH / 2 + 20 + (mainLines * 26) / 2 : 0;
+    wrapText(ctx, mainText, 0, mainY, noteW - 40, 26);
 
-      if (note.label) {
-        ctx.fillStyle = 'rgba(42,38,32,.6)'; ctx.font = '700 9.5px "Noto Sans KR",sans-serif';
-        ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
-        ctx.fillText(note.label, note.w / 2 - 9, note.h / 2 - 7);
-      }
-      ctx.restore();
-      colI++;
-    });
+    if (subText) {
+      ctx.fillStyle = 'rgba(42,38,32,.75)'; ctx.font = '500 14px "Noto Sans KR",sans-serif';
+      ctx.fillText(subText, 0, noteH / 2 - 34);
+    }
+
+    ctx.fillStyle = 'rgba(42,38,32,.6)'; ctx.font = '700 11px "Noto Sans KR",sans-serif';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(state.name, noteW / 2 - 12, noteH / 2 - 10);
+    ctx.restore();
 
     ctx.textBaseline = 'alphabetic';
     ctx.fillStyle = '#6E7889'; ctx.font = '12px "Noto Sans KR",sans-serif'; ctx.textAlign = 'left';
