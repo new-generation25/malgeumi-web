@@ -470,6 +470,20 @@ p{max-width:720px}
   var COLORS = ['#FDF3B0', '#FFD7A8', '#C8E8D0', '#D6DEF5', '#F3D6E8'];
   var state = { calls: [], name: '', tomorrow: '' };
 
+  // application/x-www-form-urlencoded 로 보낸다. FormData(멀티파트)는 CORS 프리플라이트는
+  // 피하지만, Apps Script의 e.parameter가 멀티파트 경계에서 한글(다바이트 UTF-8)을
+  // 드물게 잘못 해독하는 문제가 있다. urlencoded는 이 문제 없이 안정적으로 해독된다.
+  function postForm_(fields) {
+    var body = Object.keys(fields).map(function (k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(fields[k] == null ? '' : fields[k]);
+    }).join('&');
+    return fetch(BOARD_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    });
+  }
+
   var track = document.getElementById('nwTrack');
   var dots = document.querySelectorAll('#namewall [data-dot]');
   var callInput = document.getElementById('nwCallInput');
@@ -579,12 +593,8 @@ p{max-width:720px}
     try { posted = localStorage.getItem('namewall-posted') === '1'; } catch (e) {}
     if (posted) { toast.textContent = '이미 이름을 거셨습니다. 고맙습니다.'; return; }
 
-    // FormData로 보내면 preflight 없이 단순 요청이 된다 (헤더를 직접 붙이면 CORS에 걸린다)
-    var data = new FormData();
-    data.append('calls', state.calls.join('|'));
-    data.append('name', state.name);
-    data.append('tomorrow', state.tomorrow);
-    fetch(BOARD_API, { method: 'POST', body: data }).then(function (r) { return r.json(); }).then(function (out) {
+    postForm_({ calls: state.calls.join('|'), name: state.name, tomorrow: state.tomorrow })
+      .then(function (r) { return r.json(); }).then(function (out) {
       if (!out.ok) throw new Error(out.error || '기록 실패');
       try { localStorage.setItem('namewall-posted', '1'); } catch (e) {}
       toast.textContent = '이름의 벽에 걸었습니다. 고맙습니다.';
@@ -628,12 +638,8 @@ p{max-width:720px}
       }
 
       btn.disabled = true;
-      var data = new FormData();
-      data.append('type', 'rsvp');
-      data.append('name', name);
-      data.append('phone', phone);
-      data.append('age', age);
-      fetch(BOARD_API, { method: 'POST', body: data }).then(function (r) { return r.json(); }).then(function (out) {
+      postForm_({ type: 'rsvp', name: name, phone: phone, age: age })
+        .then(function (r) { return r.json(); }).then(function (out) {
         if (!out.ok) throw new Error(out.error || '신청 실패');
         toast.hidden = false;
         toast.textContent = '관람 신청이 접수되었습니다. 고맙습니다.';
