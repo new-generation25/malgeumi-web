@@ -34,7 +34,7 @@
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);
   font-family:"Noto Sans KR",system-ui,-apple-system,sans-serif;
-  font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;padding-bottom:78px}
+  font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
 section{padding:46px 0;border-top:1px solid var(--line)}
 section.paper{background:var(--paper);color:var(--ink);border-top:0}
@@ -132,7 +132,7 @@ ol.steps li b{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
 .nw-actions .nw-err{margin-right:auto;font-size:12.5px;color:#E8A6A6}
 .nw-actions button.btn{width:auto;border:0;cursor:pointer;font-family:inherit}
 .nw-board{padding:22px}
-.nw-board .nw-count{font-size:12.5px;color:var(--dim);margin:0 0 14px}
+.nw-count{font-size:12.5px;color:var(--dim);margin:0 0 14px}
 .nw-wall{display:flex;flex-wrap:wrap;gap:10px;min-height:60px;margin:0 0 18px}
 .sticky-note{transform:rotate(var(--rot,0deg));color:#3A3320;padding:12px 14px 14px;
   border-radius:2px;font-size:13.5px;line-height:1.5;box-shadow:0 4px 10px rgba(0,0,0,.3);
@@ -159,13 +159,6 @@ footer .fund{color:var(--gold);font-size:13px;margin-top:16px}
 footer .logos{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 footer .logos span{border:1px solid var(--line);padding:6px 10px;font-size:11px;letter-spacing:.03em}
 footer .home{display:inline-block;margin-bottom:14px;color:var(--gold);text-decoration:none;font-size:13px}
-
-.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(14,20,32,.95);
-  backdrop-filter:blur(10px);border-top:1px solid var(--line)}
-.sticky .in{max-width:var(--max);margin:0 auto;padding:10px var(--pad);display:flex;gap:8px}
-.sticky a{flex:1;text-align:center;padding:13px 8px;border-radius:3px;text-decoration:none;font-size:14px;font-weight:700}
-.sticky .a1{background:var(--gold);color:#1A1400}
-.sticky .a2{background:transparent;color:var(--fg);border:1px solid var(--line)}
 
 @media (min-width:560px){.btns{flex-direction:row}.btn{flex:1}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -248,7 +241,50 @@ p{max-width:720px}
     <div class="bar"></div>
     <p class="htag">#오늘나를부르는이름</p>
     <p class="lede">하루 동안 나를 부른 호칭을 순서대로 적고, 마지막에 내 이름을 적습니다. 그게 전부입니다. 공연 당일에는 로비 '이름의 벽'에 직접 붙이실 수 있습니다.</p>
-    <a class="go" href="#namewall">지금 적어보기</a>
+
+    <div class="namewall" id="namewall">
+      <div class="nw-head">
+        <div class="nw-dots"><span class="on" data-dot="0"></span><span data-dot="1"></span><span data-dot="2"></span></div>
+      </div>
+      <div class="nw-track" id="nwTrack">
+        <div class="nw-step">
+          <p class="nw-no">1</p>
+          <h4>오늘 나를 부른 이름들</h4>
+          <p class="nw-q">오늘 하루, 어떤 호칭으로 불리셨나요?</p>
+          <p class="nw-hint">하나씩 적고 엔터를 누르세요. 예 · 엄마 / 여보 / 사모님 / 큰며느리</p>
+          <input class="nw-input" id="nwCallInput" type="text" placeholder="호칭을 적고 엔터" maxlength="20">
+          <div class="nw-chips" id="nwChips"></div>
+          <div class="nw-actions"><span class="nw-err" id="nwErr1"></span><button class="btn pri" type="button" onclick="nwNext(1)">확인</button></div>
+        </div>
+        <div class="nw-step">
+          <p class="nw-no">2</p>
+          <h4>그리고, 나</h4>
+          <p class="nw-q">당신의 이름은 무엇입니까?</p>
+          <p class="nw-hint">본명이 부담스러우시면 불리고 싶은 이름을 적으셔도 됩니다.</p>
+          <input class="nw-input" id="nwNameInput" type="text" placeholder="이름" maxlength="20">
+          <div class="nw-actions"><span class="nw-err" id="nwErr2"></span><button class="btn pri" type="button" onclick="nwNext(2)">확인</button></div>
+        </div>
+        <div class="nw-step">
+          <p class="nw-no">3</p>
+          <h4>내일의 이름</h4>
+          <p class="nw-q">내일, 누구의 이름을 불러주시겠어요?</p>
+          <p class="nw-hint">'엄마'라고만 부르던 사람의 이름을 떠올려보세요. 예 · 우리 엄마 김순자 씨</p>
+          <input class="nw-input" id="nwTomorrowInput" type="text" placeholder="이름을 불러주고 싶은 사람" maxlength="30">
+          <div class="nw-actions"><span class="nw-err" id="nwErr3"></span><button class="btn pri" type="button" onclick="nwNext(3)">확인</button></div>
+        </div>
+      </div>
+
+      <div class="nw-board" id="nwBoard" hidden>
+        <p class="nw-count" id="nwCount">이름의 벽을 불러오는 중…</p>
+        <div class="nw-wall" id="nwWall"></div>
+        <div class="nw-btns">
+          <button class="btn pri" type="button" id="nwPost">이름의 벽에 걸기</button>
+          <button class="btn sec" type="button" id="nwCopy">문장 복사</button>
+          <button class="btn sec" type="button" id="nwSave">이미지로 저장</button>
+        </div>
+        <p class="nw-toast" id="nwToast" hidden></p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -342,67 +378,6 @@ p{max-width:720px}
   </div>
 </section>
 
-<section id="campaign">
-  <div class="wrap">
-    <p class="eyebrow">CAMPAIGN</p>
-    <h2>오늘, 세 가지만</h2>
-    <ol class="steps">
-      <li><b>로비 '이름의 벽'</b>오늘 불린 호칭을 적고 마지막에 이름을 적어 붙여 주세요.</li>
-      <li><b>관람 후 설문</b>받으신 설문지를 작성해 주시면 사업 성과로 기록됩니다.</li>
-      <li><b>후기 한 줄</b>해시태그를 달아 올려 주세요.</li>
-    </ol>
-
-    <div class="namewall" id="namewall">
-      <div class="nw-head">
-        <div class="nw-dots"><span class="on" data-dot="0"></span><span data-dot="1"></span><span data-dot="2"></span></div>
-      </div>
-      <div class="nw-track" id="nwTrack">
-        <div class="nw-step">
-          <p class="nw-no">1</p>
-          <h4>오늘 나를 부른 이름들</h4>
-          <p class="nw-q">오늘 하루, 어떤 호칭으로 불리셨나요?</p>
-          <p class="nw-hint">하나씩 적고 엔터를 누르세요. 예 · 엄마 / 여보 / 사모님 / 큰며느리</p>
-          <input class="nw-input" id="nwCallInput" type="text" placeholder="호칭을 적고 엔터" maxlength="20">
-          <div class="nw-chips" id="nwChips"></div>
-          <div class="nw-actions"><span class="nw-err" id="nwErr1"></span><button class="btn pri" type="button" onclick="nwNext(1)">확인</button></div>
-        </div>
-        <div class="nw-step">
-          <p class="nw-no">2</p>
-          <h4>그리고, 나</h4>
-          <p class="nw-q">당신의 이름은 무엇입니까?</p>
-          <p class="nw-hint">본명이 부담스러우시면 불리고 싶은 이름을 적으셔도 됩니다.</p>
-          <input class="nw-input" id="nwNameInput" type="text" placeholder="이름" maxlength="20">
-          <div class="nw-actions"><span class="nw-err" id="nwErr2"></span><button class="btn pri" type="button" onclick="nwNext(2)">확인</button></div>
-        </div>
-        <div class="nw-step">
-          <p class="nw-no">3</p>
-          <h4>내일의 이름</h4>
-          <p class="nw-q">내일, 누구의 이름을 불러주시겠어요?</p>
-          <p class="nw-hint">'엄마'라고만 부르던 사람의 이름을 떠올려보세요. 예 · 우리 엄마 김순자 씨</p>
-          <input class="nw-input" id="nwTomorrowInput" type="text" placeholder="이름을 불러주고 싶은 사람" maxlength="30">
-          <div class="nw-actions"><span class="nw-err" id="nwErr3"></span><button class="btn pri" type="button" onclick="nwNext(3)">확인</button></div>
-        </div>
-      </div>
-
-      <div class="nw-board" id="nwBoard" hidden>
-        <p class="nw-count" id="nwCount">이름의 벽을 불러오는 중…</p>
-        <div class="nw-wall" id="nwWall"></div>
-        <div class="nw-btns">
-          <button class="btn pri" type="button" id="nwPost">이름의 벽에 걸기</button>
-          <button class="btn sec" type="button" id="nwCopy">문장 복사</button>
-          <button class="btn sec" type="button" id="nwSave">이미지로 저장</button>
-        </div>
-        <p class="nw-toast" id="nwToast" hidden></p>
-      </div>
-    </div>
-
-    <div class="tags">
-      <span>#오늘나를부르는이름</span><span>#김해양성평등</span><span>#극단해연</span>
-    </div>
-    <p style="font-size:13px;color:var(--dim);margin:16px 0 0">온라인 참여 기간 <span class="ph">【8. 22. ~ 10. 31. 확인】</span> · 계정 <span class="ph">【극단 해연 SNS】</span></p>
-  </div>
-</section>
-
 <section class="paper">
   <div class="wrap">
     <p class="eyebrow">COMPANY</p>
@@ -451,6 +426,19 @@ p{max-width:720px}
   </div>
 </section>
 
+<section id="wall">
+  <div class="wrap">
+    <p class="eyebrow">WALL</p>
+    <h2>이름의 벽</h2>
+    <p class="lede">이곳에 다녀간 사람들이 걸어 둔 이름입니다. 맨 위에서 세 가지 질문에 답하면 여기에 함께 걸립니다.</p>
+    <p class="nw-count" id="nwWallCount">이름의 벽을 불러오는 중…</p>
+    <div class="nw-wall" id="nwSharedWall"></div>
+    <div class="tags">
+      <span>#오늘나를부르는이름</span><span>#김해양성평등</span><span>#극단해연</span>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <a class="home" href="haeyeon.html">← 극단 해연으로</a>
@@ -461,13 +449,6 @@ p{max-width:720px}
     <p class="fund">2026년 김해시 양성평등기금 지원사업</p>
   </div>
 </footer>
-
-<div class="sticky">
-  <div class="in">
-    <a class="a1" href="#">관람 신청</a>
-    <a class="a2" href="tel:010-2858-9293">전화 문의</a>
-  </div>
-</div>
 
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -564,23 +545,29 @@ p{max-width:720px}
     state.calls.forEach(function (c) { wall.appendChild(makeNote(c)); });
     wall.appendChild(makeNote(state.name, '나'));
     wall.appendChild(makeNote(state.tomorrow, '내일'));
-    loadWall(wall);
     if (window.gtag) gtag('event', 'namewall_complete', { page_path: location.pathname });
   }
 
-  function loadWall(wall) {
-    var countEl = document.getElementById('nwCount');
-    if (!BOARD_API) { countEl.textContent = '나의 이름들'; return; }
+  // --- 하단 "이름의 벽" 공유 게시판: 완료 여부와 상관없이 방문하면 바로 보인다 ---
+  var sharedWall = document.getElementById('nwSharedWall');
+  var sharedCount = document.getElementById('nwWallCount');
+  var sharedTotal = 0;
+
+  function loadSharedWall() {
+    if (!sharedWall) return;
+    if (!BOARD_API) { sharedCount.textContent = '아직 이름의 벽이 준비되지 않았습니다.'; return; }
     fetch(BOARD_API).then(function (r) { return r.json(); }).then(function (data) {
       var list = (data && data.entries) || [];
-      countEl.textContent = '지금까지 ' + list.length + '명이 이름을 걸었습니다';
-      list.slice(-60).reverse().forEach(function (entry) {
-        (entry.calls || []).forEach(function (c) { wall.appendChild(makeNote(c)); });
-        if (entry.name) wall.appendChild(makeNote(entry.name, '나'));
-        if (entry.tomorrow) wall.appendChild(makeNote(entry.tomorrow, '내일'));
+      sharedTotal = list.length;
+      sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
+      list.slice(-80).reverse().forEach(function (entry) {
+        (entry.calls || []).forEach(function (c) { sharedWall.appendChild(makeNote(c)); });
+        if (entry.name) sharedWall.appendChild(makeNote(entry.name, '나'));
+        if (entry.tomorrow) sharedWall.appendChild(makeNote(entry.tomorrow, '내일'));
       });
-    }).catch(function () { countEl.textContent = '나의 이름들'; });
+    }).catch(function () { sharedCount.textContent = '이름의 벽을 불러오지 못했습니다.'; });
   }
+  loadSharedWall();
 
   document.getElementById('nwPost').addEventListener('click', function () {
     var btn = this;
@@ -604,6 +591,14 @@ p{max-width:720px}
       if (!out.ok) throw new Error(out.error || '기록 실패');
       try { localStorage.setItem('namewall-posted', '1'); } catch (e) {}
       toast.textContent = '이름의 벽에 걸었습니다. 고맙습니다.';
+      // 새로고침 없이도 방금 건 이름이 하단 벽에 바로 보이게 앞에 끼워 넣는다
+      if (sharedWall) {
+        state.calls.forEach(function (c) { sharedWall.insertBefore(makeNote(c), sharedWall.firstChild); });
+        sharedWall.insertBefore(makeNote(state.name, '나'), sharedWall.firstChild);
+        sharedWall.insertBefore(makeNote(state.tomorrow, '내일'), sharedWall.firstChild);
+        sharedTotal += 1;
+        sharedCount.textContent = '지금까지 ' + sharedTotal + '명이 이름을 걸었습니다';
+      }
       if (window.gtag) gtag('event', 'namewall_post', { page_path: location.pathname });
     }).catch(function () {
       toast.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
