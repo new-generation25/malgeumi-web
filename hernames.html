@@ -137,10 +137,11 @@ ol.steps li b{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
 .nw-board{padding:22px}
 .nw-count{font-size:12.5px;color:var(--dim);margin:0 0 14px}
 .nw-wall{display:flex;flex-wrap:wrap;gap:10px;min-height:60px;margin:0 0 18px}
-.sticky-note{transform:rotate(var(--rot,0deg));color:#3A3320;padding:12px 14px 14px;
-  border-radius:2px;font-size:13.5px;line-height:1.5;box-shadow:0 4px 10px rgba(0,0,0,.3);
-  min-width:88px;max-width:150px;word-break:keep-all}
-.sticky-note b{display:block;font-size:11px;font-weight:700;opacity:.65;margin-bottom:2px}
+.sticky-note{position:relative;transform:rotate(var(--rot,0deg));color:#3A3320;
+  padding:16px 16px 24px;border-radius:2px;font-size:14.5px;font-weight:600;line-height:1.4;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);min-width:96px;max-width:150px;min-height:88px;
+  word-break:keep-all;display:flex;align-items:center;justify-content:center;text-align:center}
+.sticky-note b{position:absolute;right:9px;bottom:7px;font-size:9.5px;font-weight:700;opacity:.6}
 .nw-board .nw-btns{display:flex;flex-wrap:wrap;gap:9px}
 .nw-board .nw-btns button.btn{border:0;cursor:pointer;font-family:inherit}
 .nw-board .nw-btns .btn.sec{border:1px solid var(--line)}
@@ -622,15 +623,17 @@ p{max-width:720px}
     var mctx = measureCanvas.getContext('2d');
     mctx.font = '700 17px "Noto Sans KR",sans-serif';
 
-    var notes = state.calls.concat(['나 · ' + state.name, '내일 · ' + state.tomorrow]);
+    var notes = state.calls.map(function (c) { return { main: c, label: '' }; })
+      .concat([{ main: state.name, label: '나' }, { main: state.tomorrow, label: '내일' }]);
     // 1차: 실제로 그리기 전에 자리부터 계산한다 (내용에 맞춰 캔버스 크기를 정하기 위해)
     var x = PAD, y = TOP, rowH = 0, layout = [];
-    notes.forEach(function (t) {
+    notes.forEach(function (note) {
+      var t = note.main;
       var w = Math.min(240, Math.max(110, 56 + mctx.measureText(t).width));
       var lines = Math.ceil(mctx.measureText(t).width / (w - 28)) || 1;
       var h = Math.max(96, 64 + lines * 22);
       if (x + w > W - PAD) { x = PAD; y += rowH + GAP; rowH = 0; }
-      layout.push({ t: t, x: x, y: y, w: w, h: h });
+      layout.push({ t: t, label: note.label, x: x, y: y, w: w, h: h });
       rowH = Math.max(rowH, h);
       x += w + GAP;
     });
@@ -680,6 +683,12 @@ p{max-width:720px}
       ctx.fillStyle = '#2A2620'; ctx.font = '600 16px "Noto Sans KR",sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       wrapText(ctx, note.t, 0, 2, note.w - 26, 21);
+
+      if (note.label) {
+        ctx.fillStyle = 'rgba(42,38,32,.6)'; ctx.font = '700 9.5px "Noto Sans KR",sans-serif';
+        ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+        ctx.fillText(note.label, note.w / 2 - 9, note.h / 2 - 7);
+      }
       ctx.restore();
       colI++;
     });
