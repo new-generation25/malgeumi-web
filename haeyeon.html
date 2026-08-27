@@ -100,6 +100,14 @@ h2{font-family:var(--serif);font-weight:700;margin:0 0 20px;
   font-size:13.5px;color:var(--ink3);max-width:520px}
 .credit span b{color:var(--ink2);font-weight:500}
 
+.rep{margin-top:32px;padding:32px 28px;background:var(--surface);
+  border:1px solid var(--line);border-left:2px solid var(--amber-d);border-radius:6px}
+@media(max-width:640px){.rep{padding:26px 22px}}
+.rep .tagline{margin-bottom:14px}
+.rep h3{font-family:var(--serif);font-size:clamp(22px,3.4vw,28px);margin:0 0 12px;font-weight:700;letter-spacing:-.01em}
+.rep p{margin:0 0 16px;color:var(--ink2);font-size:15px;line-height:1.9;max-width:560px}
+.rep .credit{border-top:1px solid var(--line);max-width:560px}
+
 .tl{display:grid;gap:0;margin-top:36px;border-top:1px solid var(--line)}
 .tl > div{padding:22px 0;border-bottom:1px solid var(--line);display:grid;gap:6px}
 @media(min-width:700px){.tl > div{grid-template-columns:110px 1fr;gap:28px;align-items:baseline;padding:24px 0}}
@@ -202,32 +210,51 @@ footer .home:hover{border-bottom-color:var(--amber)}
 <section id="works">
   <div class="wrap">
     <p class="kicker">대표작</p>
-    <h2>동상동 아리랑</h2>
-    <p class="lede">한국인 아버지와 우즈베키스탄 어머니 사이에서 태어난 '한결'. 타슈켄트에서 지내다 돌아온 그가
-      김해 동상동의 다문화 골목에서 "나는 누구에게 어떤 존재인가"를 묻습니다. 2019년 초연 이후 해마다 다시 올리며,
-      이 동네가 품은 이야기를 기록해 왔습니다.</p>
-    <div class="credit" style="margin-top:26px;max-width:640px">
-      <span>작·연출 <b>이정화</b></span>
-      <span>제작 <b>극단 해연</b></span>
-      <span>2019 초연 · 매년 재연</span>
-    </div>
+    <h2>지금 오르는 무대</h2>
 
     <div class="work">
-      <div class="pos"><img src="images/theater-bunjangsil.jpg" alt="극단 해연 제5회 정기공연 연극 〈분장실〉 포스터" loading="lazy" width="640" height="910"></div>
+      <div class="pos"><a href="hernames.html"><img src="images/theater-geunyeodeul.jpg" alt="극단 해연 양성평등 옴니버스 연극 〈그녀들의 이름〉 포스터" loading="lazy" width="640" height="905"></a></div>
       <div>
-        <span class="tagline">2026 정기공연</span>
-        <h3>분장실</h3>
-        <p class="sub">DRESSING ROOM &nbsp;·&nbsp; 2026.6.12 — 6.14</p>
+        <span class="tagline">현재 공연</span>
+        <h3>그녀들의 이름</h3>
+        <p class="sub">2026.9.5(토) — 9.6(일) 오후 5시</p>
         <p class="desc">
-          무대에 오르지 못한 배우들이 모인 분장실. 욕망과 기억, 질투와 동경이 뒤엉키며
-          현실과 환상이 교차합니다. 배우라는 존재가 가진 슬픔과 열망을 조용히, 그러나 깊게 들여다본 작품입니다.
+          당신은 오늘, 몇 개의 이름으로 불렸나요. 세 편의 단편이 각각 다른 자리에 선 여성을 따라갑니다.
+          남편을 떠나보낸 아내, 급여를 흥정하지 못하는 가정교사, 사돈으로 마주 앉은 두 어머니 —
+          호칭이 아니라 이름으로 서로를 마주하게 되는 순간을 그린 옴니버스 연극입니다.
         </p>
         <div class="credit">
-          <span>원작 <b>시미즈 쿠니오</b></span>
-          <span>연출 <b>안민정</b></span>
-          <span>출연 <b>김미경 · 배소완 · 안민정 · 송혜경</b></span>
-          <span>경남문화예술진흥원 지역문화예술육성지원사업 선정 · 전석 무료</span>
+          <span>출연 <b>김미경 · 황경아 · 배소완 · 안민정 · 장혜정</b></span>
+          <span>주최 <b>김해시</b> &nbsp;·&nbsp; 주관 <b>극단 해연</b></span>
+          <span>전석 무료 · 18세 이상 관람가</span>
         </div>
+        <div style="margin-top:22px"><a class="btn" href="hernames.html">자세히 보기 →</a></div>
+      </div>
+    </div>
+
+    <div class="rep">
+      <span class="tagline">2026 정기공연</span>
+      <h3>분장실</h3>
+      <p>무대에 오르지 못한 배우들이 모인 분장실. 욕망과 기억, 질투와 동경이 뒤엉키며
+        현실과 환상이 교차합니다. 배우라는 존재가 가진 슬픔과 열망을 조용히, 그러나 깊게 들여다본 작품입니다.</p>
+      <div class="credit">
+        <span>원작 <b>시미즈 쿠니오</b></span>
+        <span>연출 <b>안민정</b></span>
+        <span>출연 <b>김미경 · 배소완 · 안민정 · 송혜경</b></span>
+        <span>경남문화예술진흥원 지역문화예술육성지원사업 선정 · 전석 무료</span>
+      </div>
+    </div>
+
+    <div class="rep">
+      <span class="tagline">대표 레퍼토리</span>
+      <h3>동상동 아리랑</h3>
+      <p>한국인 아버지와 우즈베키스탄 어머니 사이에서 태어난 '한결'. 타슈켄트에서 지내다 돌아온 그가
+        김해 동상동의 다문화 골목에서 "나는 누구에게 어떤 존재인가"를 묻습니다. 2019년 초연 이후 해마다 다시 올리며,
+        이 동네가 품은 이야기를 기록해 왔습니다.</p>
+      <div class="credit">
+        <span>작·연출 <b>이정화</b></span>
+        <span>제작 <b>극단 해연</b></span>
+        <span>2019 초연 · 매년 재연</span>
       </div>
     </div>
   </div>
@@ -333,6 +360,7 @@ if (navToggle && navLinks) {
     [/haeyeon\.html/,    'haeyeon_click'],
     [/malgeumi\.html/,   'malgeumi_click'],
     [/king\.html/,       'king_click'],
+    [/hernames\.html/,   'hernames_click'],
   ];
 
   document.addEventListener('click', function (e) {
