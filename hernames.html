@@ -78,8 +78,13 @@ a{color:var(--gold)}
 .keyinfo dd .s{display:block;font-size:13px;font-weight:300;color:var(--dim);margin-top:3px}
 .keyinfo dd b{font-weight:700}
 .btns{display:flex;flex-direction:column;gap:9px;margin-top:22px}
-.btn{display:block;text-align:center;padding:15px 18px;border-radius:3px;text-decoration:none;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.btn{display:block;text-align:center;padding:15px 18px;border-radius:3px;text-decoration:none;font-size:15px;font-weight:700;letter-spacing:-.01em;
+  border:0;cursor:pointer;font-family:inherit;width:100%}
 .btn.pri{background:var(--gold);color:#1A1400}
+.rsvp-form{margin-top:14px;padding:18px;border:1px solid var(--line);border-radius:3px;background:var(--bg2)}
+.rsvp-form .nw-input{margin-bottom:10px}
+.rsvp-form .nw-input:last-of-type{margin-bottom:14px}
+.rsvp-form .nw-actions button.btn{width:auto}
 .btn.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
 
 /* programme */
@@ -318,8 +323,16 @@ p{max-width:720px}
         </dl>
 
         <div class="btns">
-          <a class="btn pri" href="#">관람 신청</a>
-          <a class="btn sec" href="tel:010-2858-9293">문의 010-2858-9293</a>
+          <button class="btn pri" type="button" id="rsvpToggle">관람 신청</button>
+          <a class="btn sec" href="tel:010-2858-9293">전화 문의</a>
+        </div>
+
+        <div class="rsvp-form" id="rsvpForm" hidden>
+          <input class="nw-input" id="rsvpName" type="text" placeholder="이름" maxlength="20">
+          <input class="nw-input" id="rsvpPhone" type="tel" placeholder="전화번호" maxlength="20">
+          <input class="nw-input" id="rsvpAge" type="number" placeholder="나이" min="1" max="120">
+          <div class="nw-actions"><span class="nw-err" id="rsvpErr"></span><button class="btn pri" type="button" id="rsvpSubmit">신청하기</button></div>
+          <p class="nw-toast" id="rsvpToast" hidden></p>
         </div>
       </div>
     </div>
@@ -398,7 +411,7 @@ p{max-width:720px}
     <div class="note p" style="margin-top:20px">
       <b>단원 모집</b><br>
       극단 해연이 함께할 단원을 찾습니다. 나이도 경력도 묻지 않습니다. 무대에 서고 싶은 마음이면 충분합니다. 김해 이웃의 이야기를 여성 배우들이 직접 무대에 올리는 창작극, 그 다음 이야기를 함께 만들어갈 분을 기다립니다.<br>
-      <span style="display:inline-block;margin-top:8px">모집 문의 <a href="tel:010-2858-9293" style="color:#9A7B1A;font-weight:700">010-2858-9293</a></span>
+      <span style="display:inline-block;margin-top:8px">모집 문의 <a href="tel:010-2858-9293" style="color:#9A7B1A;font-weight:700">전화하기</a></span>
     </div>
   </div>
 </section>
@@ -422,10 +435,10 @@ p{max-width:720px}
     <h2>만든 사람들</h2>
     <dl class="simple">
       <div class="r"><dt>출연</dt><dd>김미경 · 황경아 · 배소완 · 안민정 · 장혜정</dd></div>
-      <div class="r"><dt>연출</dt><dd class="ph">【 】</dd></div>
-      <div class="r"><dt>기획</dt><dd class="ph">【 】</dd></div>
-      <div class="r"><dt>무대·조명</dt><dd class="ph">【 】</dd></div>
-      <div class="r"><dt>음향</dt><dd class="ph">【 】</dd></div>
+      <div class="r"><dt>연출</dt><dd>안민정</dd></div>
+      <div class="r"><dt>기획·홍보</dt><dd>이권</dd></div>
+      <div class="r"><dt>조명</dt><dd>김채안</dd></div>
+      <div class="r"><dt>음향</dt><dd>유경화</dd></div>
       <div class="r"><dt>제작</dt><dd>극단 해연</dd></div>
     </dl>
   </div>
@@ -437,7 +450,7 @@ p{max-width:720px}
     <a class="home" href="haeyeon.html">← 극단 해연으로</a>
     <p class="t">그녀들의 이름</p>
     <p style="margin:0">2026. 9. 5.(토) ~ 9. 6.(일) 17:00 · 회현동 소극장 · 전석 무료</p>
-    <p style="margin:8px 0 0">관람 문의 · 단원 모집 <a href="tel:010-2858-9293">010-2858-9293</a></p>
+    <p style="margin:8px 0 0">관람 문의 · 단원 모집 <a href="tel:010-2858-9293">전화하기</a></p>
     <div class="logos"><span>주최 김해시</span><span>주관 극단 해연</span></div>
     <p class="fund">2026년 김해시 양성평등기금 지원사업</p>
   </div>
@@ -587,6 +600,56 @@ p{max-width:720px}
       if (window.gtag) gtag('event', 'namewall_post', { page_path: location.pathname });
     }).catch(function () {
       toast.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+    });
+  }
+
+  // --- 관람 신청: 이름·전화번호·나이 → 같은 시트의 "관람 신청" 탭에 기록 ---
+  var rsvpToggle = document.getElementById('rsvpToggle');
+  var rsvpForm = document.getElementById('rsvpForm');
+  if (rsvpToggle && rsvpForm) {
+    rsvpToggle.addEventListener('click', function () {
+      rsvpForm.hidden = !rsvpForm.hidden;
+      if (!rsvpForm.hidden) document.getElementById('rsvpName').focus();
+    });
+
+    document.getElementById('rsvpSubmit').addEventListener('click', function () {
+      var btn = this;
+      var errEl = document.getElementById('rsvpErr');
+      var toast = document.getElementById('rsvpToast');
+      var name = document.getElementById('rsvpName').value.trim();
+      var phone = document.getElementById('rsvpPhone').value.trim();
+      var age = document.getElementById('rsvpAge').value.trim();
+
+      errEl.textContent = '';
+      toast.hidden = true;
+      if (!name || !phone) { errEl.textContent = '이름과 전화번호는 적어주세요'; return; }
+
+      if (!BOARD_API) {
+        toast.hidden = false;
+        toast.textContent = '아직 온라인 신청이 준비되지 않았습니다. 전화로 문의해 주세요.';
+        return;
+      }
+
+      btn.disabled = true;
+      var data = new FormData();
+      data.append('type', 'rsvp');
+      data.append('name', name);
+      data.append('phone', phone);
+      data.append('age', age);
+      fetch(BOARD_API, { method: 'POST', body: data }).then(function (r) { return r.json(); }).then(function (out) {
+        if (!out.ok) throw new Error(out.error || '신청 실패');
+        toast.hidden = false;
+        toast.textContent = '관람 신청이 접수되었습니다. 고맙습니다.';
+        document.getElementById('rsvpName').value = '';
+        document.getElementById('rsvpPhone').value = '';
+        document.getElementById('rsvpAge').value = '';
+        if (window.gtag) gtag('event', 'rsvp_submit', { page_path: location.pathname });
+        btn.disabled = false;
+      }).catch(function () {
+        toast.hidden = false;
+        toast.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+        btn.disabled = false;
+      });
     });
   }
 })();
