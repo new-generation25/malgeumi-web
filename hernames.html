@@ -85,6 +85,10 @@ a{color:var(--gold)}
 .rsvp-form .nw-input{margin-bottom:10px}
 .rsvp-form .nw-input:last-of-type{margin-bottom:14px}
 .rsvp-form .nw-actions button.btn{width:auto}
+.rsvp-label{font-size:12.5px;color:var(--dim);margin:0 0 8px}
+.rsvp-days{display:flex;gap:16px;margin:0 0 14px}
+.rsvp-days label{display:flex;align-items:center;gap:6px;font-size:14.5px;color:var(--fg)}
+.rsvp-days input{width:16px;height:16px;accent-color:var(--gold)}
 .btn.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
 
 /* programme */
@@ -328,6 +332,12 @@ p{max-width:720px}
           <input class="nw-input" id="rsvpName" type="text" placeholder="이름" maxlength="20">
           <input class="nw-input" id="rsvpPhone" type="tel" placeholder="전화번호" maxlength="20">
           <input class="nw-input" id="rsvpAge" type="number" placeholder="나이" min="1" max="120">
+          <p class="rsvp-label">관람 날짜 (해당하는 날 모두 선택)</p>
+          <div class="rsvp-days">
+            <label><input type="checkbox" id="rsvpDay5" value="9.5(토)"> 9.5(토)</label>
+            <label><input type="checkbox" id="rsvpDay6" value="9.6(일)"> 9.6(일)</label>
+          </div>
+          <input class="nw-input" id="rsvpCount" type="number" placeholder="참석 인원(본인 포함)" min="1" max="20" value="1">
           <div class="nw-actions"><span class="nw-err" id="rsvpErr"></span><button class="btn pri" type="button" id="rsvpSubmit">신청하기</button></div>
           <p class="nw-toast" id="rsvpToast" hidden></p>
         </div>
@@ -636,10 +646,16 @@ p{max-width:720px}
       var name = document.getElementById('rsvpName').value.trim();
       var phone = document.getElementById('rsvpPhone').value.trim();
       var age = document.getElementById('rsvpAge').value.trim();
+      var day5 = document.getElementById('rsvpDay5').checked;
+      var day6 = document.getElementById('rsvpDay6').checked;
+      var days = [day5 ? '9.5(토)' : '', day6 ? '9.6(일)' : ''].filter(Boolean).join('|');
+      var count = document.getElementById('rsvpCount').value.trim();
 
       errEl.textContent = '';
       toast.hidden = true;
       if (!name || !phone) { errEl.textContent = '이름과 전화번호는 적어주세요'; return; }
+      if (!days) { errEl.textContent = '관람 날짜를 하나 이상 선택해주세요'; return; }
+      if (!count || Number(count) < 1) { errEl.textContent = '참석 인원을 적어주세요'; return; }
 
       if (!BOARD_API) {
         toast.hidden = false;
@@ -648,7 +664,7 @@ p{max-width:720px}
       }
 
       btn.disabled = true;
-      postForm_({ type: 'rsvp', name: name, phone: phone, age: age })
+      postForm_({ type: 'rsvp', name: name, phone: phone, age: age, days: days, count: count })
         .then(function (r) { return r.json(); }).then(function (out) {
         if (!out.ok) throw new Error(out.error || '신청 실패');
         toast.hidden = false;
@@ -656,6 +672,9 @@ p{max-width:720px}
         document.getElementById('rsvpName').value = '';
         document.getElementById('rsvpPhone').value = '';
         document.getElementById('rsvpAge').value = '';
+        document.getElementById('rsvpDay5').checked = false;
+        document.getElementById('rsvpDay6').checked = false;
+        document.getElementById('rsvpCount').value = '1';
         if (window.gtag) gtag('event', 'rsvp_submit', { page_path: location.pathname });
         btn.disabled = false;
       }).catch(function () {

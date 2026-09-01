@@ -102,6 +102,8 @@ function doPostRsvp_(p) {
   var name = clean_(p.name, 40);
   var phone = clean_(p.phone, 20);
   var age = clean_(p.age, 3);
+  var days = String(p.days || '').split('|').map(function (s) { return clean_(s, 10); }).filter(Boolean);
+  var count = clean_(p.count, 3);
 
   if (!name || !phone) {
     return json({ ok: false, error: '이름과 전화번호는 필수입니다.' });
@@ -109,9 +111,15 @@ function doPostRsvp_(p) {
   if (age && !/^[0-9]{1,3}$/.test(age)) {
     return json({ ok: false, error: '나이는 숫자로 적어주세요.' });
   }
+  if (!days.length) {
+    return json({ ok: false, error: '관람 날짜를 하나 이상 선택해주세요.' });
+  }
+  if (!count || !/^[0-9]{1,3}$/.test(count)) {
+    return json({ ok: false, error: '참석 인원은 숫자로 적어주세요.' });
+  }
 
-  getSheet_(RSVP_SHEET, ['시각', '이름', '전화번호', '나이'])
-    .appendRow([new Date(), name, phone, age]);
+  getSheet_(RSVP_SHEET, ['시각', '이름', '전화번호', '나이', '관람 날짜', '참석 인원(본인 포함)'])
+    .appendRow([new Date(), name, phone, age, days.join('|'), count]);
   return json({ ok: true });
 }
 
