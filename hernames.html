@@ -337,7 +337,8 @@ p{max-width:720px}
             <label><input type="checkbox" id="rsvpDay5" value="9.5(토)"> 9.5(토)</label>
             <label><input type="checkbox" id="rsvpDay6" value="9.6(일)"> 9.6(일)</label>
           </div>
-          <input class="nw-input" id="rsvpCount" type="number" placeholder="참석 인원(본인 포함)" min="1" max="20" value="1">
+          <p class="rsvp-label">참석 인원 (본인 포함, 몇 명이 함께 오시나요)</p>
+          <input class="nw-input" id="rsvpCount" type="number" min="1" max="20" value="1">
           <div class="nw-actions"><span class="nw-err" id="rsvpErr"></span><button class="btn pri" type="button" id="rsvpSubmit">신청하기</button></div>
           <p class="nw-toast" id="rsvpToast" hidden></p>
         </div>
