@@ -3,7 +3,7 @@
  *
  * 같은 스프레드시트 안에 탭(시트) 두 개를 나눠 쓴다.
  *   - "이름의 벽"  : 오늘 나를 부른 이름들 응답 (기존)
- *   - "관람 신청"  : 이름·전화번호·나이 신청 (신규)
+ *   - "관람 신청"  : 이름·전화번호·나이·관람 날짜·참석 인원 신청 (신규)
  * hernames.html은 두 기능 모두 같은 웹 앱 주소(BOARD_API)로 보내고,
  * 요청에 담긴 type 값으로 이 스크립트가 알아서 시트를 나눠 적는다.
  *
@@ -48,6 +48,15 @@ function getSheet_(name, headerRow) {
   if (!sheet) {
     sheet = ss.insertSheet(name);
     sheet.appendRow(headerRow);
+    return sheet;
+  }
+  // 이미 있는 시트에 열을 새로 늘렸을 때 (예: 관람 날짜·참석 인원)
+  // 1행 헤더가 옛 형태 그대로 남아 값만 이름 없는 열에 쌓이는 것을 막는다.
+  if (sheet.getLastRow() > 0 && sheet.getLastColumn() < headerRow.length) {
+    if (sheet.getMaxColumns() < headerRow.length) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), headerRow.length - sheet.getMaxColumns());
+    }
+    sheet.getRange(1, 1, 1, headerRow.length).setValues([headerRow]);
   }
   return sheet;
 }
