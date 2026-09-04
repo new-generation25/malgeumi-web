@@ -154,6 +154,7 @@ ol.steps li b{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
 .sticky-note .nw-note-main{font-size:14.5px;font-weight:700}
 .sticky-note b{position:absolute;right:9px;bottom:7px;font-size:9.5px;font-weight:700;opacity:.6}
 .nw-toast{font-size:14px;color:var(--gold)}
+.nw-board .btn{margin-top:14px}
 dl.simple{margin:0}
 dl.simple .r{display:flex;gap:15px;padding:11px 0;border-bottom:1px solid var(--line)}
 dl.simple dt{flex:none;width:62px;font-size:11px;letter-spacing:.13em;color:var(--gold);font-weight:500;padding-top:4px;margin:0}
@@ -286,6 +287,7 @@ p{max-width:720px}
 
       <div class="nw-board" id="nwBoard" hidden>
         <p class="nw-toast" id="nwToast">이름의 벽에 거는 중…</p>
+        <button class="btn pri" type="button" id="nwGoRsvp" hidden>관람 신청하기</button>
       </div>
     </div>
   </div>
@@ -602,6 +604,7 @@ p{max-width:720px}
     document.querySelector('#namewall .nw-head').hidden = true;
     track.hidden = true;
     document.getElementById('nwBoard').hidden = false;
+    document.getElementById('nwGoRsvp').hidden = false;
     var toast = document.getElementById('nwToast');
 
     if (window.gtag) gtag('event', 'namewall_complete', { page_path: location.pathname });
@@ -638,6 +641,15 @@ p{max-width:720px}
     rsvpToggle.addEventListener('click', function () {
       rsvpForm.hidden = !rsvpForm.hidden;
       if (!rsvpForm.hidden) document.getElementById('rsvpName').focus();
+    });
+
+    // 이름의 벽 완료 화면 → 관람 신청으로 바로 이어준다 (참여한 사람을 예약까지 끌고 가는 연결)
+    var goRsvp = document.getElementById('nwGoRsvp');
+    if (goRsvp) goRsvp.addEventListener('click', function () {
+      rsvpForm.hidden = false;
+      document.querySelector('.hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { document.getElementById('rsvpName').focus(); }, 450);
+      if (window.gtag) gtag('event', 'namewall_to_rsvp', { page_path: location.pathname });
     });
 
     document.getElementById('rsvpSubmit').addEventListener('click', function () {
