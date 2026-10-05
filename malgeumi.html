@@ -184,6 +184,8 @@
             color: var(--navy);
         }
 
+        .nav-new{display:inline-block;margin-left:.4em;padding:.1em .5em;border-radius:9999px;background:#E0463A;color:#fff;font-size:.62em;font-weight:800;letter-spacing:.04em;line-height:1.5;vertical-align:.3em}
+
         /* 모바일 메뉴 토글 — 데스크톱에서는 숨긴다 */
         .nav-toggle {
             display: none;
@@ -748,6 +750,13 @@
 
         .archive-card:hover {
             border-color: var(--navy);
+        }
+
+        /* 공연 페이지로 이어지는 카드는 <a>라 링크 기본 꼴을 지운다 */
+        a.archive-card {
+            display: block;
+            color: inherit;
+            text-decoration: none;
         }
 
         /* 포스터가 세로라 4:5로 잡는다. 가로 공연사진도 같은 비율로 잘라 넣었다 */
@@ -1714,7 +1723,7 @@
                 <a href="index.html">회현동소극장</a>
                 <a href="malgeumi.html" aria-current="page">말그미극단</a>
                 <a href="haeyeon.html">극단 해연</a>
-                <a href="king.html">King받은 이도</a>
+                <a href="king2.html">한글폼미쳤다<span class="nav-new">NEW</span></a>
                 <a href="#contact" class="btn-primary">소식 구독</a>
             </div>
         </div>
@@ -1800,20 +1809,20 @@
             </div>
 
             <div class="show-grid fade-in">
-                <a class="show-card" href="king.html">
+                <a class="show-card" href="king2.html">
                     <div class="show-card-thumb">
-                        <img src="images/king-poster.jpg" alt="King받은 이도 : 말모이 작전 공연 포스터" loading="lazy" width="900"
-                            height="1118">
+                        <img src="images/king2-poster.jpg" alt="킹받은 이도 : 한글 폼 미쳤다 공연 포스터" loading="lazy" width="900"
+                            height="1273">
                         <span class="show-card-badge">예매 중</span>
                     </div>
                     <div class="show-card-body">
-                        <h3>King받은 이도<br>: 한글 폼 미쳤다!</h3>
+                        <h3>킹받은 이도<br>: 한글 폼 미쳤다</h3>
                         <p class="show-card-meta">
-                            <i class="fa-regular fa-calendar"></i> 2026. 8. 16 – 8. 23 · 회현동소극장
+                            <i class="fa-regular fa-calendar"></i> 2026. 10. 9 – 10. 10 · 회현동소극장
                         </p>
                         <p class="show-card-desc">
-                            오늘 아침, ㄱ과 ㅎ이 사라졌습니다. 1942년 말모이 작전으로 떠나는 60분의 참여형 아동극.<br>
-                            작 김미경 · 연출 안민정
+                            왕이 되기 싫다며 궁을 탈출한 이도 왕자가 2026년에 떨어집니다. 2026 한글날 기념 관객 참여형 창작아동극.<br>
+                            7세 이상 · 60분
                         </p>
                         <span class="show-card-cta">자세히 보기 <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
@@ -1835,6 +1844,16 @@
             <div class="archive-viewport fade-in">
                 <div class="archive-scroll" id="archiveScroll" tabindex="0" role="region"
                     aria-label="지난 활동 작품 목록 — 좌우로 넘겨 보세요">
+                <a class="archive-card" href="king.html" aria-label="King받은 이도 : 말모이 작전 공연 페이지 열기">
+                    <img src="images/king-poster.jpg" alt="King받은 이도 : 말모이 작전 공연 포스터" loading="lazy" width="900"
+                        height="1118">
+                    <div class="archive-card-content">
+                        <span class="archive-tag">참여형 아동극</span>
+                        <h3>King받은 이도<br>: 말모이 작전</h3>
+                        <p>사라진 ㄱ과 ㅎ을 되찾으러 1942년 경성으로 떠나는 60분. 객석이 QR 퀴즈와 스마트폰으로 함께하는 3D 디지털 판타지 아동극입니다.</p>
+                        <p class="archive-meta">2026.8.16~23 · 회현동 소극장 · 6회<br>작 김미경 / 연출 안민정</p>
+                    </div>
+                </a>
                 <div class="archive-card">
                     <img src="images/work-chobi.jpg" alt="창작 아동극 〈소원 도깨비 초비〉 포스터" loading="lazy" width="900"
                         height="1125">
@@ -2365,6 +2384,7 @@
     [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
     [/haeyeon\.html/,    'haeyeon_click'],
     [/malgeumi\.html/,   'malgeumi_click'],
+    [/king2\.html/,       'king2_click'],
     [/king\.html/,       'king_click'],
   ];
 

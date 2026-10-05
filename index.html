@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme-color="6">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +41,10 @@
 [data-theme-color="3"]{ --acc-perf:#C9A227; --acc-troupe:#7A2E2E; --acc-join:#2F4F3E; } /* 극장 커튼 (기본값) */
 [data-theme-color="4"]{ --acc-perf:#E0AB60; --acc-troupe:#F0CE97; --acc-join:#B9803D; } /* 모노 앰버 */
 [data-theme-color="5"]{ --acc-perf:#F0AB3D; --acc-troupe:#D14D6E; --acc-join:#3FA8A3; } /* 대비 강한 버전 */
+[data-theme-color="6"]{ --acc-perf:#4FA3F0; --acc-troupe:#6FB4FF; --acc-join:#8AC6FF;
+  --bg:#0B1424; --bg2:#0F1B30; --surface:#162840; --line:#27406A; --amber:#4FA3F0; --kakao:#FFD04D; } /* 하늘 파랑 — 남색 배경에 파랑, 카카오 버튼만 노랑 (아동극) */
+[data-theme-color="7"]{ --acc-perf:#F28FB1; --acc-troupe:#F7B6CF; --acc-join:#C79BE8;
+  --bg:#1D0F1E; --bg2:#251328; --surface:#321A36; --line:#59325E; --amber:#F28FB1; } /* 솜사탕 — 자두빛 배경에 분홍·연보라 (아동극) */
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
@@ -66,6 +70,7 @@ a{color:inherit}
 .nav-links a{font-size:15.2px;font-weight:500;line-height:1.7;color:var(--ink2);
   text-decoration:none;transition:color .2s}
 .nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-new{display:inline-block;margin-left:.4em;padding:.1em .5em;border-radius:9999px;background:#E0463A;color:#fff;font-size:.62em;font-weight:800;letter-spacing:.04em;line-height:1.5;vertical-align:.3em}
 .nav-links .nav-cta{background:var(--amber);color:#1A1409;font-weight:600;
   padding:11.2px 28.8px;border-radius:9999px}
 .nav-links .nav-cta:hover{background:#EDBE77;color:#1A1409}
@@ -367,6 +372,8 @@ footer .home:hover{border-bottom-color:var(--amber)}
 .theme-switch button[data-theme="3"]{background:linear-gradient(135deg,#C9A227 50%,#7A2E2E 50%)}
 .theme-switch button[data-theme="4"]{background:linear-gradient(135deg,#F0CE97 50%,#B9803D 50%)}
 .theme-switch button[data-theme="5"]{background:linear-gradient(135deg,#F0AB3D 50%,#D14D6E 50%)}
+.theme-switch button[data-theme="6"]{background:linear-gradient(135deg,#4FA3F0 50%,#FFD04D 50%)}
+.theme-switch button[data-theme="7"]{background:linear-gradient(135deg,#F28FB1 50%,#C79BE8 50%)}
 .theme-switch button.is-active{border-color:#fff}
 
 /* -- 소식 구독 팝업 -- */
@@ -465,7 +472,7 @@ footer .home:hover{border-bottom-color:var(--amber)}
       <a href="index.html" aria-current="page">회현동소극장</a>
       <a href="malgeumi.html">말그미극단</a>
       <a href="haeyeon.html">극단 해연</a>
-      <a href="king.html">King받은 이도</a>
+      <a href="king2.html">한글폼미쳤다<span class="nav-new">NEW</span></a>
       <a href="malgeumi.html#contact" class="nav-cta">소식 구독</a>
     </div>
   </div>
@@ -483,20 +490,20 @@ footer .home:hover{border-bottom-color:var(--amber)}
   <div class="wrap">
     <div class="hero-grid">
       <div class="poster">
-        <a href="hernames.html"><img src="images/theater-geunyeodeul.jpg" alt="극단 해연 양성평등 옴니버스 연극 〈그녀들의 이름〉 포스터"></a>
+        <a href="king2.html"><img src="images/king2-poster.jpg" alt="말그미극단 관객 참여형 창작아동극 〈킹받은 이도 : 한글 폼 미쳤다〉 포스터"></a>
       </div>
       <div>
         <p class="eyebrow"><i class="dot"></i>지금 올라가는 공연</p>
-        <h1 class="hero-title">그녀들의 이름</h1>
+        <h1 class="hero-title">킹받은 이도<br>한글 폼 미쳤다</h1>
         <p class="hero-meta">
-          2026. 9. 5 (토) — 9. 6 (일) 오후 5시 · 회현동 소극장 · 극단 해연<br>
-          양성평등 옴니버스 연극 · 3편
+          2026. 10. 9 (금) · 10 (토) 오후 1시, 3시 · 회현동 소극장 · 말그미극단<br>
+          2026 한글날 기념 관객 참여형 창작아동극
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="hernames.html">자세히 보기</a>
+          <a class="btn btn-primary" href="king2.html">자세히 보기</a>
           <a class="btn btn-kakao" href="http://pf.kakao.com/_PxknSX">공연 알림 받기</a>
         </div>
-        <p class="hint">전석 무료 · 18세 이상 관람가</p>
+        <p class="hint">7세 이상 관람 · 60분 · 예약 010-2858-9293</p>
       </div>
     </div>
     <div class="kakao-card">
@@ -788,6 +795,7 @@ footer .home:hover{border-bottom-color:var(--amber)}
           <ul class="tl-list">
             <li>〈분장실〉<span class="by">극단 해연</span></li>
             <li>〈King받은 이도 : 말모이 작전〉 8.16~23<span class="by">말그미극단</span></li>
+            <li>〈킹받은 이도 : 한글 폼 미쳤다〉 10.9~10<span class="by">말그미극단</span></li>
           </ul>
         </div>
       </div>
@@ -962,6 +970,8 @@ footer .home:hover{border-bottom-color:var(--amber)}
   <button type="button" data-theme="3" title="③ 극장 커튼"></button>
   <button type="button" data-theme="4" title="④ 모노 앰버"></button>
   <button type="button" data-theme="5" title="⑤ 대비 강한 버전"></button>
+  <button type="button" data-theme="6" title="⑥ 하늘 파랑 (아동극)"></button>
+  <button type="button" data-theme="7" title="⑦ 솜사탕 (아동극)"></button>
 </div>
 
 <footer>
@@ -1005,7 +1015,7 @@ if (navToggle && navLinks) {
     root.setAttribute('data-theme-color', v);
     buttons.forEach(b => b.classList.toggle('is-active', b.dataset.theme === v));
   };
-  const saved = localStorage.getItem(KEY) || '3';
+  const saved = localStorage.getItem(KEY) || '6';
   apply(saved);
   buttons.forEach(b => b.addEventListener('click', () => {
     localStorage.setItem(KEY, b.dataset.theme);
@@ -1116,6 +1126,7 @@ if (navToggle && navLinks) {
     [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
     [/haeyeon\.html/,    'haeyeon_click'],
     [/malgeumi\.html/,   'malgeumi_click'],
+    [/king2\.html/,       'king2_click'],
     [/king\.html/,       'king_click'],
   ];
 

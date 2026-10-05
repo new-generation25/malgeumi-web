@@ -51,6 +51,7 @@ a{color:inherit}
 .nav-links a{font-size:15.2px;font-weight:500;line-height:1.7;color:var(--ink2);
   text-decoration:none;transition:color .2s}
 .nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--ink)}
+.nav-new{display:inline-block;margin-left:.4em;padding:.1em .5em;border-radius:9999px;background:#E0463A;color:#fff;font-size:.62em;font-weight:800;letter-spacing:.04em;line-height:1.5;vertical-align:.3em}
 .nav-links .nav-cta{background:var(--amber);color:#1A1409;font-weight:600;
   padding:11.2px 28.8px;border-radius:9999px}
 .nav-links .nav-cta:hover{background:#EDBE77;color:#1A1409}
@@ -190,7 +191,7 @@ footer .home{color:var(--amber);font-weight:600;text-decoration:none}
       <a href="index.html">회현동소극장</a>
       <a href="malgeumi.html">말그미극단</a>
       <a href="haeyeon.html">극단 해연</a>
-      <a href="king.html">King받은 이도</a>
+      <a href="king2.html">한글폼미쳤다<span class="nav-new">NEW</span></a>
       <a href="malgeumi.html#contact" class="nav-cta">소식 구독</a>
     </div>
   </div>
@@ -369,6 +370,7 @@ if (tabRental && tabSupport && 'IntersectionObserver' in window) {
     [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
     [/haeyeon\.html/,    'haeyeon_click'],
     [/malgeumi\.html/,   'malgeumi_click'],
+    [/king2\.html/,       'king2_click'],
     [/king\.html/,       'king_click'],
   ];
 
