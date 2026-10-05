@@ -416,7 +416,7 @@ p + p{margin-top:1.1rem}
       </div>
 
       <div class="cta-row">
-        <a href="tel:010-2858-9293" class="btn btn--gold" data-book><i class="fa-solid fa-phone" aria-hidden="true"></i> 전화로 예약하기</a>
+        <a href="https://forms.gle/r4y6zriYYRm9BMqT9" target="_blank" rel="noopener" class="btn btn--gold" data-book>예매하기</a>
         <a href="#info" class="btn btn--ghost">요금·관람 안내</a>
       </div>
     </div>
@@ -556,7 +556,7 @@ p + p{margin-top:1.1rem}
       <div><dt>일시</dt><dd>2026. 10. 9(금) · 10(토)<small>오후 1시, 3시 (하루 2회, 총 4회)</small></dd></div>
       <div><dt>장소</dt><dd>회현동소극장<small>김해도서관 맞은편 GS건물 4층</small></dd></div>
       <div><dt>관람 연령</dt><dd>7세 이상<small>런타임 60분</small></dd></div>
-      <div><dt>예약·문의</dt><dd><a href="tel:010-2858-9293">010-2858-9293</a></dd></div>
+      <div><dt>예매·문의</dt><dd><a href="tel:010-2858-9293">010-2858-9293</a></dd></div>
     </dl>
   </div>
 </section>
@@ -569,9 +569,9 @@ p + p{margin-top:1.1rem}
       2026. 10. 9 – 10. 10 · 회현동소극장 · 네 번 공연합니다.
     </p>
 
-    <a href="tel:010-2858-9293" class="btn btn--gold" data-book><i class="fa-solid fa-phone" aria-hidden="true"></i> 010-2858-9293</a>
+    <a href="https://forms.gle/r4y6zriYYRm9BMqT9" target="_blank" rel="noopener" class="btn btn--gold" data-book>예매하기</a>
     <p style="margin-top:1.25rem;font-size:.875rem;color:var(--slate)">
-      전화로 원하시는 날짜와 회차, 인원을 알려 주세요.
+      신청서에서 날짜와 회차를 고르시면 됩니다. 문의는 <a href="tel:010-2858-9293" style="color:var(--gold)">010-2858-9293</a>
     </p>
   </div>
 </section>
@@ -601,14 +601,14 @@ p + p{margin-top:1.1rem}
 <!-- 모바일 하단 고정 -->
 <div class="dock" id="dock">
   <a class="a" href="#info">요금·안내</a>
-  <a class="b" href="tel:010-2858-9293" data-book>전화로 예약하기</a>
+  <a class="b" href="https://forms.gle/r4y6zriYYRm9BMqT9" target="_blank" rel="noopener" data-book>예매하기</a>
 </div>
 
 <script>
 /* ─── 예약 버튼 클릭 추적 (메타 픽셀 활성화 시에만 동작) ─── */
 document.querySelectorAll('[data-book]').forEach(a => {
   a.addEventListener('click', () => {
-    if (window.fbq) fbq('track', 'Lead', {content_name: '킹받은 이도 한글 폼 미쳤다 예약 문의'});
+    if (window.fbq) fbq('track', 'Lead', {content_name: '킹받은 이도 한글 폼 미쳤다 예매 신청'});
   });
 });
 
