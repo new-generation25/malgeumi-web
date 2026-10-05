@@ -315,6 +315,13 @@ p + p{margin-top:1.1rem}
 .info dd{color:var(--paper);font-size:1rem;line-height:1.6}
 .info dd small{display:block;color:var(--fog);font-size:.85rem}
 .info a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(232,181,75,.4)}
+/* 매진 회차 — 글자를 흐리게 하고 오른쪽 위에 배지를 단다 */
+.times .soldout{position:relative}
+.times .soldout .d,.times .soldout .t{opacity:.4;text-decoration:line-through}
+.times .soldout .sold-badge{
+  position:absolute;top:.9rem;right:1rem;padding:.15rem .6rem;border-radius:9999px;
+  background:var(--jumuk);color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+}
 .times--4{grid-template-columns:repeat(2,1fr)}
 @media(min-width:34rem){.times--4{grid-template-columns:repeat(4,1fr)}}
 </style>
@@ -424,7 +431,7 @@ p + p{margin-top:1.1rem}
   <div class="wrap">
     <p class="kicker" style="margin-bottom:.25rem">공연 회차</p>
     <div class="times times--4" style="margin:1.25rem 0 0">
-      <div><span class="d">10. 9 <small>금</small></span><span class="t">오후 1:00</span></div>
+      <div class="soldout"><span class="d">10. 9 <small>금</small></span><span class="t">오후 1:00</span><b class="sold-badge">매진</b></div>
       <div><span class="d">10. 9 <small>금</small></span><span class="t">오후 3:00</span></div>
       <div><span class="d">10. 10 <small>토</small></span><span class="t">오후 1:00</span></div>
       <div><span class="d">10. 10 <small>토</small></span><span class="t">오후 3:00</span></div>
@@ -436,23 +443,15 @@ p + p{margin-top:1.1rem}
 <section class="band">
   <div class="narrow rise">
     <div class="eyebrow"><b>ㄱ</b><span>이야기</span><i></i></div>
-    <h2>왕이 되기 싫은 왕자가<br>도서관에 떨어졌습니다</h2>
+    <h2>왕이 되기 싫은 왕자가<br>2026년에 떨어졌습니다</h2>
     <p>
-      책이 제일 좋은 열한 살 이도는 아바마마에게 책을 모두 빼앗기고 결심합니다.
-      "왕이 되지 않겠다." 봇짐을 메고 궁을 나서려는 순간, 하늘나라 특급 심부름센터의
-      도깨비 <strong style="color:var(--gold);font-weight:500">초비</strong>가 앞을 막아섭니다.
-      이도가 왕이 되지 않으면 세종대왕도, 한글도 사라지기 때문입니다.
+      책이 제일 좋은 열한 살 이도는 "왕이 되지 않겠다"며 궁을 나서려 합니다.
+      이도가 왕이 되지 않으면 세종대왕도, 한글도 사라진다며
+      하늘나라 도깨비 <strong style="color:var(--gold);font-weight:500">초비</strong>가 이도를 붙잡아 2026년으로 데려옵니다.
     </p>
     <p>
-      초비가 이도를 데려간 곳은 2026년. 세종대왕을 존경하는 열세 살
-      <strong style="color:var(--gold);font-weight:500">덕이</strong>가 이도의 누나를 자처합니다.
-      그런데 도서관에도, 카페에도, 박물관 앞에도 수상한 두 사람이 따라붙습니다.
-      글자를 호로록 삼켜 지구를 차지하려는 싹쓰리 행성의 악당, 아리와 까리입니다.
-    </p>
-    <p>
-      한글은 촌스럽다는 속삭임, 화면을 뒤덮는 악플.
-      이도는 자기가 만들 글자가 누군가를 아프게 할 수도 있다는 것을 알게 됩니다.
-      그래도 이도는 왕이 될 수 있을까요.
+      그런데 글자를 노리는 수상한 악당들이 이도의 뒤를 쫓고 있습니다.
+      이도는 과연 왕이 될 수 있을까요.
     </p>
     <p style="font-family:var(--display);font-weight:600;font-size:1.25rem;color:var(--paper);margin-top:2rem">
       결말은 무대에서 확인해 주세요.
@@ -479,7 +478,7 @@ p + p{margin-top:1.1rem}
                 onerror="this.closest('figure').remove()"></figure>
         <h3>덕이</h3>
         <p class="who">열세 살 · 세종대왕 팬</p>
-        <p>태권도 3단(아마도). 도서관에 살다시피 하는 세종대왕 덕후입니다. 이도에게 "이 누나가 다 보여줄게"라고 나섭니다.</p>
+        <p>태권도 3단(아마도). 도서관에 살다시피 하는 세종대왕 덕후입니다. 이도 앞에서 큰소리를 칩니다.</p>
       </article>
       <article class="person">
         <figure><img src="images/p2-chobi.jpg" alt="흰 한복에 밀짚모자를 쓴 파란 도깨비 초비 (포스터 일러스트)" loading="lazy"
@@ -494,12 +493,12 @@ p + p{margin-top:1.1rem}
       <article class="person">
         <h3>아리 · 까리</h3>
         <p class="who">싹쓰리 행성의 악당</p>
-        <p>사서로, 고시생으로, 카페 직원으로 변장해 덕이와 이도를 방해합니다. 변장은 매번 허술합니다.</p>
+        <p>글자를 빼앗으려 이도 일행을 쫓아다니는 한 쌍. 하는 짓이 영 허술합니다.</p>
       </article>
       <article class="person">
         <h3>호로록 대마왕</h3>
         <p class="who">싹쓰리 행성의 우두머리</p>
-        <p>세계의 글자를 호로록 삼켜 온 마왕. 이번 목표는 대한민국의 한글입니다. 훈화가 길고 기침이 잦습니다.</p>
+        <p>세계의 글자를 호로록 삼켜 온 마왕. 이번 목표는 한글입니다. 훈화가 길고 기침이 잦습니다.</p>
       </article>
     </div>
   </div>
@@ -518,15 +517,15 @@ p + p{margin-top:1.1rem}
     <div class="acts">
       <div class="act" data-n="ㄱ">
         <h3>응원의 말을 보내요</h3>
-        <p>입장할 때 QR코드로 응원 문구를 적어 두면, 무대 큰 화면에 여러분의 말이 가득 올라옵니다. 운영진이 확인한 문구만 표시됩니다.</p>
+        <p>입장할 때 QR코드로 응원 문구를 적어 두면, 무대 큰 화면에 여러분의 말이 올라옵니다. 운영진이 확인한 문구만 표시됩니다.</p>
       </div>
       <div class="act" data-n="ㄴ">
         <h3>마법 캡슐 속 한글을 찾아요</h3>
-        <p>초비가 객석으로 내려와 캡슐을 나눠 줍니다. 안에는 한글 카드와 외국어 카드가 섞여 있습니다. 악당들의 방해를 뚫고 한글만 골라 가져다주세요.</p>
+        <p>초비가 객석으로 내려와 캡슐을 나눠 줍니다. 안에 든 것 중 한글만 골라 가져다주세요.</p>
       </div>
       <div class="act" data-n="ㄷ">
         <h3>다 함께 읽어요</h3>
-        <p>모인 글자가 순서대로 맞춰지면 객석 전체가 큰 소리로 읽습니다. 그 한마디가 무대 위 두 사람을 구합니다.</p>
+        <p>모인 글자로 완성된 문장을 객석 전체가 큰 소리로 읽습니다.</p>
       </div>
       <div class="act" data-n="ㄹ" style="border-style:dashed;border-color:rgba(232,181,75,.4)">
         <h3>한글날 580돌</h3>
