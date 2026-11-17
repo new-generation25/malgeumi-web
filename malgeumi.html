@@ -1722,6 +1722,7 @@
                 <a href="index.html">회현동소극장</a>
                 <a href="malgeumi.html" aria-current="page">말그미극단</a>
                 <a href="haeyeon.html">극단 해연</a>
+                <a href="kkotpocha.html">꽃포장 길마차</a>
                 <a href="#contact" class="btn-primary">소식 구독</a>
             </div>
         </div>
@@ -1803,14 +1804,28 @@
             <div class="section-header fade-in">
                 <span class="section-index">02</span>
                 <h2 class="section-title">공연 안내</h2>
-                <p class="section-subtitle">다음 무대를 준비하고 있습니다</p>
+                <p class="section-subtitle">곧 만나는 공연입니다</p>
             </div>
 
             <div class="show-grid fade-in">
-                <p style="color: var(--fog); font-size: 1.0625rem;">
-                    지금 예매할 수 있는 공연은 없습니다. 새 공연이 확정되면
-                    <a href="#contact" style="color: inherit; text-decoration: underline;">소식 구독</a>으로 알려 드립니다.
-                </p>
+                <a class="show-card" href="kkotpocha.html">
+                    <div class="show-card-thumb">
+                        <img src="images/kkotpocha-poster.jpg" alt="2026 회현_冬_話 꽃포장 길마차 공연 포스터" loading="lazy" width="900"
+                            height="1270">
+                        <span class="show-card-badge is-upcoming">공연 예정</span>
+                    </div>
+                    <div class="show-card-body">
+                        <h3>꽃포장 길마차</h3>
+                        <p class="show-card-meta">
+                            <i class="fa-regular fa-calendar"></i> 2026. 12. 19 – 12. 20 · 회현동소극장
+                        </p>
+                        <p class="show-card-desc">
+                            2026 회현_冬_話 연말 나눔 공연. 관람료와 후원금은 전액 연말 불우이웃 돕기에 기부합니다.<br>
+                            15세 이상 관람가
+                        </p>
+                        <span class="show-card-cta">자세히 보기 <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
 
             </div>
         </div>
@@ -2380,6 +2395,7 @@
     [/malgeumi\.html/,   'malgeumi_click'],
     [/king2\.html/,       'king2_click'],
     [/king\.html/,       'king_click'],
+    [/kkotpocha\.html/,  'kkotpocha_click'],
   ];
 
   document.addEventListener('click', function (e) {

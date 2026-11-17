@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>꽃포장 길마차 — 2026 회현_冬_話 연말 나눔 공연 | 2026.12.19–12.20 회현동소극장</title>
+<meta name="description" content="2026 회현_冬_話(시즌 5) 연말 나눔 공연 『꽃포장 길마차』. 2026년 12월 19일(토)·20일(일) 오후 3시, 김해 회현동소극장. 관람료 10,000원, 관람료와 후원금은 전액 연말 불우이웃 돕기에 기부합니다.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="회현동 소극장">
+<meta property="og:title" content="꽃포장 길마차 — 2026 회현_冬_話">
+<meta property="og:description" content="웃픈 그녀들이 시원하게 욕해드립니다. 2026.12.19(토)·20(일) 오후 3시, 김해 회현동소극장.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://malgeumi-play.vercel.app/kkotpocha.html">
+<!-- 공유 썸네일 images/kkotpocha-og.jpg — 공연 포스터 윗부분(전구·제목·태그라인)을 1200×630으로 잘라낸 것 -->
+<meta property="og:image" content="https://malgeumi-play.vercel.app/images/kkotpocha-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="꽃포장 길마차 — 웃픈 그녀들이 시원하게 욕해드립니다">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#120D0B">
+<link rel="canonical" href="https://malgeumi-play.vercel.app/kkotpocha.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%230F0D0B%22/><circle cx=%2216%22 cy=%2212%22 r=%226%22 fill=%22%23E0AB60%22/><path d=%22M4 27 Q16 18 28 27 L28 29 L4 29 Z%22 fill=%22%23E0AB60%22/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* king.html의 뼈대(공통 네비·band 섹션·인물 카드·푸터·하단 바)를 그대로 쓰고
+   색만 이 공연(포장마차 전구·주황 천막) 톤으로 바꿨다 */
+:root{
+  --ink:#120D0B;
+  --ink-2:#1B1411;
+  --ink-3:#271C17;
+  --slate:#8F7B6E;
+  --fog:#C4B4A7;
+  --gold:#F2A94B;
+  --amber:#E0773A;
+  --paper:#F2E8D8;
+  --paper-2:#E4D5BE;
+  --jumuk:#C8432B;
+  --line:rgba(196,180,167,.2);
+  --display:"Hahmlet",serif;
+  --body:"IBM Plex Sans KR",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--fog);
+  font-family:var(--body);font-weight:300;
+  line-height:1.75;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+/* ── 공통 네비 (malgeumi.html · index.html · king.html과 수치 동일) ──
+   padding 16/32 · 로고 24 · 간격 32 · 링크 15.2 · CTA 11.2/28.8 */
+.navbar{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:16px 32px;background:rgba(18,13,11,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.nav-container{
+  max-width:1200px;margin:0 auto;position:relative;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.nav-logo{
+  font-weight:800;font-size:24px;
+  line-height:1.4;letter-spacing:-.01em;
+  color:var(--paper);text-decoration:none;
+}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  font-size:15.2px;font-weight:500;line-height:1.7;
+  color:var(--fog);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--paper)}
+.nav-links .nav-cta{
+  background:var(--gold);color:#1E1206;font-weight:600;
+  padding:11.2px 28.8px;border-radius:9999px;
+}
+.nav-links .nav-cta:hover{background:#F7BD6A;color:#1E1206}
+.nav-toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:8px;font-size:22.4px;color:var(--paper);line-height:1;
+}
+@media(max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{
+    display:none;position:absolute;top:calc(100% + 16px);left:-32px;right:-32px;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:8px 32px 20px;background:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13.6px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .nav-links a:last-child{border-bottom:none}
+  .nav-links .nav-cta{margin-top:13.6px;text-align:center;padding:13.6px 28.8px}
+}
+
+.wrap{width:min(100% - 2.5rem,68rem);margin-inline:auto}
+.narrow{width:min(100% - 2.5rem,46rem);margin-inline:auto}
+
+/* ── 섹션 공통 ───────────────────────────── */
+.band{padding:5.5rem 0}
+.band--paper{background:var(--paper);color:#3E3229}
+.band--deep{background:var(--ink-2)}
+
+.eyebrow{display:flex;align-items:center;gap:.85rem;margin-bottom:2.25rem}
+.eyebrow b{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--gold);line-height:1}
+.eyebrow span{font-size:.7rem;font-weight:600;letter-spacing:.24em;color:var(--slate)}
+.band--paper .eyebrow b{color:var(--jumuk)}
+.band--paper .eyebrow span{color:#8A7462}
+.eyebrow i{flex:1;height:1px;background:var(--line);font-style:normal}
+.band--paper .eyebrow i{background:rgba(62,50,41,.2)}
+
+h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.75rem,5vw,2.75rem);line-height:1.3;
+  color:var(--paper);letter-spacing:-.01em;margin-bottom:1.5rem;
+}
+.band--paper h2{color:#2C2219}
+p{font-size:1.0625rem}
+p + p{margin-top:1.1rem}
+.band--paper p{color:#4E4035}
+
+/* ── 히어로 ───────────────────────────── */
+.hero{
+  /* 높이를 화면에 맞추지 않는다 — 내용이 짧은 화면에서 아래에 빈 공간이 남았다 */
+  position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6.5rem 0 2.5rem;overflow:hidden;
+  /* 포스터 윗단의 전구 불빛처럼 위에서 따뜻한 빛이 번진다 */
+  background:radial-gradient(120% 60% at 50% 0%,rgba(224,119,58,.32) 0%,rgba(18,13,11,0) 70%);
+}
+.hero > *{position:relative;z-index:2}
+/* 전구 줄 */
+/* 전구 줄은 본문 폭 전체로 건다 */
+.bulbs{display:flex;justify-content:space-between;margin:0 0 2rem;padding:0 .25rem}
+.bulbs i{
+  width:.7rem;height:.95rem;border-radius:45% 45% 50% 50%;
+  background:#FFD08A;box-shadow:0 0 14px 4px rgba(255,176,82,.55);
+  animation:glow 3.2s ease-in-out infinite;
+}
+.bulbs i:nth-child(2n){animation-delay:.8s}
+.bulbs i:nth-child(3n){animation-delay:1.6s}
+@keyframes glow{0%,100%{opacity:1}50%{opacity:.55}}
+
+.kicker{font-size:.95rem;font-weight:600;letter-spacing:.2em;color:var(--amber);margin-bottom:1.1rem}
+.title{margin:0}
+.title img{display:block;width:min(100%,30rem);height:auto;aspect-ratio:1000/634}
+.tagline{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(1.2rem,4.2vw,1.85rem);line-height:1.4;
+  color:var(--paper);margin-top:1rem;
+}
+.tagline em{font-style:normal;color:var(--gold)}
+.lede{margin-top:1.4rem;max-width:34rem;font-size:clamp(1rem,2.4vw,1.1rem);color:var(--fog)}
+.lede strong{color:var(--paper);font-weight:500}
+
+.hero-strip{width:100%;margin:2rem 0 .5rem}
+.hero-strip img{
+  display:block;width:100%;
+  aspect-ratio:16/9;object-fit:cover;object-position:center 55%;border-radius:2px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 22%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0%,#000 22%,#000 82%,transparent 100%);
+}
+@media(min-width:48rem){.hero-strip img{aspect-ratio:21/9}}
+
+.facts{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;
+  margin-top:1.5rem;padding-top:1.5rem;
+  border-top:1px solid var(--line);
+  font-size:.92rem;color:var(--fog);
+}
+.facts b{color:var(--gold);font-weight:600;margin-right:.4rem}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:1rem 1.9rem;border:none;cursor:pointer;
+  font-family:var(--body);font-size:1rem;font-weight:600;
+  text-decoration:none;border-radius:2px;
+  transition:transform .18s,background .18s,color .18s;
+}
+.btn--gold{background:var(--gold);color:#1E1206}
+.btn--gold:hover{background:#F7BD6A;transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.btn--ghost:hover{box-shadow:inset 0 0 0 1px var(--gold);color:var(--gold)}
+
+/* ── 회차 ─────────────────────────── */
+.times{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:2px;margin:1.25rem 0 0;
+}
+.times div{background:var(--ink-2);padding:1.15rem 1.35rem}
+.times .d{display:block;font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--paper);line-height:1.3}
+.times .d small{font-family:var(--body);font-weight:400;font-size:.8rem;color:var(--fog)}
+.times .t{font-size:.9rem;color:var(--gold);letter-spacing:.03em}
+
+/* ── 회현_冬_話 소개 ─────────────────── */
+.intro{display:grid;gap:2.5rem;align-items:start}
+@media(min-width:52rem){.intro{grid-template-columns:1.2fr .8fr;gap:4rem}}
+.intro .poster img{display:block;width:100%;height:auto;aspect-ratio:900/1270;border-radius:2px;background:var(--ink-3)}
+.intro .poster figcaption{font-size:.8rem;color:var(--slate);margin-top:.8rem}
+.donate{
+  margin-top:2rem;padding:1.15rem 1.35rem;border-left:3px solid var(--gold);
+  background:var(--ink-2);font-size:.98rem;color:var(--fog);
+}
+.donate b{color:var(--paper);font-weight:600}
+
+/* ── 줄거리 ─────────────────────────── */
+.quote{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(1.25rem,3.8vw,1.75rem);line-height:1.55;
+  color:#2C2219;padding-left:1.5rem;
+  border-left:3px solid var(--jumuk);margin:2.5rem 0 0;
+}
+
+/* ── 출연 ─────────────────────────── */
+.people{display:grid;gap:1px;background:var(--line);margin-top:2.5rem}
+@media(min-width:40rem){.people{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:62rem){.people{grid-template-columns:repeat(3,1fr)}}
+.person{background:var(--ink-2);padding:1.75rem 1.5rem 2rem}
+.person figure{margin:0 0 1.25rem}
+.person figure img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:2px;background:var(--ink-3)}
+/* 사진이 없는 배역 — 리플렛처럼 빈 실루엣 자리 */
+.person .noimg{
+  aspect-ratio:4/5;border-radius:2px;
+  background:radial-gradient(ellipse at 50% 30%,#5a4d46 0,#2f2621 60%,#1d1714 100%);
+  display:grid;place-items:center;color:rgba(242,232,216,.35);font-size:3.2rem;
+}
+.person .role{font-size:.78rem;font-weight:600;letter-spacing:.12em;color:var(--amber);margin-bottom:.1rem}
+.person h3{font-family:var(--display);font-weight:800;font-size:1.4rem;color:var(--paper);margin-bottom:.6rem}
+.person p{font-size:.95rem}
+
+/* ── 만든 사람들 ─────────────────────── */
+.staff{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:1.5rem 1.25rem;margin-top:2.25rem}
+.staff figure{margin:0}
+.staff img,.staff .noimg{display:block;width:100%;height:auto;aspect-ratio:3/4;border-radius:2px;background:var(--ink-3)}
+.staff .noimg{
+  background:radial-gradient(ellipse at 50% 30%,#5a4d46 0,#2f2621 60%,#1d1714 100%);
+  display:grid;place-items:center;color:rgba(242,232,216,.35);font-size:2.4rem;
+}
+.staff figcaption{margin-top:.75rem;line-height:1.45}
+.staff figcaption span{display:block;font-size:.78rem;letter-spacing:.08em;color:var(--amber);font-weight:600}
+.staff figcaption b{font-family:var(--display);font-size:1.15rem;color:var(--paper);font-weight:800}
+
+/* ── 관람 안내 ─────────────────────── */
+.info{margin:0 0 2.25rem;border-top:1px solid var(--line);text-align:left}
+.info .r{display:flex;gap:1.25rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
+.info dt{flex:none;width:4.5rem;font-size:.8rem;font-weight:600;letter-spacing:.12em;color:var(--gold);padding-top:.2rem}
+.info dd{flex:1;font-size:1rem;color:var(--paper);line-height:1.6}
+.info dd small{display:block;font-size:.85rem;color:var(--fog);margin-top:.15rem}
+
+/* ── 오시는 길 ─────────────────────── */
+.addr{font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,4vw,1.75rem);color:#2C2219;line-height:1.45}
+.addr small{display:block;font-family:var(--body);font-weight:400;font-size:.95rem;color:#6B5A4C;margin-top:.35rem}
+.band--paper .btn--ghost{color:#2C2219;box-shadow:inset 0 0 0 1px rgba(62,50,41,.3)}
+.band--paper .btn--ghost:hover{color:var(--jumuk);box-shadow:inset 0 0 0 1px var(--jumuk)}
+
+/* ── 푸터 (king.html과 같은 구성) ──────── */
+.footer{background:var(--ink-2);border-top:1px solid var(--line);padding:2rem;text-align:center;color:var(--fog)}
+.footer-container{
+  max-width:72rem;margin:0 auto 1rem;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;
+}
+.footer-info h3{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--paper);margin-bottom:.5rem}
+.footer-info p{font-size:.9rem;line-height:1.9}
+.footer-info strong{color:var(--paper-2);font-weight:600}
+.footer-info a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+.footer-info a:hover{color:var(--gold);border-color:var(--gold)}
+.footer-links{display:flex;justify-content:center;gap:2rem}
+.footer-links a{font-size:1.5rem;color:inherit;text-decoration:none}
+.footer-links a:hover{color:var(--gold)}
+.copyright{max-width:72rem;margin:0 auto;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--slate)}
+@media(max-width:44rem){
+  .footer-container{flex-direction:column;align-items:flex-start}
+  .footer-links{justify-content:flex-start}
+}
+
+/* ── 모바일 하단 고정 바 ─────────────── */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;gap:1px;background:var(--line);
+  transform:translateY(110%);transition:transform .3s;
+}
+.dock.on{transform:translateY(0)}
+.dock a{flex:1;padding:1.05rem;text-align:center;text-decoration:none;font-weight:600;font-size:.95rem}
+.dock .a{background:var(--ink-3);color:var(--paper);flex:0 0 38%}
+.dock .b{background:var(--gold);color:#1E1206}
+@media(min-width:44rem){.dock{display:none}}
+@media(max-width:43.99rem){body{padding-bottom:3.5rem}}
+
+/* ── 스크롤 등장 ───────────────────── */
+.rise{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.rise.seen{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rise{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+<!-- ═══════════════════════════════════════════════════════════
+     관리자 자기 방문 제외
+     주소 끝에 ?noanalytics=1 을 붙여 한 번 열면, 그 브라우저는 이후
+     GA와 Vercel 어느 쪽에도 기록되지 않습니다. 되돌리려면 ?noanalytics=0.
+     표시는 브라우저에 남으므로 기기·브라우저마다 한 번씩 해야 합니다.
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var KEY = 'analytics-off';
+  var toggled = null;
+  try {
+    if (/[?&]noanalytics=1/.test(location.search)) { localStorage.setItem(KEY, '1'); toggled = true; }
+    if (/[?&]noanalytics=0/.test(location.search)) { localStorage.removeItem(KEY); toggled = false; }
+  } catch (e) {}
+
+  var off = false;
+  try { off = localStorage.getItem(KEY) === '1'; } catch (e) {}
+
+  if (off) {
+    // GA4 공식 차단 스위치. gtag가 실리기 전에 켜 두면 아무것도 보내지 않는다.
+    window['ga-disable-G-LGQHMEV50C'] = true;
+    // Vercel Web Analytics 는 beforeSend 가 null 을 돌려주면 보내지 않는다.
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    window.va('beforeSend', function () { return null; });
+  }
+
+  if (toggled !== null) {
+    document.addEventListener('DOMContentLoaded', function () {
+      var d = document.createElement('div');
+      d.textContent = toggled ? '이 브라우저는 통계에서 제외됩니다' : '이 브라우저를 다시 통계에 넣습니다';
+      d.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;'
+        + 'background:#141A21;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;'
+        + 'box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      document.body.appendChild(d);
+      setTimeout(function () { d.remove(); }, 4000);
+    });
+  }
+})();
+</script>
+
+<!-- Google tag (gtag.js) — 회현동소극장 홈페이지 속성 (전체 사이트 공용) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LGQHMEV50C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LGQHMEV50C');
+</script>
+
+</head>
+<body>
+
+<!-- ══════════ 공통 네비 ══════════ -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">회현동<span>소극장</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks"
+            aria-label="메뉴 열기"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">회현동소극장</a>
+      <a href="malgeumi.html">말그미극단</a>
+      <a href="haeyeon.html">극단 해연</a>
+      <a href="kkotpocha.html" aria-current="page">꽃포장 길마차</a>
+      <a href="malgeumi.html#contact" class="nav-cta">소식 구독</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ 히어로 ══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="bulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <p class="kicker">2026 회현_冬_話 · 시즌 5 · 연말 나눔 공연</p>
+    <!-- 제목 붓글씨 images/kkotpocha-title.webp — 포스터 작업파일 title.png(투명)을 1000px로 줄인 것 -->
+    <h1 class="title"><img src="images/kkotpocha-title.webp" alt="꽃포장 길마차" fetchpriority="high"></h1>
+    <p class="tagline"><em>웃픈</em> 그녀들이 시원하게 <em>욕</em>해드립니다</p>
+
+    <p class="lede">
+      시장 골목 포장마차 거리, 20년을 이웃으로 부대껴 온 네 여자의 이야기.
+      <strong>관람료와 후원금은 전액 연말 불우이웃 돕기에 기부합니다.</strong>
+    </p>
+
+    <div class="hero-strip">
+      <img src="images/kkotpocha-stage.jpg" alt="『꽃포장 길마차』 무대 — 주황 천막의 포장마차 ‘미자네’와 빨강·파랑 플라스틱 의자"
+           onerror="this.closest('.hero-strip').remove()">
+    </div>
+
+    <div class="facts">
+      <span><b>일시</b>2026. 12. 19(토) · 20(일) 오후 3시</span>
+      <span><b>장소</b>김해 회현동소극장</span>
+      <span><b>관람료</b>10,000원</span>
+      <span><b>관람</b>15세 이상</span>
+    </div>
+
+    <div class="cta-row">
+      <a href="tel:055-339-9110" class="btn btn--gold"><i class="fa-solid fa-phone" aria-hidden="true"></i> 관람 문의 055-339-9110</a>
+      <a href="#visit" class="btn btn--ghost">오시는 길</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ 공연 회차 ══════════ -->
+<section class="band band--deep" style="padding:3rem 0">
+  <div class="wrap">
+    <p style="font-size:.75rem;font-weight:600;letter-spacing:.22em;color:var(--amber);margin-bottom:.25rem">공연 회차</p>
+    <div class="times">
+      <div><span class="d">12. 19 <small>토</small></span><span class="t">오후 3:00</span></div>
+      <div><span class="d">12. 20 <small>일</small></span><span class="t">오후 3:00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 冬. 회현_冬_話 ══════════ -->
+<section class="band">
+  <div class="wrap rise">
+    <div class="eyebrow"><b>冬</b><span>2026 회현_冬_話 · 다섯 번째</span><i></i></div>
+    <div class="intro">
+      <div>
+        <h2>해마다 연말,<br>극장이 여는 나눔 공연</h2>
+        <p>
+          회현_冬_話는 ㈜회현동극장이 2021년부터 해마다 연말에 여는 나눔 공연으로, 올해로 다섯 번째입니다.
+          한 해 동안 받은 사랑을 지역에 돌려드리기 위해 공연 관람료와 후원금은 연말 불우이웃 돕기에 전액 기부합니다.
+          올해는 회현동소극장이 처음 무대에 올렸던 『꽃포장 길마차』로 찾아갑니다.
+        </p>
+        <div class="donate">
+          관람료 <b>10,000원</b> · 관람료와 후원금은 <b>전액 연말 불우이웃 돕기</b>에 기부합니다.
+        </div>
+      </div>
+      <figure class="poster">
+        <img src="images/kkotpocha-poster.jpg" alt="『꽃포장 길마차』 포스터 — 2026 회현_冬_話, 2026년 12월 19일(토)·20일(일) 오후 3시, 김해 회현동소극장"
+             loading="lazy" onerror="this.closest('figure').remove()">
+        <figcaption>2026 회현_冬_話 『꽃포장 길마차』 포스터</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 話. 줄거리 ══════════ -->
+<section class="band band--paper">
+  <div class="narrow rise">
+    <div class="eyebrow"><b>話</b><span>줄거리</span><i></i></div>
+    <h2>시장 골목<br>포장마차 거리</h2>
+    <p>
+      시장 골목 포장마차 거리. 20년을 이웃으로 부대껴 온 미자, 영자, 숙자, 혜자는
+      하루가 멀다 하고 욕을 주고받는 사이다.
+    </p>
+    <p>
+      아픈 딸의 수술비를 몸에 지니고 다니던 영자의 돈이 하루아침에 사라지고,
+      의심은 가장 가까운 친구들에게로 향한다. 20년 우정이 흔들리는 사이,
+      포장마차 주변을 맴도는 낯선 애기엄마가 나타나는데…
+    </p>
+    <p class="quote">
+      거친 욕 속에 감춰 둔 상처와 의리, 서로를 식구로 품어 가는 시장 여자들의 웃기고 슬픈 이야기.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ 人. 출연 ══════════
+     배우 사진: 리플렛과 같은 프로필(투명 PNG 1000×1250)을 리플렛과 같은 푸른 그라데이션
+     (radial-gradient(ellipse at 50% 30%, #a9d8e6 0, #3f8fb0 55%, #1b405a 100%)) 위에 얹어
+     800×1000 JPG로 구운 것. 원본: G: …/홍보물/배우 누끼/프로필_최종/ -->
+<section class="band band--deep">
+  <div class="wrap rise">
+    <div class="eyebrow"><b>人</b><span>출연</span><i></i></div>
+    <h2>포장마차 거리의 사람들</h2>
+
+    <div class="people">
+      <article class="person">
+        <figure><img src="images/kkotpocha-mija.jpg" alt="미자 역 김미경" loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <p class="role">미자</p>
+        <h3>김미경</h3>
+        <p>입은 거칠어도 정 많은 전라도 아지매. 20년 시장 친구들의 싸움을 말리며 포장마차를 꾸려 가는 여자</p>
+      </article>
+      <article class="person">
+        <figure><img src="images/kkotpocha-youngja.jpg" alt="영자 역 안민정" loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <p class="role">영자</p>
+        <h3>안민정</h3>
+        <p>힘 세고 눈에 힘 «짱짱»한 천하영자. 아픈 딸의 수술비를 홀로 마련하기 위해 억척같이 살아가는 여자</p>
+      </article>
+      <article class="person">
+        <figure><img src="images/kkotpocha-sookja.jpg" alt="숙자 역 배소완" loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <p class="role">숙자</p>
+        <h3>배소완</h3>
+        <p>다혈질에 웃음 호탕한 철이 엄마. 아들 대학 등록금을 벌려고 아구찜집에서 일하는 여자</p>
+      </article>
+      <article class="person">
+        <figure><img src="images/kkotpocha-hyeja.jpg" alt="혜자 역 김정애" loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <p class="role">혜자</p>
+        <h3>김정애</h3>
+        <p>애교와 눈치로 사는 시장의 «여시». 다방을 접고 황진이 노래방을 차린 막내</p>
+      </article>
+      <article class="person">
+        <figure><img src="images/kkotpocha-youngju.jpg" alt="영주·애기엄마 역 김채안" loading="lazy" onerror="this.closest('figure').remove()"></figure>
+        <p class="role">영주 · 애기엄마 (1인 2역)</p>
+        <h3>김채안</h3>
+        <p>자존심 하나로 버텨 온 단골 «선생님». 폭력을 피해 시장을 맴도는 낯선 애기엄마</p>
+      </article>
+      <article class="person">
+        <!-- 이진욱 사진 미정 — 받으면 images/kkotpocha-lee-jinwook.jpg(800×1000, 위와 같은 배경)로 만들어
+             아래 .noimg 를 <figure><img …></figure> 로 바꾸세요 -->
+        <figure><div class="noimg" aria-hidden="true"><i class="fa-solid fa-user"></i></div></figure>
+        <p class="role">검은 망토</p>
+        <h3>이진욱</h3>
+        <p>말없이 무대를 가로지르는 그림자</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 作. 만든 사람들 ══════════ -->
+<section class="band">
+  <div class="wrap rise">
+    <div class="eyebrow"><b>作</b><span>만든 사람들</span><i></i></div>
+    <h2>무대 뒤에서</h2>
+    <div class="staff">
+      <figure>
+        <img src="images/kkotpocha-kimkyunghoon.jpg" alt="연출 김경훈" loading="lazy">
+        <figcaption><span>연출</span><b>김경훈</b></figcaption>
+      </figure>
+      <figure>
+        <img src="images/kkotpocha-leekwon.jpg" alt="기획·음향 이권" loading="lazy">
+        <figcaption><span>기획 · 음향</span><b>이권</b></figcaption>
+      </figure>
+      <figure>
+        <!-- 임광욱 사진 미정 — 받으면 images/kkotpocha-limkwangwook.jpg(480×640)로 넣고 아래 .noimg 를 <img>로 바꾸세요 -->
+        <div class="noimg" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+        <figcaption><span>무대디자인</span><b>임광욱</b></figcaption>
+      </figure>
+      <!-- 조명 · 진행 스태프 미정 — 정해지면 위 figure 블록을 복사해 여기에 추가
+      <figure>
+        <img src="images/kkotpocha-이름.jpg" alt="조명 이름" loading="lazy">
+        <figcaption><span>조명</span><b>이름</b></figcaption>
+      </figure>
+      <figure>
+        <img src="images/kkotpocha-이름.jpg" alt="진행 이름" loading="lazy">
+        <figcaption><span>진행</span><b>이름</b></figcaption>
+      </figure>
+      -->
+    </div>
+    <!-- 극장지기 인사말(대표 이정화) 원고 미정 — 받으면 이 섹션 앞에 band 하나로 추가 -->
+  </div>
+</section>
+
+<!-- ══════════ 관람 안내 ══════════ -->
+<section class="band band--deep">
+  <div class="narrow rise" style="text-align:center">
+    <h2 style="margin-bottom:1.75rem">관람 안내</h2>
+    <dl class="info">
+      <div class="r"><dt>공연</dt><dd>2026 회현_冬_話 『꽃포장 길마차』</dd></div>
+      <div class="r"><dt>일시</dt><dd>2026년 12월 19일(토) · 20일(일) 오후 3시</dd></div>
+      <div class="r"><dt>장소</dt><dd>김해 회현동소극장<small><a href="#visit" style="color:inherit">오시는 길 보기</a></small></dd></div>
+      <div class="r"><dt>관람료</dt><dd>10,000원<small>관람료·후원금 전액 연말 불우이웃 돕기에 기부</small></dd></div>
+      <div class="r"><dt>관람</dt><dd>15세 이상</dd></div>
+      <div class="r"><dt>문의</dt><dd>말그미극단 055-339-9110</dd></div>
+    </dl>
+    <a href="tel:055-339-9110" class="btn btn--gold"><i class="fa-solid fa-phone" aria-hidden="true"></i> 관람 문의 전화하기</a>
+  </div>
+</section>
+
+<!-- ══════════ 오시는 길 ══════════ -->
+<section class="band band--paper" id="visit">
+  <div class="narrow rise">
+    <div class="eyebrow"><b>路</b><span>오시는 길</span><i></i></div>
+    <p class="addr">
+      김해시 분성로 259, 4층
+      <small>김해도서관 맞은편 GS편의점 건물 4층 · 회현동소극장</small>
+    </p>
+    <div class="cta-row">
+      <a href="https://map.naver.com/p/entry/place/1044803603" target="_blank" rel="noopener" class="btn btn--ghost"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> 네이버 지도 길찾기</a>
+      <a href="index.html#visit" class="btn btn--ghost">교통 · 주차 안내</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 푸터 ══════════ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-info">
+      <h3>회현동 소극장</h3>
+      <p><strong>운영:</strong> 주식회사 회현동극장</p>
+      <p><strong>주소:</strong> 경남 김해시 분성로 259, 4층</p>
+      <p><strong>문의:</strong> <a href="mailto:hoehyeon.theater@gmail.com">hoehyeon.theater@gmail.com</a> / <a href="tel:055-339-9110">055-339-9110</a></p>
+      <p><a href="index.html">← 회현동소극장으로</a></p>
+    </div>
+    <div class="footer-social">
+      <div class="footer-links">
+        <a href="https://www.instagram.com/hoehyeon.theater/" target="_blank" rel="noopener" aria-label="회현동 소극장 인스타그램"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://blog.naver.com/jhoehyeon707" target="_blank" rel="noopener" aria-label="회현동 소극장 네이버 블로그"><i class="fa-solid fa-blog"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <p>© 2026 회현동극장. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- 모바일 하단 고정 -->
+<div class="dock" id="dock">
+  <a class="a" href="#visit">오시는 길</a>
+  <a class="b" href="tel:055-339-9110">관람 문의 전화</a>
+</div>
+
+<script>
+/* ─── 스크롤 등장 ─── */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target); }});
+}, {threshold:.12});
+document.querySelectorAll('.rise').forEach(el => io.observe(el));
+
+/* ─── 모바일 메뉴 토글 ─── */
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('navLinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  });
+  navLinks.addEventListener('click', e => {
+    if (e.target.closest('a')) {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', '메뉴 열기');
+    }
+  });
+}
+
+/* ─── 모바일 하단 바 ─── */
+const dock = document.getElementById('dock');
+const hero = document.querySelector('.hero');
+new IntersectionObserver(es => {
+  dock.classList.toggle('on', !es[0].isIntersecting);
+}, {threshold:.15}).observe(hero);
+</script>
+<!-- ═══════════════════════════════════════════════════════════
+     Vercel 유입 분석 — 방문자·유입 경로·페이지별 조회수
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+
+<!-- ─── 전환 추적 ───────────────────────────────────────────
+     data-track이 있으면 그 이름을 쓴다. 없으면 링크 주소로 알아본다.
+     ──────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  var BY_HREF = [
+    [/^tel:/,            'phone_click'],
+    [/^mailto:/,         'email_click'],
+    [/pf\.kakao\.com/,   'kakao_channel'],   // 공연 알림 = 카카오 채널 추가
+    [/forms\.gle/,       'booking_click'],   // 예매하기
+    [/map\.naver\.com/,  'map_click'],
+    [/blog\.naver\.com/, 'blog_click'],
+    [/instagram\.com/,   'instagram_click'],
+    [/^#place$/,         'theater_click'],   // 회현동소극장 알아보기
+    [/haeyeon\.html/,    'haeyeon_click'],
+    [/malgeumi\.html/,   'malgeumi_click'],
+    [/king\.html/,       'king_click'],
+    [/kkotpocha\.html/,  'kkotpocha_click'],
+  ];
+
+  document.addEventListener('click', function (e) {
+    if (!window.gtag) return;
+    var el = e.target && e.target.closest && e.target.closest('[data-track], a, button');
+    if (!el) return;
+
+    var name = el.getAttribute('data-track');
+    if (!name) {
+      var href = el.getAttribute('href') || '';
+      if (!href) return;
+      for (var i = 0; i < BY_HREF.length; i++) {
+        if (BY_HREF[i][0].test(href)) { name = BY_HREF[i][1]; break; }
+      }
+    }
+    if (name) gtag('event', name, { page_path: location.pathname });
+  });
+})();
+</script>
+
+</body>
+</html>
