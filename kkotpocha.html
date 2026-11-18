@@ -318,6 +318,33 @@ p + p{margin-top:1.1rem}
   .rise{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ── 관람 예약 폼 ─────────────────────────
+   소식 구독과 같은 구글시트(말그미극단 소식 구독자 명단)에 기록한다.
+   날짜·인원은 메시지 칸에 "[꽃포장 길마차 예약] 12/19(토) 오후 3시 · 2명"으로 묶어 보낸다 */
+.rsv{text-align:left;margin:0 0 1.5rem;padding:1.5rem;border:1px solid var(--line);border-radius:4px;background:var(--ink)}
+.rsv h3{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--paper);margin:0 0 .35rem}
+.rsv .sub{font-size:.9rem;color:var(--slate);margin:0 0 1.25rem}
+.rsv .f{display:block;font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--gold);margin:0 0 .4rem}
+.rsv input[type=text],.rsv input[type=tel],.rsv input[type=number]{
+  width:100%;padding:.8rem .9rem;margin:0 0 1rem;border:1px solid var(--line);border-radius:3px;
+  background:var(--ink-2);color:var(--paper);font:inherit;font-size:1rem}
+.rsv input::placeholder{color:#6f655c}
+.rsv input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.rsv .days{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1rem;border:0;padding:0}
+.rsv .days label{display:flex;align-items:center;gap:.45rem;padding:.65rem .9rem;border:1px solid var(--line);border-radius:3px;
+  color:var(--paper);font-size:.95rem;cursor:pointer}
+.rsv .days input{accent-color:var(--gold);width:1rem;height:1rem}
+.rsv .days label:has(input:checked){border-color:var(--gold)}
+.rsv .consent{display:flex;gap:.55rem;align-items:flex-start;font-size:.85rem;color:var(--fog);margin:.25rem 0 1.25rem;line-height:1.6}
+.rsv .consent input{accent-color:var(--gold);margin-top:.3rem;flex:none}
+.rsv .consent small{display:block;color:var(--slate);font-size:.78rem}
+.rsv button.btn{width:100%;justify-content:center}
+.rsv .status{font-size:.9rem;margin:.9rem 0 0;color:var(--fog)}
+.rsv .status.is-error{color:#FF8B7A}
+.rsv-done{text-align:center;padding:1rem 0}
+.rsv-done b{display:block;font-family:var(--display);font-size:1.3rem;color:var(--paper);margin-bottom:.4rem}
+.rsv-done p{color:var(--fog);font-size:.95rem}
 </style>
 <!-- ═══════════════════════════════════════════════════════════
      관리자 자기 방문 제외
@@ -415,7 +442,7 @@ p + p{margin-top:1.1rem}
     </div>
 
     <div class="cta-row">
-      <a href="tel:055-339-9110" class="btn btn--gold"><i class="fa-solid fa-phone" aria-hidden="true"></i> 관람 문의 055-339-9110</a>
+      <a href="#reserve" class="btn btn--gold" data-track="kkotpocha_reserve_click">관람 예약하기</a>
       <a href="#visit" class="btn btn--ghost">오시는 길</a>
     </div>
   </div>
@@ -543,11 +570,6 @@ p + p{margin-top:1.1rem}
         <img src="images/kkotpocha-leekwon.jpg" alt="기획·음향 이권" loading="lazy">
         <figcaption><span>기획 · 음향</span><b>이권</b></figcaption>
       </figure>
-      <figure>
-        <!-- 임광욱 사진 미정 — 받으면 images/kkotpocha-limkwangwook.jpg(480×640)로 넣고 아래 .noimg 를 <img>로 바꾸세요 -->
-        <div class="noimg" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
-        <figcaption><span>무대디자인</span><b>임광욱</b></figcaption>
-      </figure>
       <!-- 조명 · 진행 스태프 미정 — 정해지면 위 figure 블록을 복사해 여기에 추가
       <figure>
         <img src="images/kkotpocha-이름.jpg" alt="조명 이름" loading="lazy">
@@ -575,7 +597,37 @@ p + p{margin-top:1.1rem}
       <div class="r"><dt>관람</dt><dd>15세 이상</dd></div>
       <div class="r"><dt>문의</dt><dd>말그미극단 055-339-9110</dd></div>
     </dl>
-    <a href="tel:055-339-9110" class="btn btn--gold"><i class="fa-solid fa-phone" aria-hidden="true"></i> 관람 문의 전화하기</a>
+    <div class="rsv" id="reserve">
+      <div id="rsvFormView">
+        <h3>관람 예약</h3>
+        <p class="sub">남겨 주신 번호로 예약 확인 연락을 드립니다. 관람료는 당일 현장에서 받습니다.</p>
+        <form id="rsvForm" novalidate>
+          <label class="f" for="rsv-name">이름</label>
+          <input id="rsv-name" type="text" autocomplete="name" maxlength="40" placeholder="예약자 이름">
+          <label class="f" for="rsv-phone">휴대전화</label>
+          <input id="rsv-phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="010-1234-5678">
+          <fieldset class="days">
+            <legend class="f">관람 날짜</legend>
+            <label><input type="radio" name="rsv-day" value="12/19(토) 오후 3시"> 12. 19 (토) 오후 3시</label>
+            <label><input type="radio" name="rsv-day" value="12/20(일) 오후 3시"> 12. 20 (일) 오후 3시</label>
+          </fieldset>
+          <label class="f" for="rsv-count">인원</label>
+          <input id="rsv-count" type="number" min="1" max="20" value="1" inputmode="numeric">
+          <label class="consent">
+            <input id="rsv-consent" type="checkbox">
+            <span>예약 확인 연락을 위한 이름·휴대전화 수집·이용에 동의합니다.
+              <small>공연 연락에만 쓰고, 공연이 끝나면 파기합니다.</small></span>
+          </label>
+          <button type="submit" class="btn btn--gold">예약 신청</button>
+          <p class="status" id="rsv-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="rsv-done" id="rsvDoneView" hidden>
+        <b>예약 신청이 접수되었습니다</b>
+        <p id="rsvDoneText"></p>
+      </div>
+    </div>
+    <a href="tel:055-339-9110" class="btn btn--ghost"><i class="fa-solid fa-phone" aria-hidden="true"></i> 전화 문의 055-339-9110</a>
   </div>
 </section>
 
@@ -619,7 +671,7 @@ p + p{margin-top:1.1rem}
 <!-- 모바일 하단 고정 -->
 <div class="dock" id="dock">
   <a class="a" href="#visit">오시는 길</a>
-  <a class="b" href="tel:055-339-9110">관람 문의 전화</a>
+  <a class="b" href="#reserve" data-track="kkotpocha_reserve_click">관람 예약하기</a>
 </div>
 
 <script>
@@ -702,5 +754,55 @@ new IntersectionObserver(es => {
 })();
 </script>
 
+<script>
+/* ─── 관람 예약 → 구글시트 (소식 구독과 같은 웹앱) ───
+   시트 「말그미극단 소식 구독자 명단」에 이름·휴대전화와 함께
+   메시지 칸 "[꽃포장 길마차 예약] 날짜 · 인원"으로 한 줄 기록된다.
+   이메일은 보내지 않는다 — 이메일이 있으면 스크립트가 "구독 완료" 메일을 보내기 때문 */
+(function () {
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbywXwIjpd9i-LnPCAqnb6Owj4b0jQvRZ3OE1FvixJLFydaIDIz3sZFsz3GIQx4zA03W/exec';
+  var form = document.getElementById('rsvForm');
+  if (!form) return;
+  var status = document.getElementById('rsv-status');
+  var say = function (msg, err) { status.textContent = msg; status.className = 'status' + (err ? ' is-error' : ''); };
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('rsv-name').value.trim();
+    var phone = document.getElementById('rsv-phone').value.trim();
+    var dayEl = form.querySelector('input[name="rsv-day"]:checked');
+    var count = parseInt(document.getElementById('rsv-count').value, 10);
+    var consent = document.getElementById('rsv-consent').checked;
+
+    if (!name) { say('이름을 적어 주세요.', true); return; }
+    if (!/^[0-9\-\s]{9,}$/.test(phone)) { say('휴대전화 번호를 확인해 주세요.', true); return; }
+    if (!dayEl) { say('관람 날짜를 골라 주세요.', true); return; }
+    if (!(count >= 1 && count <= 20)) { say('인원은 1~20명으로 적어 주세요. 그 이상은 전화로 문의해 주세요.', true); return; }
+    if (!consent) { say('개인정보 수집·이용에 동의해 주세요.', true); return; }
+
+    var message = '[꽃포장 길마차 예약] ' + dayEl.value + ' · ' + count + '명';
+    // 한글이 깨지지 않도록 FormData 대신 urlencoded로 보낸다 (hernames.html과 같은 방식)
+    var body = new URLSearchParams({ name: name, phone: phone, email: '', message: message, consent: 'y' });
+
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = '보내는 중…'; say('');
+
+    fetch(ENDPOINT, { method: 'POST', body: body })
+      .then(function (r) { return r.json(); })
+      .then(function (out) {
+        if (!out.ok) throw new Error(out.error || '기록 실패');
+        document.getElementById('rsvDoneText').textContent =
+          name + '님, ' + dayEl.value + ' · ' + count + '명으로 접수했습니다. 확인 연락을 드리겠습니다.';
+        document.getElementById('rsvFormView').hidden = true;
+        document.getElementById('rsvDoneView').hidden = false;
+        if (window.gtag) gtag('event', 'kkotpocha_reserve', { page_path: location.pathname });
+      })
+      .catch(function () {
+        say('전송에 실패했습니다. 055-339-9110으로 전화 주시거나 잠시 후 다시 시도해 주세요.', true);
+      })
+      .then(function () { btn.disabled = false; btn.textContent = '예약 신청'; });
+  });
+})();
+</script>
 </body>
 </html>
