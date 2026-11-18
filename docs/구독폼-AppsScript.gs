@@ -29,6 +29,11 @@ function doPost(e) {
     if (p.consent !== 'y')   return json({ ok: false, error: '개인정보 수집·이용 동의가 없습니다.' });
 
     var name = String(p.name).slice(0, 100);
+
+    // 공연 관람 예약은 구독자 명단(첫 탭)에 섞지 않고 공연별 탭에 따로 적는다.
+    // kkotpocha.html 이 kind=reserve, show=공연 이름, day, count 를 보낸다.
+    if (p.kind === 'reserve') return saveReservation(p, name);
+
     var email = String(p.email || '').slice(0, 200);
 
     var sheet = SpreadsheetApp.getActive().getSheets()[0];
@@ -77,6 +82,30 @@ function sendConfirmEmail(name, email) {
     from: 'hoehyeon.theater@gmail.com',
     name: '회현동 소극장'
   });
+}
+
+// 관람 예약 → 「<공연 이름> 예약」 탭. 탭이 없으면 머리줄과 함께 만든다.
+// 휴대전화는 앞에 ' 를 붙여 글자로 저장한다 — 숫자로 바뀌면 맨 앞 0이 사라진다.
+// 예약자에게 메일은 보내지 않는다(이메일을 받지 않는다).
+function saveReservation(p, name) {
+  var show = String(p.show || '공연').slice(0, 40);
+  var tabName = show + ' 예약';
+  var ss = SpreadsheetApp.getActive();
+  var sheet = ss.getSheetByName(tabName);
+  if (!sheet) {
+    sheet = ss.insertSheet(tabName);
+    sheet.appendRow(['신청일시', '이름', '휴대전화', '관람 날짜', '인원', '개인정보 수집·이용 동의']);
+    sheet.setFrozenRows(1);
+  }
+  sheet.appendRow([
+    new Date(),
+    name,
+    "'" + String(p.phone).slice(0, 40),
+    String(p.day || '').slice(0, 60),
+    Math.max(0, Math.min(99, parseInt(p.count, 10) || 0)),
+    '동의함'
+  ]);
+  return json({ ok: true });
 }
 
 // 브라우저가 주소를 직접 열었을 때 (동작 확인용)

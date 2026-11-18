@@ -320,8 +320,7 @@ p + p{margin-top:1.1rem}
 }
 
 /* ── 관람 예약 폼 ─────────────────────────
-   소식 구독과 같은 구글시트(말그미극단 소식 구독자 명단)에 기록한다.
-   날짜·인원은 메시지 칸에 "[꽃포장 길마차 예약] 12/19(토) 오후 3시 · 2명"으로 묶어 보낸다 */
+   소식 구독과 같은 구글시트(말그미극단 소식 구독자 명단)의 「꽃포장 길마차 예약」 탭에 기록한다 */
 .rsv{text-align:left;margin:0 0 1.5rem;padding:1.5rem;border:1px solid var(--line);border-radius:4px;background:var(--ink)}
 .rsv h3{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--paper);margin:0 0 .35rem}
 .rsv .sub{font-size:.9rem;color:var(--slate);margin:0 0 1.25rem}
@@ -753,9 +752,10 @@ new IntersectionObserver(es => {
 </script>
 
 <script>
-/* ─── 관람 예약 → 구글시트 (소식 구독과 같은 웹앱) ───
-   시트 「말그미극단 소식 구독자 명단」에 이름·휴대전화와 함께
-   메시지 칸 "[꽃포장 길마차 예약] 날짜 · 인원"으로 한 줄 기록된다.
+/* ─── 관람 예약 → 구글시트 (소식 구독과 같은 웹앱 주소) ───
+   kind=reserve 로 보내면 스크립트(docs/구독폼-AppsScript.gs saveReservation)가
+   시트 「말그미극단 소식 구독자 명단」의 「꽃포장 길마차 예약」 탭에 따로 적는다.
+   message 는 새 스크립트 배포 전 대비용 — 예전 스크립트는 이것을 첫 탭에 적는다.
    이메일은 보내지 않는다 — 이메일이 있으면 스크립트가 "구독 완료" 메일을 보내기 때문 */
 (function () {
   var ENDPOINT = 'https://script.google.com/macros/s/AKfycbywXwIjpd9i-LnPCAqnb6Owj4b0jQvRZ3OE1FvixJLFydaIDIz3sZFsz3GIQx4zA03W/exec';
@@ -780,7 +780,10 @@ new IntersectionObserver(es => {
 
     var message = '[꽃포장 길마차 예약] ' + dayEl.value + ' · ' + count + '명';
     // 한글이 깨지지 않도록 FormData 대신 urlencoded로 보낸다 (hernames.html과 같은 방식)
-    var body = new URLSearchParams({ name: name, phone: phone, email: '', message: message, consent: 'y' });
+    var body = new URLSearchParams({
+      kind: 'reserve', show: '꽃포장 길마차', day: dayEl.value, count: String(count),
+      name: name, phone: phone, email: '', message: message, consent: 'y'
+    });
 
     var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true; btn.textContent = '보내는 중…'; say('');
